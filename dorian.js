@@ -14,7 +14,7 @@ const ROWS = 200;
 const CELL_SIZE = WIDTH / COLS;
 const MAX_AGE = 800;
 const MUTATION_CHANCE = 0.002;
-const FPS = 60;
+const FPS = 120;
 
 let tick = 0;
 let speedModifier = 1;
