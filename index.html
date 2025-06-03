@@ -7,7 +7,23 @@
 </head>
 <body>
   <canvas id="dorian-canvas" width="1000" height="1000"></canvas>
-
+<div id="ui" style="
+  position: absolute; 
+  top: 10px; 
+  left: 10px; 
+  background: rgba(0,0,0,0.6); 
+  padding: 12px 16px; 
+  border-radius: 8px; 
+  font-family: monospace; 
+  color: white; 
+  line-height: 1.5; 
+  z-index: 999;">
+  <div id="tick">Tick: 0</div>
+  <div id="dominant">Dominant: None</div>
+  <div id="diversity">Diversity: 0</div>
+  <div id="entropy">Entropy: 0.00</div>
+  <div style="font-size: 11px; opacity: 0.6;">Waiting for emergence...</div>
+</div>
   <div id="hud">
     <h1 id="tick">Tick: 0</h1>
     <h2 id="dominant">Dominant: <span>None</span></h2>
