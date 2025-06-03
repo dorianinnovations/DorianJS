@@ -126,7 +126,10 @@ function animate() {
   tick++;
   update();
   draw();
+  calculateInsights();
   requestAnimationFrame(animate);
+}
+
 }
 
 function calculateInsights() {
@@ -155,7 +158,7 @@ function calculateInsights() {
     const p = count / total;
     return p * Math.log2(p);
   }).reduce((a, b) => a + b, 0)).toFixed(2);
-
+  document.getElementById("tick").textContent = `Tick: ${tick}`;
   document.getElementById("dominant").textContent = `Dominant: ${dominant}`;
   document.getElementById("diversity").textContent = `Diversity: ${diversity}`;
   document.getElementById("entropy").textContent = `Entropy: ${entropy}`;
