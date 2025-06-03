@@ -129,5 +129,36 @@ function animate() {
   requestAnimationFrame(animate);
 }
 
+function calculateInsights() {
+  const counts = {};
+  for (let row of grid) {
+    for (let cell of row) {
+      if (cell.state) {
+        counts[cell.eid] = (counts[cell.eid] || 0) + 1;
+      }
+    }
+  }
+
+  let dominant = "None";
+  let max = 0;
+  let total = 0;
+  for (let eid in counts) {
+    total += counts[eid];
+    if (counts[eid] > max) {
+      max = counts[eid];
+      dominant = EMOTION_ID_TO_NAME[eid];
+    }
+  }
+
+  const diversity = Object.keys(counts).length;
+  const entropy = -(Object.values(counts).map(count => {
+    const p = count / total;
+    return p * Math.log2(p);
+  }).reduce((a, b) => a + b, 0)).toFixed(2);
+
+  document.getElementById("dominant").textContent = `Dominant: ${dominant}`;
+  document.getElementById("diversity").textContent = `Diversity: ${diversity}`;
+  document.getElementById("entropy").textContent = `Entropy: ${entropy}`;
+}
 seed(COLS >> 1, ROWS >> 1);
 animate();
