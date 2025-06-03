@@ -1,25 +1,36 @@
-// emotions.js
-
-export const EMOTION_ID_TO_NAME = {
-  0: "joy", 1: "fear", 2: "anger", 3: "calm", 4: "envy",
-  5: "love", 6: "sadness", 7: "hope", 8: "curiosity", 9: "pride"
-};
-
-export const EMOTION_NAME_TO_ID = Object.fromEntries(
-  Object.entries(EMOTION_ID_TO_NAME).map(([k, v]) => [v, parseInt(k)])
-);
+// === emotions.js ===
 
 export const EMOTIONS = {
-  0: { color: [255, 230, 70], vector: [1, -1], archetype: "vital" },
-  1: { color: [90, 130, 255], vector: [-1, 1], archetype: "shadow" },
-  2: { color: [255, 60, 60], vector: [1, 0], archetype: "shadow" },
-  3: { color: [100, 255, 180], vector: [-1, 0], archetype: "neutral" },
-  4: { color: [200, 100, 255], vector: [0, -1], archetype: "ego" },
-  5: { color: [255, 160, 210], vector: [0, 1], archetype: "vital" },
-  6: { color: [130, 150, 255], vector: [-1, -1], archetype: "shadow" },
-  7: { color: [100, 255, 200], vector: [1, 1], archetype: "hope" },
-  8: { color: [255, 200, 120], vector: [0, 0], archetype: "curious" },
-  9: { color: [255, 245, 100], vector: [1, 0], archetype: "ego" }
+  0: { name: "Joy", color: [255, 230, 0] },
+  1: { name: "Trust", color: [0, 204, 102] },
+  2: { name: "Fear", color: [0, 153, 153] },
+  3: { name: "Surprise", color: [102, 0, 204] },
+  4: { name: "Sadness", color: [51, 102, 204] },
+  5: { name: "Disgust", color: [153, 51, 102] },
+  6: { name: "Anger", color: [204, 0, 0] },
+  7: { name: "Anticipation", color: [255, 102, 0] }
 };
 
-export const EMOTION_LIST = Object.keys(EMOTIONS).map(e => parseInt(e));
+export const EMOTION_LIST = Object.keys(EMOTIONS).map(k => parseInt(k));
+export const EMOTION_ID_TO_NAME = Object.fromEntries(
+  Object.entries(EMOTIONS).map(([k, v]) => [parseInt(k), v.name])
+);
+
+// Terrain zones for emotional effects
+export const terrainZones = {
+  'desert':    { decay_modifier: 1.5, boost: [0, 7], suppress: [4, 5] },
+  'ocean':     { decay_modifier: 0.7, boost: [2, 4], suppress: [6] },
+  'forest':    { decay_modifier: 1.0, boost: [1, 3], suppress: [0] },
+  'mountain':  { decay_modifier: 1.3, boost: [6], suppress: [2, 0] },
+  'valley':    { decay_modifier: 0.9, boost: [4, 1], suppress: [3, 5] }
+};
+
+// Return the terrain type based on coordinates (symbolic, not literal geography)
+export function getZone(x, y) {
+  const px = (x / 200), py = (y / 200);
+  if (px < 0.3 && py < 0.3) return 'mountain';
+  if (px > 0.7 && py < 0.3) return 'desert';
+  if (px < 0.3 && py > 0.7) return 'ocean';
+  if (px > 0.7 && py > 0.7) return 'valley';
+  return 'forest';
+} 
