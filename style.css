@@ -18,13 +18,36 @@ canvas {
   position: absolute;
   top: 8px;
   left: 8px;
-  color: white;
-  background: rgba(20, 20, 40, 0.92);
-  padding: 10px 20px;
-  border-radius: 12px;
-  box-shadow: 0 0 20px rgba(0,0,0,0.4);
-  backdrop-filter: blur(4px);
+  color: #fffbe6;
+  background: linear-gradient(135deg, rgba(255, 255, 255, 0.158) 60%, rgba(175, 175, 175, 0.219) 100%);
+  padding: 16px 28px;
+  border-radius: 10px;
+  box-shadow: 0 4px 32px 0 rgba(80, 40, 160, 0.25), 0 0 0 2px rgba(255,255,255,0.07);
+  border: 1.5px solid rgba(255, 255, 255, 0.342);
+  backdrop-filter: blur(3px);
   z-index: 10;
-  min-width: 180px;
+  min-width: 160px;
+  font-family: 'IBM Plex Mono', 'Space Mono', 'Roboto Mono', 'Share Tech Mono', 'Consolas', monospace;
+  font-size: 1.2em;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  transition: box-shadow 0.2s, background 0.2s;
+  cursor: grab;
+}
+
+#ui.dragging {
+  cursor: grabbing;
+}
+
+#ui div {
+  margin-bottom: 4px;
+  font-weight: 600;
+  text-shadow: 0 1px 4px rgba(0,0,0,0.18);
+  font-size: 1em;
+  letter-spacing: 0.09em;
+}
+
+#ui div:last-child {
+  margin-bottom: 0;
 }
 

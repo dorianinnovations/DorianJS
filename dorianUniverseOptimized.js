@@ -2,7 +2,7 @@
 import { EMOTIONS, EMOTION_LIST, EMOTION_ID_TO_NAME, getZone, terrainZones } from './emotions.js';
 
 export class DorianUniverseOptimized {
-  constructor({ cols = 200, rows = 200, maxAge = 800, mutationChance = 0.002 } = {}) {
+  constructor({ cols = 200, rows = 200, maxAge = 800, mutationChance = 0.006 } = {}) {
     this.cols = cols;
     this.rows = rows;
     this.size = cols * rows;

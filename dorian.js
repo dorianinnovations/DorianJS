@@ -22,7 +22,6 @@ let speedModifier = 1;
 let recentDeaths = [];
 let lastAlive = 0;
 let lastTick = performance.now();
-let fps = 0;
 let running = true;
 
 // Initialize optimized universe
@@ -47,10 +46,7 @@ function updateHUD() {
   const stats = universe.getStats();
   const alive = countAlive();
   const growth = alive - lastAlive;
-  const now = performance.now();
-  const dt = now - lastTick;
-  fps = Math.round(1000 / dt);
-  lastTick = now;
+  lastTick = performance.now();
   lastAlive = alive;
 
   document.getElementById("tick").textContent = `Tick: ${stats.tick}`;
@@ -59,7 +55,6 @@ function updateHUD() {
   document.getElementById("entropy").textContent = `Entropy: ${stats.entropy}`;
   document.getElementById("alive").textContent = `Alive: ${alive}`;
   document.getElementById("growth").textContent = `Growth: ${growth}`;
-  document.getElementById("fps").textContent = `FPS: ${fps}`;
 }
 
 function animate() {
@@ -88,6 +83,51 @@ canvas.addEventListener('mousedown', (e) => {
   universe.seed(x, y);
   draw(); // Immediate visual feedback
   updateHUD();
+});
+
+// Make #ui draggable
+const ui = document.getElementById('ui');
+let isDragging = false;
+let dragOffsetX = 0;
+let dragOffsetY = 0;
+
+ui.addEventListener('mousedown', (e) => {
+  isDragging = true;
+  ui.classList.add('dragging');
+  dragOffsetX = e.clientX - ui.offsetLeft;
+  dragOffsetY = e.clientY - ui.offsetTop;
+});
+
+document.addEventListener('mousemove', (e) => {
+  if (!isDragging) return;
+  ui.style.left = (e.clientX - dragOffsetX) + 'px';
+  ui.style.top = (e.clientY - dragOffsetY) + 'px';
+});
+
+document.addEventListener('mouseup', () => {
+  isDragging = false;
+  ui.classList.remove('dragging');
+});
+
+// Touch support
+ui.addEventListener('touchstart', (e) => {
+  isDragging = true;
+  ui.classList.add('dragging');
+  const touch = e.touches[0];
+  dragOffsetX = touch.clientX - ui.offsetLeft;
+  dragOffsetY = touch.clientY - ui.offsetTop;
+});
+
+document.addEventListener('touchmove', (e) => {
+  if (!isDragging) return;
+  const touch = e.touches[0];
+  ui.style.left = (touch.clientX - dragOffsetX) + 'px';
+  ui.style.top = (touch.clientY - dragOffsetY) + 'px';
+});
+
+document.addEventListener('touchend', () => {
+  isDragging = false;
+  ui.classList.remove('dragging');
 });
 
 animate();
