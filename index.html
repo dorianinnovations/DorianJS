@@ -9,20 +9,23 @@
   <canvas id="dorian-canvas" width="1000" height="1000"></canvas>
 <div id="ui" style="
   position: absolute; 
-  top: 10px; 
-  left: 10px; 
-  background: rgba(0,0,0,0.6); 
-  padding: 12px 16px; 
+  top: 8px; 
+  left: 8px; 
+  background: rgba(20,20,40,0.92); 
+  padding: 10px 20px; 
   border-radius: 8px; 
   font-family: monospace; 
   color: white; 
   line-height: 1.5; 
-  z-index: 999;">
+  z-index: 999; 
+  min-width: 180px;">
   <div id="tick">Tick: 0</div>
   <div id="dominant">Dominant: None</div>
   <div id="diversity">Diversity: 0</div>
   <div id="entropy">Entropy: 0.00</div>
-  <div style="font-size: 11px; opacity: 0.6;">Waiting for emergence...</div>
+  <div id="alive">Alive: 0</div>
+  <div id="growth">Growth: 0</div>
+  <div id="fps">FPS: 0</div>
 </div>
   <script type="module" src="dorian.js"></script>
 </body>
