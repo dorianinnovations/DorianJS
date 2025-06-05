@@ -1,4 +1,3 @@
-
 import { DorianUniverseOptimized } from './dorianUniverseOptimized.js';
 import { EMOTIONS, EMOTION_ID_TO_NAME, EMOTION_LIST, getZone, terrainZones } from './emotions.js';
 
@@ -79,6 +78,16 @@ window.addEventListener('keydown', (e) => {
     running = !running;
     if (running) animate();
   }
+});
+
+// User seeding: click to seed new live cells
+canvas.addEventListener('mousedown', (e) => {
+  const rect = canvas.getBoundingClientRect();
+  const x = Math.floor((e.clientX - rect.left) / CELL_SIZE);
+  const y = Math.floor((e.clientY - rect.top) / CELL_SIZE);
+  universe.seed(x, y);
+  draw(); // Immediate visual feedback
+  updateHUD();
 });
 
 animate();
