@@ -4,17 +4,54 @@
   <meta charset="UTF-8">
   <title>Dorian</title>
   <link rel="stylesheet" href="style.css">
-</head>
+  <link href="https://cdn.jsdelivr.net/npm/bootswatch@5.3.3/dist/darkly/bootstrap.min.css" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;700&display=swap" rel="stylesheet">
+  <a class="btn btn-primary" href="https://dorian-ichpbusiness.replit.app/"> Homepage</a>
+
 <body>
+    <div class="hero-glow"></div>
+    <div class="hero-title">Dorian</div>
   <canvas id="dorian-canvas" width="1000" height="1000"></canvas>
-<div id="ui">
-  <div id="tick">Tick: 0</div>
-  <div id="dominant">Dominant: None</div>
-  <div id="diversity">Diversity: 0</div>
-  <div id="entropy">Entropy: 0.00</div>
-  <div id="alive">Alive: 0</div>
-  <div id="growth">Growth: 0</div>
-</div>
+  <div id="ui" class="card bg-dark text-light mt-4 border-0 shadow-lg" style="max-width:1000px;">
+    <div class="card-body p-3">
+      <div class="row mb-2">
+        <div class="col-auto ms-auto"><button id="hide-ui-btn" title="Hide UI" class="btn btn-light btn-sm">👁️</button></div>
+      </div>
+      <div class="row text-center mb-2">
+        <div class="col"><div id="tick">Tick: 0</div></div>
+        <div class="col"><div id="dominant">Current Emotional State: None</div></div>
+        <div class="col"><div id="diversity">Diversity: 0</div></div>
+        <div class="col"><div id="entropy">Entropy: 0.00</div></div>
+        <div class="col"><div id="alive">Alive: 0</div></div>
+        <div class="col"><div id="growth">Growth: 0</div></div>
+      </div>
+      <form class="row align-items-center mb-3 g-2" id="speed-control">
+        <div class="col-auto">
+          <label for="speed-slider" class="form-label mb-0">Speed:</label>
+        </div>
+        <div class="col-auto">
+          <input type="range" id="speed-slider" min="1" max="10" value="1" class="form-range" style="width:90px;">
+        </div>
+        <div class="col-auto">
+          <span id="speed-value">1</span>x
+        </div>
+        <div class="col-auto">
+          <button id="pause-btn" type="button" class="btn btn-primary btn-sm ms-2">Pause</button>
+        </div>
+        <div class="col-auto">
+          <button id="reset-btn" type="button" class="btn btn-danger btn-sm ms-2">Restart</button>
+        </div>
+      </form>
+      <div id="logic-toggles" class="row g-2 justify-content-center">
+        <div class="col-auto">
+          <div class="form-check form-switch">
+            <input class="form-check-input" type="checkbox" id="toggle-mutation" checked>
+            <label class="form-check-label" for="toggle-mutation">Mutation</label>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
   <script type="module" src="dorian.js"></script>
 </body>
 </html>
