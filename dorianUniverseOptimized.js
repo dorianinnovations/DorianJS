@@ -20,6 +20,24 @@ export class DorianUniverseOptimized {
     // --- Fix: Initialize memory arrays ONCE here ---
     this._deadTicks = new Uint16Array(this.size);
     this._aliveTicks = new Uint16Array(this.size);
+    // Precompute neighbor lists for quick lookup
+    this.neighborMap = new Array(this.size);
+    for (let y = 0; y < this.rows; y++) {
+      for (let x = 0; x < this.cols; x++) {
+        const idx = this.index(x, y);
+        const neighbors = [];
+        for (let dx = -1; dx <= 1; dx++) {
+          for (let dy = -1; dy <= 1; dy++) {
+            if (dx === 0 && dy === 0) continue;
+            const nx = x + dx, ny = y + dy;
+            if (nx >= 0 && ny >= 0 && nx < this.cols && ny < this.rows) {
+              neighbors.push(this.index(nx, ny));
+            }
+          }
+        }
+        this.neighborMap[idx] = neighbors;
+      }
+    }
   }
 
   index(x, y) {
@@ -52,17 +70,7 @@ export class DorianUniverseOptimized {
   }
 
   getNeighbors(x, y) {
-    const neighbors = [];
-    for (let dx = -1; dx <= 1; dx++) {
-      for (let dy = -1; dy <= 1; dy++) {
-        if (dx === 0 && dy === 0) continue;
-        const nx = x + dx, ny = y + dy;
-        if (nx >= 0 && ny >= 0 && nx < this.cols && ny < this.rows) {
-          neighbors.push(this.index(nx, ny));
-        }
-      }
-    }
-    return neighbors;
+    return this.neighborMap[this.index(x, y)];
   }
 
   update() {
@@ -72,7 +80,7 @@ export class DorianUniverseOptimized {
       const [x, y] = this.coords(idx);
       const zone = getZone(x, y);
       const { decay_modifier: mod, boost, suppress } = terrainZones[zone];
-      const neighbors = this.getNeighbors(x, y);
+      const neighbors = this.neighborMap[idx];
       const liveNeighbors = neighbors.filter(nidx => this.state[nidx]);
       // --- CLUSTERING INCENTIVE LOGIC ---
       if (!this.state[idx]) {
@@ -182,7 +190,8 @@ export class DorianUniverseOptimized {
       tick: this.tick,
       dominant,
       diversity,
-      entropy
+      entropy,
+      alive: total
     };
   }
 
