@@ -41,6 +41,13 @@ const pauseBtn = document.getElementById('pause-btn');
 const mutationToggle = document.getElementById('toggle-mutation');
 const resetBtn = document.getElementById('reset-btn');
 
+mutationToggle.addEventListener('change', () => {
+  const chance = mutationToggle.checked ? MUTATION_CHANCE : 0;
+  if (worker) {
+    worker.postMessage({ type: 'setMutation', mutationChance: chance });
+  }
+});
+
 speedSlider.max = '10';
 speedSlider.addEventListener('input', () => {
   if (parseInt(speedSlider.value) > 10) speedSlider.value = '10';
