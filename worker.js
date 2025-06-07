@@ -4,7 +4,7 @@ let universe = null;
 let cellSize = 5; // rendered pixel size
 
 self.onmessage = (e) => {
-  const { type, opts, x, y, updates } = e.data;
+  const { type, opts, x, y, updates, mutationChance } = e.data;
   switch (type) {
     case 'init':
       // opts may include birthDelay to control how long cells stay dead before regrowth
@@ -23,6 +23,11 @@ self.onmessage = (e) => {
         const imageData = universe.getImageData(cellSize);
         const stats = universe.getStats();
         self.postMessage({ type: 'frame', imageData, stats }, [imageData.data.buffer]);
+      }
+      break;
+    case 'setMutation':
+      if (universe && typeof mutationChance === 'number') {
+        universe.setMutationChance(mutationChance);
       }
       break;
   }

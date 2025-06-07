@@ -41,6 +41,10 @@ export class DorianUniverseOptimized {
     }
   }
 
+  setMutationChance(value) {
+    this.mutationChance = value;
+  }
+
   index(x, y) {
     return y * this.cols + x;
   }
