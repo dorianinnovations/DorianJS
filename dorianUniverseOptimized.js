@@ -2,7 +2,7 @@
 import { EMOTIONS, EMOTION_LIST, EMOTION_ID_TO_NAME, getZone, terrainZones } from './emotions.js';
 
 export class DorianUniverseOptimized {
-  constructor({ cols = 200, rows = 200, maxAge = 800, mutationChance = 0.006 } = {}) {
+  constructor({ cols = 200, rows = 200, maxAge = 800, mutationChance = 0.006, cellSize = 5 } = {}) {
     this.cols = cols;
     this.rows = rows;
     this.size = cols * rows;
@@ -17,9 +17,40 @@ export class DorianUniverseOptimized {
     // Set of active cell indices
     this.active = new Set();
     this.tick = 0;
+    // Spatial hashing buckets for neighbor lookups
+    // bucketSize is in cells: roughly 32px worth of cells
+    this.bucketSize = Math.max(1, Math.floor(32 / cellSize));
+    this.buckets = new Map(); // key: "bx,by" -> Set of cell indices
     // --- Fix: Initialize memory arrays ONCE here ---
     this._deadTicks = new Uint16Array(this.size);
     this._aliveTicks = new Uint16Array(this.size);
+  }
+
+  _bucketKey(bx, by) {
+    return `${bx},${by}`;
+  }
+
+  _bucketCoords(x, y) {
+    return [Math.floor(x / this.bucketSize), Math.floor(y / this.bucketSize)];
+  }
+
+  _addToBucket(idx) {
+    const [x, y] = this.coords(idx);
+    const [bx, by] = this._bucketCoords(x, y);
+    const key = this._bucketKey(bx, by);
+    if (!this.buckets.has(key)) this.buckets.set(key, new Set());
+    this.buckets.get(key).add(idx);
+  }
+
+  _removeFromBucket(idx) {
+    const [x, y] = this.coords(idx);
+    const [bx, by] = this._bucketCoords(x, y);
+    const key = this._bucketKey(bx, by);
+    const bucket = this.buckets.get(key);
+    if (bucket) {
+      bucket.delete(idx);
+      if (bucket.size === 0) this.buckets.delete(key);
+    }
   }
 
   index(x, y) {
@@ -46,20 +77,33 @@ export class DorianUniverseOptimized {
           this.energy[idx] = 10;
           this.age[idx] = 0;
           this.active.add(idx);
+          this._addToBucket(idx); // track in spatial bucket
         }
       }
     }
   }
 
+  // Determine neighboring cells using spatial buckets. The caller's bucket and
+  // the eight surrounding buckets are scanned for candidate indices. Only
+  // adjacent cells (dx ∈ [-1,1], dy ∈ [-1,1]) are returned.
   getNeighbors(x, y) {
+    const [bx, by] = this._bucketCoords(x, y);
+    const candidates = [];
+    // Gather indices from this bucket and the eight surrounding buckets
+    for (let bdx = -1; bdx <= 1; bdx++) {
+      for (let bdy = -1; bdy <= 1; bdy++) {
+        const key = this._bucketKey(bx + bdx, by + bdy);
+        const bucket = this.buckets.get(key);
+        if (bucket) candidates.push(...bucket);
+      }
+    }
     const neighbors = [];
-    for (let dx = -1; dx <= 1; dx++) {
-      for (let dy = -1; dy <= 1; dy++) {
-        if (dx === 0 && dy === 0) continue;
-        const nx = x + dx, ny = y + dy;
-        if (nx >= 0 && ny >= 0 && nx < this.cols && ny < this.rows) {
-          neighbors.push(this.index(nx, ny));
-        }
+    for (const idx of candidates) {
+      const [nx, ny] = this.coords(idx);
+      const dx = nx - x;
+      const dy = ny - y;
+      if ((dx !== 0 || dy !== 0) && Math.abs(dx) <= 1 && Math.abs(dy) <= 1) {
+        neighbors.push(idx);
       }
     }
     return neighbors;
@@ -115,6 +159,7 @@ export class DorianUniverseOptimized {
           this.age[idx] = 0;
           this._deadTicks[idx] = 0; // reset dead counter ON BIRTH
           this._aliveTicks[idx] = 1; // start alive counter
+          this._addToBucket(idx); // add to spatial bucket
           nextActive.add(idx);
           neighbors.forEach(n => nextActive.add(n));
         } else {
@@ -128,6 +173,7 @@ export class DorianUniverseOptimized {
         this.state[idx] = 0;
         this._deadTicks[idx] = 1; // start dead counter ON DEATH
         this._aliveTicks[idx] = 0;
+        this._removeFromBucket(idx); // remove from spatial bucket
         neighbors.forEach(n => nextActive.add(n));
         continue;
       }
@@ -143,6 +189,7 @@ export class DorianUniverseOptimized {
         this.state[idx] = 0;
         this._deadTicks[idx] = 1; // start dead counter ON DEATH
         this._aliveTicks[idx] = 0;
+        this._removeFromBucket(idx); // remove from spatial bucket
         neighbors.forEach(n => nextActive.add(n));
       } else {
         nextActive.add(idx);
