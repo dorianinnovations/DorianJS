@@ -2,7 +2,7 @@
 import { EMOTIONS, EMOTION_LIST, EMOTION_ID_TO_NAME, getZone, terrainZones } from './emotions.js';
 
 export class DorianUniverseOptimized {
-  constructor({ cols = 200, rows = 200, maxAge = 800, mutationChance = 0.006 } = {}) {
+  constructor({ cols = 200, rows = 200, maxAge = 800, mutationChance = 0.006, birthDelay = 1 } = {}) {
     this.cols = cols;
     this.rows = rows;
     this.size = cols * rows;
@@ -17,8 +17,9 @@ export class DorianUniverseOptimized {
     // Set of active cell indices
     this.active = new Set();
     this.tick = 0;
+    this.birthDelay = birthDelay; // minimum ticks a cell must stay dead before rebirth
     // --- Fix: Initialize memory arrays ONCE here ---
-    this._deadTicks = new Uint16Array(this.size);
+    this._deadTicks = new Uint16Array(this.size); // tracks how long each cell has been dead
     this._aliveTicks = new Uint16Array(this.size);
     // Precompute neighbor lists for quick lookup
     this.neighborMap = new Array(this.size);
@@ -103,8 +104,8 @@ export class DorianUniverseOptimized {
         let birthChance = 0.18;
         birthChance += 0.45 * affinity; // up to 0.63 if all neighbors are same emotion
         if (overcrowded) birthChance *= 0.08; // even stronger penalty if overcrowded
-        // --- MEMORY/AGE-BASED RULES: Only allow birth if cell has been dead for at least 3 ticks (hysteresis) ---
-        if (this._deadTicks[idx] < 3) {
+        // --- MEMORY/AGE-BASED RULES: Only allow birth if cell has been dead for at least `birthDelay` ticks ---
+        if (this._deadTicks[idx] < this.birthDelay) {
           this._deadTicks[idx]++;
           continue;
         }

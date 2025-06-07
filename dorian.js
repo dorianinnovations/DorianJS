@@ -10,6 +10,7 @@ const COLS = 200;
 const ROWS = 200;
 const MAX_AGE = 800;
 const MUTATION_CHANCE = 0.002;
+const BIRTH_DELAY = 1; // minimum dead ticks before a cell can grow again
 let UPDATES_PER_FRAME = 1;
 
 let running = false;
@@ -28,7 +29,7 @@ function initWorker() {
       if (running) requestAnimationFrame(animate);
     }
   };
-  worker.postMessage({ type: 'init', opts: { cols: COLS, rows: ROWS, maxAge: MAX_AGE, mutationChance: MUTATION_CHANCE, cellSize: CELL_SIZE } });
+  worker.postMessage({ type: 'init', opts: { cols: COLS, rows: ROWS, maxAge: MAX_AGE, mutationChance: MUTATION_CHANCE, birthDelay: BIRTH_DELAY, cellSize: CELL_SIZE } });
 }
 
 initWorker();

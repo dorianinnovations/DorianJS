@@ -1,12 +1,13 @@
 import { DorianUniverseOptimized } from './dorianUniverseOptimized.js';
 
 let universe = null;
-let cellSize = 5;
+let cellSize = 5; // rendered pixel size
 
 self.onmessage = (e) => {
   const { type, opts, x, y, updates } = e.data;
   switch (type) {
     case 'init':
+      // opts may include birthDelay to control how long cells stay dead before regrowth
       universe = new DorianUniverseOptimized(opts);
       cellSize = opts.cellSize || cellSize;
       break;
