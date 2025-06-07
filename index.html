@@ -81,25 +81,6 @@ resizeBtn.addEventListener('click', () => {
   }
 });
 
-// Optional: Make the container draggable
-container.style.cursor = 'move';
-let isDragging = false, startX, startY, origX, origY;
-container.addEventListener('mousedown', (e) => {
-  if (e.target === resizeBtn) return; // Don't drag when clicking the button
-  isDragging = true;
-  startX = e.clientX;
-  startY = e.clientY;
-  origX = container.offsetLeft;
-  origY = container.offsetTop;
-});
-document.addEventListener('mousemove', (e) => {
-  if (isDragging) {
-    container.style.position = 'absolute';
-    container.style.left = origX + (e.clientX - startX) + 'px';
-    container.style.top = origY + (e.clientY - startY) + 'px';
-  }
-});
-document.addEventListener('mouseup', () => isDragging = false);
 
 const ui = document.getElementById('ui');
 ui.style.cursor = 'move';
