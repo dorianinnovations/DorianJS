@@ -26,8 +26,8 @@ export const terrainZones = {
 };
 
 // Return the terrain type based on coordinates (symbolic, not literal geography)
-export function getZone(x, y) {
-  const px = (x / 200), py = (y / 200);
+export function getZone(x, y, cols = 200, rows = 200) {
+  const px = (x / cols), py = (y / rows);
   if (px < 0.3 && py < 0.3) return 'mountain';
   if (px > 0.7 && py < 0.3) return 'desert';
   if (px < 0.3 && py > 0.7) return 'ocean';
