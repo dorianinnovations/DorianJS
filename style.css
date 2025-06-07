@@ -254,7 +254,7 @@ transition: background 0.2s, color 0.2s, box-shadow 0.1s;}
 }
 
 .hero-title {
-  font-size: 6.4rem;
+  font-size: 3rem;
   position: fixed;
   top: 60px;
   left: 50%;
