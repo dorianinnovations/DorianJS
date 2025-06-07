@@ -83,7 +83,7 @@ export class DorianUniverseOptimized {
     const toUpdate = Array.from(this.active);
     for (const idx of toUpdate) {
       const [x, y] = this.coords(idx);
-      const zone = getZone(x, y);
+      const zone = getZone(x, y, this.cols, this.rows);
       const { decay_modifier: mod, boost, suppress } = terrainZones[zone];
       const neighbors = this.neighborMap[idx];
       const liveNeighbors = neighbors.filter(nidx => this.state[nidx]);

@@ -14,7 +14,7 @@ class Cell {
   }
 
   evaluate(neighbors, universe) {
-    const zone = getZone(this.x, this.y);
+    const zone = getZone(this.x, this.y, universe.cols, universe.rows);
     const { decay_modifier: mod, boost, suppress } = terrainZones[zone];
     // --- Emotion-to-zone preference mapping ---
     const emotionZonePreference = {
