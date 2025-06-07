@@ -17,6 +17,9 @@ export class DorianUniverseOptimized {
     // Set of active cell indices
     this.active = new Set();
     this.tick = 0;
+    // --- Fix: Initialize memory arrays ONCE here ---
+    this._deadTicks = new Uint16Array(this.size);
+    this._aliveTicks = new Uint16Array(this.size);
   }
 
   index(x, y) {
@@ -71,29 +74,75 @@ export class DorianUniverseOptimized {
       const { decay_modifier: mod, boost, suppress } = terrainZones[zone];
       const neighbors = this.getNeighbors(x, y);
       const liveNeighbors = neighbors.filter(nidx => this.state[nidx]);
+      // --- CLUSTERING INCENTIVE LOGIC ---
       if (!this.state[idx]) {
-        if ((liveNeighbors.length === 3 || liveNeighbors.length === 4) && Math.random() < 0.25) {
-          const chosen = liveNeighbors[Math.floor(Math.random() * liveNeighbors.length)];
+        // Affinity bias: more likely to be born if most neighbors are same emotion
+        let affinity = 0;
+        let maxEmotion = null;
+        if (liveNeighbors.length > 0) {
+          const emotionCounts = {};
+          for (const nidx of liveNeighbors) {
+            const eid = this.emotion[nidx];
+            emotionCounts[eid] = (emotionCounts[eid] || 0) + 1;
+          }
+          maxEmotion = Object.keys(emotionCounts).reduce((a, b) => emotionCounts[a] > emotionCounts[b] ? a : b);
+          const maxCount = emotionCounts[maxEmotion];
+          affinity = maxCount / liveNeighbors.length;
+        }
+        // Overcrowding penalty: less likely to be born if too many neighbors
+        const overcrowded = liveNeighbors.length >= 7;
+        // Adjust base birth chance (stronger effect)
+        let birthChance = 0.18;
+        birthChance += 0.45 * affinity; // up to 0.63 if all neighbors are same emotion
+        if (overcrowded) birthChance *= 0.08; // even stronger penalty if overcrowded
+        // --- MEMORY/AGE-BASED RULES: Only allow birth if cell has been dead for at least 3 ticks (hysteresis) ---
+        if (this._deadTicks[idx] < 3) {
+          this._deadTicks[idx]++;
+          continue;
+        }
+        if ((liveNeighbors.length === 3 || liveNeighbors.length === 4) && Math.random() < birthChance) {
+          let chosen;
+          if (affinity > 0.5 && maxEmotion !== null) {
+            const maxEmotionNeighbors = liveNeighbors.filter(nidx => this.emotion[nidx] == maxEmotion);
+            chosen = maxEmotionNeighbors[Math.floor(Math.random() * maxEmotionNeighbors.length)];
+          } else {
+            chosen = liveNeighbors[Math.floor(Math.random() * liveNeighbors.length)];
+          }
           this.state[idx] = 1;
           this.emotion[idx] = Math.random() > this.mutationChance ? this.emotion[chosen] : this.randomEmotion();
           this.intensity[idx] = 1.0;
           this.energy[idx] = 10;
           this.age[idx] = 0;
+          this._deadTicks[idx] = 0; // reset dead counter ON BIRTH
+          this._aliveTicks[idx] = 1; // start alive counter
           nextActive.add(idx);
           neighbors.forEach(n => nextActive.add(n));
+        } else {
+          this._deadTicks[idx]++;
         }
         continue;
       }
       // Alive cell
+      // Overcrowding penalty: die if too many live neighbors
+      if (liveNeighbors.length >= 7) {
+        this.state[idx] = 0;
+        this._deadTicks[idx] = 1; // start dead counter ON DEATH
+        this._aliveTicks[idx] = 0;
+        neighbors.forEach(n => nextActive.add(n));
+        continue;
+      }
+      // --- MEMORY/AGE-BASED RULES: Only allow death if cell has been alive for at least 2 ticks (hysteresis) ---
+      this._aliveTicks[idx]++;
       this.age[idx]++;
       let decay = 0.01 * mod;
       if (suppress.includes(this.emotion[idx])) decay *= 1.5;
       if (boost.includes(this.emotion[idx])) decay *= 0.6;
       this.intensity[idx] = Math.max(0.1, this.intensity[idx] - decay);
       this.energy[idx] -= 0.2;
-      if (this.age[idx] > this.maxAge || this.energy[idx] <= 0) {
+      if ((this.age[idx] > this.maxAge || this.energy[idx] <= 0) && this._aliveTicks[idx] >= 2) {
         this.state[idx] = 0;
-        // No memory for now (for speed)
+        this._deadTicks[idx] = 1; // start dead counter ON DEATH
+        this._aliveTicks[idx] = 0;
         neighbors.forEach(n => nextActive.add(n));
       } else {
         nextActive.add(idx);
@@ -166,4 +215,4 @@ export class DorianUniverseOptimized {
     }
     return imageData;
   }
-} 
+}

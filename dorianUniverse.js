@@ -16,10 +16,35 @@ class Cell {
   evaluate(neighbors, universe) {
     const zone = getZone(this.x, this.y);
     const { decay_modifier: mod, boost, suppress } = terrainZones[zone];
+    // --- Emotion-to-zone preference mapping ---
+    const emotionZonePreference = {
+      0: 'desert',        // Joy prefers desert
+      1: 'forest',        // Trust prefers forest
+      2: 'ocean',         // Fear prefers ocean
+      3: 'mountain',      // Surprise prefers mountain
+      4: 'ocean',         // Sadness prefers ocean
+      5: 'valley',        // Disgust prefers valley
+      6: 'mountain',      // Anger prefers mountain
+      7: 'desert'         // Anticipation prefers desert
+    };
 
     if (!this.state) {
       const live = neighbors.filter(n => n && n.state);
-      if ((live.length === 3 || live.length === 4) && Math.random() < 0.25) {
+      let birthChance = 0.25;
+      if (live.length > 0) {
+        // Find most common neighbor emotion
+        const emotionCounts = {};
+        for (const n of live) {
+          emotionCounts[n.eid] = (emotionCounts[n.eid] || 0) + 1;
+        }
+        const maxEmotion = Object.keys(emotionCounts).reduce((a, b) => emotionCounts[a] > emotionCounts[b] ? a : b);
+        if (emotionZonePreference[maxEmotion] === zone) {
+          birthChance *= 1.7;
+        } else {
+          birthChance *= 0.7;
+        }
+      }
+      if ((live.length === 3 || live.length === 4) && Math.random() < birthChance) {
         const chosen = live[Math.floor(Math.random() * live.length)];
         this.state = true;
         this.eid = Math.random() > universe.mutationChance ? chosen.eid : DorianUniverse.randomEmotion();
@@ -34,6 +59,12 @@ class Cell {
     let decay = 0.01 * mod;
     if (suppress.includes(this.eid)) decay *= 1.5;
     if (boost.includes(this.eid)) decay *= 0.6;
+    // Zone preference: boost survival if in preferred zone
+    if (emotionZonePreference[this.eid] === zone) {
+      decay *= 0.6;
+    } else {
+      decay *= 1.4;
+    }
 
     this.intensity = Math.max(0.1, this.intensity - decay);
     this.energy -= 0.2;
@@ -130,4 +161,4 @@ export class DorianUniverse {
       entropy
     };
   }
-} 
+}

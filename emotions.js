@@ -18,11 +18,11 @@ export const EMOTION_ID_TO_NAME = Object.fromEntries(
 
 // Terrain zones for emotional effects
 export const terrainZones = {
-  'desert':    { decay_modifier: 1.5, boost: [0, 7], suppress: [4, 5] },
-  'ocean':     { decay_modifier: 0.7, boost: [2, 4], suppress: [6] },
-  'forest':    { decay_modifier: 1.0, boost: [1, 3], suppress: [0] },
-  'mountain':  { decay_modifier: 1.3, boost: [6], suppress: [2, 0] },
-  'valley':    { decay_modifier: 0.9, boost: [4, 1], suppress: [3, 5] }
+  'desert':    { decay_modifier: 4.0, boost: [0, 7], suppress: [4, 5] },
+  'ocean':     { decay_modifier: 3.5, boost: [2, 4], suppress: [6] },
+  'forest':    { decay_modifier: 2.5, boost: [1, 3], suppress: [0] },
+  'mountain':  { decay_modifier: 1.5, boost: [6], suppress: [2, 0] },
+  'valley':    { decay_modifier: 1.0, boost: [4, 1], suppress: [3, 5] }
 };
 
 // Return the terrain type based on coordinates (symbolic, not literal geography)
