@@ -1,23 +1,23 @@
-/* Global Reset & Defaults */
+/* ===================================
+   GLOBAL STYLES
+=================================== */
 * {
   box-sizing: border-box;
 }
 
 html, body {
   background-color: #000 !important;
-}
-
-body {
   min-height: 100vh;
   font-family: 'Space Grotesk', 'Fira Code', monospace;
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  background: #000;
 }
 
-/* Canvas Styling */
+/* ===================================
+   CANVAS STYLING
+=================================== */
 canvas {
   display: block;
   margin: 0 auto;
@@ -41,203 +41,299 @@ canvas:hover {
     0 0 0 2px #0000;
 }
 
-/* UI Container */
+/* Emotion-Based Shadows */
+canvas.dominant-emotion-joy         { box-shadow: 0 0 400px 0 #ffe60042 !important; }
+canvas.dominant-emotion-trust       { box-shadow: 0 0 400px 0 #00cc6653 !important; }
+canvas.dominant-emotion-fear        { box-shadow: 0 0 400px 0 #00999947 !important; }
+canvas.dominant-emotion-surprise    { box-shadow: 0 0 400px 0 #6600cc52 !important; }
+canvas.dominant-emotion-sadness     { box-shadow: 0 0 400px 0 #3366cc3c !important; }
+canvas.dominant-emotion-disgust     { box-shadow: 0 0 400px 0 #99336642 !important; }
+canvas.dominant-emotion-anger       { box-shadow: 0 0 400px 0 #cc00002e !important; }
+canvas.dominant-emotion-anticipation{ box-shadow: 0 0 400px 0 #ff66002b !important; }
+
+canvas[class^="dominant-emotion"] {
+  transition: box-shadow 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* ===================================
+   UI CONTAINER
+=================================== */
 #ui {
   position: absolute;
   top: 50%;
   left: 79%;
   transform: translate(-50%, -50%);
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
   width: 260px;
   max-width: 340px;
   min-width: 240px;
-  padding: 24px 20px;
+  padding: 12px 24px;
   background: rgba(0, 0, 0, 0.7);
-  border-radius: 16px;
+  border-radius: 30px;
+  backdrop-filter: blur(2px);
   color: #e0ffe6;
   font-family: 'Space Grotesk', 'Inter', 'Roboto', sans-serif;
   font-size: 1.7em;
-  text-shadow: 0 0 4px #fff, 0 0 1px #fff;
+  text-shadow: 0 0 4px #fff;
   box-shadow: 0 0 32px 4px #ffffff22;
   border: 1px solid rgba(255, 255, 255, 0.2);
-  transition:
-    box-shadow 0.2s,
-    background 0.2s,
-    opacity 0.3s,
-    transform 0.1s;
-  z-index: 2;
-  overflow-y: auto;
-  overflow-x: hidden;
   max-height: 95vh;
-  will-change: transform;
+  overflow-y: auto;
+  z-index: 2;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
   gap: 20px;
   user-select: none;
-  -webkit-user-select: none;
-  -ms-user-select: none;
   touch-action: manipulation;
 }
 
-/* Metric Jump Animation */
-#ui .number-jump {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-variant-numeric: tabular-nums;
-  font-size: 2.2em;
-  font-weight: 700;
-  color: #bafff6;
-  text-shadow: 0 0 8px #fff, 0 0 2px #fff;
-  animation: number-jump 0.18s cubic-bezier(0.4, 0, 0.2, 1);
-  white-space: nowrap;
-}
-
-@keyframes number-jump {
-  0%   { transform: scale(1) translateY(0); }
-  30%  { transform: scale(1.12) translateY(-6px); }
-  60%  { transform: scale(0.98) translateY(2px); }
-  100% { transform: scale(1) translateY(0); }
-}
-
-/* Remove internal layout issues */
 #ui .card-body,
 #ui .row,
 #ui .col,
 #ui .col-auto {
-  all: unset;
   display: flex;
   flex-direction: column;
   align-items: center;
-  justify-content: center;
   width: 100%;
-  gap: 12px;
+  background: none;
+  border: none;
+  padding: 0;
+  margin: 0;
+  gap: 1px;
 }
 
+/* ===================================
+   TITLES & GLOW TEXT
+=================================== */
+.section-title,
+.glow,
+.hero-title {
+  color: #bafff6;
+  font-weight: 700;
+  text-shadow: 0 0 12px #fff;
+}
 
+.section-title {
+  font-size: 2.2rem;
+  margin-bottom: 1.2em;
+}
+
+.glow {
+  color: #fff;
+}
+
+.hero-title {
+  position: fixed;
+  top: 80px;
+  left: 50%;
+  transform: translateX(-50%);
+  padding: 0 16px;
+  font-size: 2.5rem;
+  font-family: 'Space Grotesk', 'Fira Code', monospace;
+  text-align: center;
+  border-bottom: 2px solid rgba(255, 255, 255, 0.15);
+  background: rgba(0, 0, 0, 0.5);
+  box-shadow: 0 0 24px rgba(255, 255, 255, 0.1);
+  border-radius: 16px;
+  backdrop-filter: blur(10px);
+  z-index: 0;
+  pointer-events: none;
+}
+
+/* ===================================
+   BUTTONS
+=================================== */
+
+/* Uncomment the following block to use the original Dorian Link button styles */
+/*.dorian-btn {
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: 'Space Grotesk', 'Fira Code', 'Inter', 'Roboto', monospace;
+  text-transform: uppercase;
+  border-radius: 999px;
+  color: #fff;
+  border: 1.5px solid rgba(255, 255, 255, 0.034);
+  cursor: pointer;
+  transition: all 0.2s ease;
+  background: #00000041;
+  text-shadow: 0 0 10px #fff;
+  backdrop-filter: blur(24px);
+  outline: none;
+}
+*/
+
+
+.custom-btn,
 .hide-btn {
   display: flex;
   align-items: center;
   justify-content: center;
-  padding: 10px;
-  font-size: 1em;
-  font-family: 'Space Grotesk', 'Fira Code', 'Inter', 'Roboto', 'Arial';
-  font-weight: 700;
+  font-family: 'Space Grotesk', 'Fira Code', 'Inter', 'Roboto', monospace;
   text-transform: uppercase;
-  border-radius: 800px;
-  background-color: rgba(0, 0, 0, 0.5);
-  color: #fff;
-  border: none;
-  cursor: pointer;
-  transition: background 0.2s, color 0.2s, box-shadow 0.2s;
-  backdrop-filter: blur(50%);
-}
-/* Buttons */
-.custom-btn {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  padding: 12px 28px;
-  font-size: 1em;
-  font-family: 'Space Grotesk', 'Fira Code', 'Inter', 'Roboto', 'Arial', monospace;
-  font-weight: 900;
-  text-transform: uppercase;
-  letter-spacing: 0.08em;
   border-radius: 999px;
-  background: #000;
   color: #fff;
-  border: 1.5px solid #fff2;
-  box-shadow: 0 0 16px 2px #fff2, 0 0 0 0 #fff;
-  text-shadow: 0 0 8px #fff, 0 0 2px #fff;
+  border: 1.5px solid rgba(255, 255, 255, 0);
   cursor: pointer;
-  transition:
-    background 0.18s cubic-bezier(0.4,0,0.2,1),
-    color 0.18s cubic-bezier(0.4,0,0.2,1),
-    box-shadow 0.18s cubic-bezier(0.4,0,0.2,1),
-    border 0.18s cubic-bezier(0.4,0,0.2,1);
+  transition: all 0.2s ease;
+  background: #00000041;
+  text-shadow: 0 0 10px #fff;
   backdrop-filter: blur(24px);
   outline: none;
+}
+.custom-btn {
+  padding: 12px 24px;
+  font-size: 0.9em;
+  font-weight: 700;
+  background-color: rgba(0, 0, 0, 0.7);
+}
+.hide-btn {
+  padding: 10px;
+  font-size: 1em;
+  font-weight: 700;
+  background-color: rgba(0, 0, 0, 0.5);
 }
 
 .custom-btn:hover,
 .custom-btn:focus {
   background: #111;
-  color: #fff;
-  border: 1.5px solid #fff8;
   box-shadow: 0 0 32px 4px #fff6, 0 0 0 2px #fff4;
-  text-shadow: 0 0 16px #fff, 0 0 4px #fff;
+  text-shadow: 0 0 16px #fff;
   position: relative;
-  z-index: 1;
+  
 }
 
 .custom-btn:hover::after,
 .custom-btn:focus::after {
   content: "";
   position: absolute;
-  inset: -8px;
+  inset: -2px;
   border-radius: 999px;
-  pointer-events: none;
-  z-index: -1;
-  border: 2px solid #bafff622;
   opacity: 0.35;
-  box-shadow: 0 0 16px 4px #bafff61a;
+  pointer-events: none;
   animation: btn-glow-circle 4.5s linear infinite;
 }
-
 @keyframes btn-glow-circle {
-  0% {
-    box-shadow: 0 0 16px 4px #bafff61a;
-    transform: rotate(0deg) scale(1);
-    border-color: #bafff622;
-    opacity: 0.35;
+  0%, 100% {
+    box-shadow:
+      0 0 12px 4px rgba(255, 0, 0, 0.363),
+      0 0 24px 8px rgba(30, 255, 0, 0.39),
+      0 0 32px 12px rgba(251, 255, 0, 0.418);
+    transform: scale(1) translateY(0);
+    opacity: 0.4;
   }
-  25% {
-    box-shadow: 0 0 22px 6px #bafff625;
-    transform: rotate(90deg) scale(1.015);
-    border-color: #bafff62a;
+  20% {
+    box-shadow:
+      0 0 14px 5px rgba(204, 0, 255, 0.527),
+      0 0 26px 10px rgba(0, 255, 242, 0.452),
+      0 0 34px 14px rgba(0, 4, 255, 0.521);
+    transform: scale(1.015) translateY(-1.5px);
     opacity: 0.42;
   }
-  50% {
-    box-shadow: 0 0 28px 8px #bafff62a;
-    transform: rotate(180deg) scale(1.03);
-    border-color: #bafff633;
-    opacity: 0.5;
+  40% {
+    box-shadow:
+      0 0 14px 5px rgba(0, 255, 128, 0.2),
+      0 0 26px 10px rgba(0, 255, 255, 0.2),
+      0 0 34px 14px rgba(0, 128, 255, 0.2);
+    transform: scale(1.02) translateY(-2px);
+    opacity: 0.45;
   }
-  75% {
-    box-shadow: 0 0 22px 6px #bafff625;
-    transform: rotate(270deg) scale(1.015);
-    border-color: #bafff62a;
+  60% {
+    box-shadow:
+      0 0 14px 5px rgba(0, 128, 255, 0.2),
+      0 0 26px 10px rgba(153, 0, 255, 0.2),
+      0 0 34px 14px rgba(255, 0, 255, 0.2);
+    transform: scale(1.015) translateY(-1.5px);
     opacity: 0.42;
   }
-  100% {
-    box-shadow: 0 0 16px 4px #bafff61a;
-    transform: rotate(360deg) scale(1);
-    border-color: #bafff622;
-    opacity: 0.35;
+  80% {
+    box-shadow:
+      0 0 14px 5px rgba(255, 0, 200, 0.2),
+      0 0 26px 10px rgba(255, 85, 85, 0.459),
+      0 0 34px 14px rgba(0, 255, 149, 0.404);
+    transform: scale(1.01) translateY(-1px);
+    opacity: 0.4;
   }
 }
 
 
-
-/* Slider Presets for all sliders */
-.slider-preset {
+/* ===================================
+   SPEED CONTROL SLIDER
+=================================== */
+#speed-control {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  gap: 8px;
-  padding: 8px 12px;
-  margin: 10px 0 18px 0;
-  background: rgba(0, 0, 0, 0.5);
-  border-radius: 12px;
-  box-shadow: 0 4px 32px rgba(0, 255, 195, 0.08), 0 0 0 2px #ffffff75
+  gap: 10px;
+  padding: 16px 20px;
+  background: rgba(20, 20, 20, 0.781);
+  border-radius: 16px;
+  backdrop-filter: blur(10px);
+  transition: all 0.9s ease;
 }
 
-.custom-btn:hover {
-  background-color: #222;
-  box-shadow: 0 0 12px #fff;
+#speed-control input[type="range"] {
+  flex: 1;
+  height: 4px;
+  border-radius: 50px;
+  appearance: none;
+  background: transparent;
+  position: relative;
+  z-index: 1;
+  animation: slider-glow 3s linear infinite;
 }
-/* Inputs */
+
+#speed-control input[type="range"]::-webkit-slider-thumb,
+#speed-control input[type="range"]::-moz-range-thumb {
+  width: 18px;
+  height: 18px;
+  background: #fff;
+  border: 2px solid #000;
+  border-radius: 50%;
+  transition: transform 0.2s;
+  box-shadow: 0 0 4px rgba(255, 255, 255, 0.5);
+}
+
+#speed-control input[type="range"]::-webkit-slider-thumb:hover,
+#speed-control input[type="range"]::-moz-range-thumb:hover {
+  transform: scale(1.2);
+}
+
+@keyframes slider-glow {
+  0% {
+    box-shadow: 0 0 32px 8px #ff000040, 0 0 9px 12px #ff7f003f, 0 0 48px 16px #ffff003f;
+  }
+  12.5% {
+    box-shadow: 0 0 32px 8px #7fff003f, 0 0 9px 12px #00ff003f, 0 0 48px 16px #00ff7f3f;
+  }
+  25% {
+    box-shadow: 0 0 32px 8px #00ff003f, 0 0 9px 12px #00ff7f3f, 0 0 48px 16px #00ffff3f;
+  }
+  37.5% {
+    box-shadow: 0 0 32px 8px #007fff3f, 0 0 9px 12px #0000ff3f, 0 0 48px 16px #7f00ff3f;
+  }
+  50% {
+    box-shadow: 0 0 32px 8px #ff00ff3f, 0 0 9px 12px #ff007f3f, 0 0 48px 16px #ff00003f;
+  }
+  62.5% {
+    box-shadow: 0 0 32px 8px #ff007f3f, 0 0 9px 12px #ff7f003f, 0 0 48px 16px #ffff003f;
+  }
+  75% {
+    box-shadow: 0 0 32px 8px #7fff003f, 0 0 9px 12px #00ff003f, 0 0 48px 16px #00ff7f3f;
+  }
+  87.5% {
+    box-shadow: 0 0 32px 8px #00ff7f3f, 0 0 9px 12px #00ffff3f, 0 0 48px 16px #007fff3f;
+  }
+  100% {
+    box-shadow: 0 0 32px 8px #ff00003f, 0 0 9px 12px #ff7f003f, 0 0 48px 16px #ffff003f;
+  }
+}
+
+
+/* ===================================
+   FORM ELEMENTS
+=================================== */
 #ui input,
 #ui select,
 #ui .form-control {
@@ -251,90 +347,17 @@ canvas:hover {
   white-space: nowrap;
 }
 
-/* Speed Control — now with inline labels */
-/* Speed Control — Elegant Refinement */
-#speed-control {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 10px;
-  padding: 14px 20px;
-  margin: 16px 0 24px 0;
-  background: rgba(20, 20, 20, 0.65);
-  border-radius: 16px;
-  backdrop-filter: blur(10px);
-  box-shadow:
-    0 6px 18px rgba(255, 255, 255, 0.05),
-    0 0 0 1px rgba(255, 255, 255, 0.1),
-    inset 0 0 12px rgba(255, 255, 255, 0.04);
-  transition: all 0.3s ease;
-}
-
-/* Slider refinement */
-#speed-control input[type="range"] {
-  flex: 1 1 auto;
-  height: 10px;
-  max-width: 400px;
-  appearance: none;
-  background: linear-gradient(to right, #ccc 0%, #000 100%);
-  border-radius: 5px;
-  outline: none;
-  cursor: pointer;
-  box-shadow:
-    inset 0 1px 4px rgba(255, 255, 255, 0.2),
-    0 2px 8px rgba(0, 0, 0, 0.25);
-  transition: all 0.2s ease-in-out;
-}
-
-#speed-control input[type="range"]::-webkit-slider-thumb {
-  -webkit-appearance: none;
-  width: 18px;
-  height: 18px;
-  border-radius: 50%;
-  background: #fff;
-  border: 2px solid #000;
-  box-shadow: 0 0 4px rgba(255, 255, 255, 0.5);
-  transition: transform 0.2s;
-}
-
-#speed-control input[type="range"]::-webkit-slider-thumb:hover {
-  transform: scale(1.2);
-}
-
-#speed-control input[type="range"]::-moz-range-thumb {
-  width: 18px;
-  height: 18px;
-  border-radius: 50%;
-  background: #fff;
-  border: 2px solid #000;
-  box-shadow: 0 0 4px rgba(255, 255, 255, 0.5);
-  transition: transform 0.2s;
-}
-
-#speed-control input[type="range"]::-moz-range-thumb:hover {
-  transform: scale(1.2);
-}
-
-
-/* Logic Toggles */
+/* ===================================
+   TOGGLES & METRIC EFFECTS
+=================================== */
 #logic-toggles {
-  appearance: none;
   width: 44px;
   height: 24px;
   background: #222;
   border-radius: 999px;
   display: flex;
-  outline: none;
-  cursor: pointer;
-  transition: background 0.3s ease;
   box-shadow: inset 0 0 4px #000000aa;
-}
-
-#logic-toggles label {
-  font-weight: 500;
-  
-  cursor: pointer;
-  align-items: center;
+  transition: background 0.3s ease;
 }
 
 #logic-toggles input[type="checkbox"] {
@@ -342,9 +365,8 @@ canvas:hover {
   height: 1.2em;
   border-radius: 40px;
   accent-color: #ffffff5d;
-  color: #ffffff00;
   box-shadow: 0 0 6px #00ffc355;
-  transition: accent-color 0.2s, box-shadow 0.2s;
+  transition: 0.2s ease;
 }
 
 #logic-toggles input[type="checkbox"]:hover {
@@ -352,58 +374,25 @@ canvas:hover {
   box-shadow: 0 0 12px #00ffc3;
 }
 
-/* Titles & Glow */
-.section-title {
-  font-size: 2.2rem;
+.number-jump {
+  font-size: 2.2em;
   font-weight: 700;
   color: #bafff6;
-  text-shadow: 0 0 12px #fff;
-  margin-bottom: 1.2em;
+  animation: number-jump 0.18s ease;
+  text-shadow: 0 0 8px #fff;
+  white-space: nowrap;
 }
 
-.glow {
-  color: #fff;
-  text-shadow: 0 0 16px #fff, 0 0 2px #fff;
+@keyframes number-jump {
+  0%   { transform: scale(1); }
+  30%  { transform: scale(1.12) translateY(-6px); }
+  60%  { transform: scale(0.98) translateY(2px); }
+  100% { transform: scale(1); }
 }
 
-.hero-title {
-  position: fixed;
-  top: 80px;
-  left: 50%;
-  transform: translateX(-50%);
-  width: auto;
-  max-width: 90%;
-  padding: 0 16px;
-  font-size: 2.5rem;
-  font-weight: 700;
-  font-family: "Space Grotesk", 'Fira Code', monospace;
-  text-align: center;
-  line-height: 1.3;
-  letter-spacing: -0.02em;
-  color: #fff;
-  text-shadow: 0 0 16px #ffffff1c, 0 0 2px #fff;
-  border-bottom: 2px solid rgba(255, 255, 255, 0.15);
-  border-radius: 16px;
-  display: inline-block;
-  z-index: 1;
-  pointer-events: none;
-}
-
-/* Emotion Border Colors - Smooth Fade */
-canvas.dominant-emotion-joy         { box-shadow: 0 0 400px 0px #ffe60042 !important; }
-canvas.dominant-emotion-trust       { box-shadow: 0 0 400px 0px #00cc6653 !important; }
-canvas.dominant-emotion-fear        { box-shadow: 0 0 400px 0px #00999947 !important; }
-canvas.dominant-emotion-surprise    { box-shadow: 0 0 400px 0px #6600cc52 !important; }
-canvas.dominant-emotion-sadness     { box-shadow: 0 0 400px 0px #3366cc3c !important; }
-canvas.dominant-emotion-disgust     { box-shadow: 0 0 400px 0px #99336642 !important; }
-canvas.dominant-emotion-anger       { box-shadow: 0 0 400px 0px #cc00002e !important; }
-canvas.dominant-emotion-anticipation{ box-shadow: 0 0 400px 0px #ff66002b !important; }
-
-canvas[class^="dominant-emotion"] {
-  transition: box-shadow 0.6s cubic-bezier(0.4, 0, 0.2, 1);
-}
-
-/* Responsive Improvements */
+/* ===================================
+   RESPONSIVE UI
+=================================== */
 @media (max-width: 600px) {
   #ui {
     left: 50%;
