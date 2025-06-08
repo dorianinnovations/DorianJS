@@ -1,31 +1,50 @@
-// === dorianUniverseOptimized.js ===
 import { EMOTIONS, EMOTION_LIST, EMOTION_ID_TO_NAME, getZone, terrainZones } from './emotions.js';
 
 export class DorianUniverseOptimized {
-  constructor({ cols = 200, rows = 200, maxAge = 800, mutationChance = 0.006, birthDelay = 1 } = {}) {
+  constructor({ cols = 200, rows = 200, maxAge = 2000, mutationChance = 0.05, birthDelay = 1 } = {}) {
     this.cols = cols;
     this.rows = rows;
     this.size = cols * rows;
     this.maxAge = maxAge;
     this.mutationChance = mutationChance;
-    // Typed arrays for state, emotion, intensity, age, energy
-    this.state = new Uint8Array(this.size); // 0 = dead, 1 = alive
-    this.emotion = new Uint8Array(this.size); // emotion id
+    this.birthDelay = birthDelay;
+
+    this.lifeForce = new Float32Array(this.size);
+    this.emotion = new Uint8Array(this.size);
     this.intensity = new Float32Array(this.size);
     this.age = new Uint16Array(this.size);
     this.energy = new Float32Array(this.size);
-    // Set of active cell indices
+    this.groupId = new Uint16Array(this.size);
+    this.groupMeta = new Map();
+    this.nextGroupId = 1;
+
     this.active = new Set();
     this.tick = 0;
-    this.birthDelay = birthDelay; // minimum ticks a cell must stay dead before rebirth
-    // --- Fix: Initialize memory arrays ONCE here ---
-    this._deadTicks = new Uint16Array(this.size); // tracks how long each cell has been dead
-    this._aliveTicks = new Uint16Array(this.size);
-    // Precompute neighbor lists for quick lookup
+
+    this.supportMap = new Array(this.size);
+    this.resistMap = new Array(this.size);
     this.neighborMap = new Array(this.size);
+
+    this.emotionRelations = {
+      0: { helps: [1], harms: [6] }, // Joy helps Trust, harmed by Anger
+      1: { helps: [0, 4], harms: [] }, // Trust helps Joy and Sadness
+      2: { helps: [], harms: [3] }, // Fear harms Surprise
+      3: { helps: [], harms: [5] }, // Surprise harms Disgust
+      4: { helps: [], harms: [0] }, // Sadness harms Joy
+      5: { helps: [], harms: [2] }, // Disgust harms Fear
+      6: { helps: [], harms: [1, 0] }, // Anger harms Trust, Joy
+      7: { helps: [3], harms: [] }  // Anticipation helps Surprise
+    };
+
     for (let y = 0; y < this.rows; y++) {
       for (let x = 0; x < this.cols; x++) {
         const idx = this.index(x, y);
+        const zone = getZone(x, y, this.cols, this.rows);
+        const supported = terrainZones[zone]?.supports || [];
+        const resisted = terrainZones[zone]?.resists || [];
+        this.supportMap[idx] = new Set(supported);
+        this.resistMap[idx] = new Set(resisted);
+
         const neighbors = [];
         for (let dx = -1; dx <= 1; dx++) {
           for (let dy = -1; dy <= 1; dy++) {
@@ -41,10 +60,6 @@ export class DorianUniverseOptimized {
     }
   }
 
-  setMutationChance(value) {
-    this.mutationChance = value;
-  }
-
   index(x, y) {
     return y * this.cols + x;
   }
@@ -58,109 +73,96 @@ export class DorianUniverseOptimized {
   }
 
   seed(cx, cy) {
-    for (let dx = -2; dx <= 2; dx++) {
-      for (let dy = -2; dy <= 2; dy++) {
+    const group = this.nextGroupId++;
+    const emotion = this.randomEmotion();
+    this.groupMeta.set(group, {
+      dominantEmotion: emotion,
+      spreadRate: 0.0001 + Math.random() * 0.05,
+      aggression: Math.random(),
+      mutationBias: Math.random()
+    });
+    for (let dx = -1; dx <= 1; dx++) {
+      for (let dy = -1; dy <= 1; dy++) {
         const x = cx + dx, y = cy + dy;
         if (x >= 0 && y >= 0 && x < this.cols && y < this.rows) {
           const idx = this.index(x, y);
-          this.state[idx] = 1;
-          this.emotion[idx] = this.randomEmotion();
+          this.lifeForce[idx] = 0.5 + Math.random() * 0.5; // Initial life force
+          this.emotion[idx] = emotion;
           this.intensity[idx] = 1.0;
-          this.energy[idx] = 10;
+          this.energy[idx] = 300;
           this.age[idx] = 0;
+          this.groupId[idx] = group;
           this.active.add(idx);
         }
       }
     }
   }
 
-  getNeighbors(x, y) {
-    return this.neighborMap[this.index(x, y)];
-  }
-
   update() {
     const nextActive = new Set();
     const toUpdate = Array.from(this.active);
+    const emotionCounts = new Map();
+
     for (const idx of toUpdate) {
-      const [x, y] = this.coords(idx);
-      const zone = getZone(x, y, this.cols, this.rows);
-      const { decay_modifier: mod, boost, suppress } = terrainZones[zone];
       const neighbors = this.neighborMap[idx];
-      const liveNeighbors = neighbors.filter(nidx => this.state[nidx]);
-      // --- CLUSTERING INCENTIVE LOGIC ---
-      if (!this.state[idx]) {
-        // Affinity bias: more likely to be born if most neighbors are same emotion
-        let affinity = 0;
-        let maxEmotion = null;
-        if (liveNeighbors.length > 0) {
-          const emotionCounts = {};
-          for (const nidx of liveNeighbors) {
-            const eid = this.emotion[nidx];
-            emotionCounts[eid] = (emotionCounts[eid] || 0) + 1;
-          }
-          maxEmotion = Object.keys(emotionCounts).reduce((a, b) => emotionCounts[a] > emotionCounts[b] ? a : b);
-          const maxCount = emotionCounts[maxEmotion];
-          affinity = maxCount / liveNeighbors.length;
-        }
-        // Overcrowding penalty: less likely to be born if too many neighbors
-        const overcrowded = liveNeighbors.length >= 7;
-        // Adjust base birth chance (stronger effect)
-        let birthChance = 0.18;
-        birthChance += 0.45 * affinity; // up to 0.63 if all neighbors are same emotion
-        if (overcrowded) birthChance *= 0.08; // even stronger penalty if overcrowded
-        // --- MEMORY/AGE-BASED RULES: Only allow birth if cell has been dead for at least `birthDelay` ticks ---
-        if (this._deadTicks[idx] < this.birthDelay) {
-          this._deadTicks[idx]++;
-          continue;
-        }
-        if ((liveNeighbors.length === 3 || liveNeighbors.length === 4) && Math.random() < birthChance) {
-          let chosen;
-          if (affinity > 0.5 && maxEmotion !== null) {
-            const maxEmotionNeighbors = liveNeighbors.filter(nidx => this.emotion[nidx] == maxEmotion);
-            chosen = maxEmotionNeighbors[Math.floor(Math.random() * maxEmotionNeighbors.length)];
-          } else {
-            chosen = liveNeighbors[Math.floor(Math.random() * liveNeighbors.length)];
-          }
-          this.state[idx] = 1;
-          this.emotion[idx] = Math.random() > this.mutationChance ? this.emotion[chosen] : this.randomEmotion();
-          this.intensity[idx] = 1.0;
-          this.energy[idx] = 10;
-          this.age[idx] = 0;
-          this._deadTicks[idx] = 0; // reset dead counter ON BIRTH
-          this._aliveTicks[idx] = 1; // start alive counter
-          nextActive.add(idx);
-          neighbors.forEach(n => nextActive.add(n));
-        } else {
-          this._deadTicks[idx]++;
-        }
-        continue;
+      const lf = this.lifeForce[idx];
+      const emotion = this.emotion[idx];
+      const group = this.groupId[idx];
+
+      const meta = this.groupMeta.get(group);
+      if (!meta) continue;
+
+      emotionCounts.set(emotion, (emotionCounts.get(emotion) || 0) + 1);
+
+      if (lf <= 0) continue;
+
+      // Terrain influence
+      if (this.supportMap[idx].has(EMOTION_ID_TO_NAME[emotion])) {
+        this.energy[idx] *= 1.02;
+      } else if (this.resistMap[idx].has(EMOTION_ID_TO_NAME[emotion])) {
+        this.energy[idx] *= 0.95;
+        this.lifeForce[idx] *= 0.98;
       }
-      // Alive cell
-      // Overcrowding penalty: die if too many live neighbors
-      if (liveNeighbors.length >= 7) {
-        this.state[idx] = 0;
-        this._deadTicks[idx] = 1; // start dead counter ON DEATH
-        this._aliveTicks[idx] = 0;
-        neighbors.forEach(n => nextActive.add(n));
-        continue;
+
+      // Emotion relations
+      const relations = this.emotionRelations[emotion] || {};
+      for (const n of neighbors) {
+        if (this.lifeForce[n] <= 0) continue;
+        const neighborEmotion = this.emotion[n];
+        if (relations.helps?.includes(neighborEmotion)) {
+          this.energy[n] += 0.01;
+        }
+        if (relations.harms?.includes(neighborEmotion)) {
+          this.lifeForce[n] *= 0.97;
+        }
       }
-      // --- MEMORY/AGE-BASED RULES: Only allow death if cell has been alive for at least 2 ticks (hysteresis) ---
-      this._aliveTicks[idx]++;
+
+      // Spread
+      for (const n of neighbors) {
+        if (this.lifeForce[n] <= 0 && Math.random() < meta.spreadRate) {
+          this.lifeForce[n] = 0.3 + Math.random() * 0.3;
+          this.energy[n] = 0.1 + Math.random() * 0.2;
+          this.intensity[n] = 0.6 + Math.random() * 0.3;
+          this.emotion[n] = emotion;
+          this.groupId[n] = group;
+          this.age[n] = 0;
+          nextActive.add(n);
+        }
+      }
+
+      // Decay
       this.age[idx]++;
-      let decay = 0.01 * mod;
-      if (suppress.includes(this.emotion[idx])) decay *= 1.5;
-      if (boost.includes(this.emotion[idx])) decay *= 0.6;
-      this.intensity[idx] = Math.max(0.1, this.intensity[idx] - decay);
-      this.energy[idx] -= 0.2;
-      if ((this.age[idx] > this.maxAge || this.energy[idx] <= 0) && this._aliveTicks[idx] >= 2) {
-        this.state[idx] = 0;
-        this._deadTicks[idx] = 1; // start dead counter ON DEATH
-        this._aliveTicks[idx] = 0;
-        neighbors.forEach(n => nextActive.add(n));
-      } else {
-        nextActive.add(idx);
-        neighbors.forEach(n => nextActive.add(n));
+      this.energy[idx] -= 0.02 + Math.random() * 0.03;
+      this.intensity[idx] = Math.max(0.05, this.intensity[idx] - (0.003 + Math.random() * 0.005));
+      this.lifeForce[idx] -= 0.002 + Math.random() * 0.003;
+
+      if (this.energy[idx] <= 0 || this.lifeForce[idx] <= 0) {
+        this.lifeForce[idx] = 0;
+        continue;
       }
+
+      nextActive.add(idx);
+      neighbors.forEach(n => nextActive.add(n));
     }
     this.active = nextActive;
     this.tick++;
@@ -170,7 +172,7 @@ export class DorianUniverseOptimized {
     const counts = {};
     let total = 0;
     for (let i = 0; i < this.size; i++) {
-      if (this.state[i]) {
+      if (this.lifeForce[i] > 0.1) {
         const eid = this.emotion[i];
         counts[eid] = (counts[eid] || 0) + 1;
         total++;
@@ -200,18 +202,16 @@ export class DorianUniverseOptimized {
     };
   }
 
-  // Batch draw: fill an ImageData buffer and return it
   getImageData(cellSize = 5) {
-    // cellSize: how many pixels per cell
     const width = this.cols * cellSize;
     const height = this.rows * cellSize;
     const imageData = new ImageData(width, height);
     for (let y = 0; y < this.rows; y++) {
       for (let x = 0; x < this.cols; x++) {
         const idx = this.index(x, y);
-        if (this.state[idx]) {
+        if (this.lifeForce[idx] > 0.1) {
           const [r, g, b] = EMOTIONS[this.emotion[idx]].color;
-          const fade = this.intensity[idx] * 1.5;
+          const fade = Math.max(0.2, Math.min(1.0, this.intensity[idx]));
           const cr = Math.min(255, r * fade);
           const cg = Math.min(255, g * fade);
           const cb = Math.min(255, b * fade);

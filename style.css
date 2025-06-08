@@ -27,6 +27,8 @@ canvas {
   box-shadow: 0 0 56px 8px #ffffff17;
   transition: border 0.28s, box-shadow 0.28s;
   z-index: 1;
+    border: 1px solid rgba(255, 255, 255, 0.271);
+
 }
 
 canvas:not([class*="dominant-emotion-"]) {
@@ -74,8 +76,8 @@ canvas[class^="dominant-emotion"] {
   font-family: 'Space Grotesk', 'Inter', 'Roboto', sans-serif;
   font-size: 1.7em;
   text-shadow: 0 0 4px #fff;
-  box-shadow: 0 0 32px 4px #ffffff22;
-  border: 1px solid rgba(255, 255, 255, 0.2);
+  box-shadow: 0 0 32px 4px #ffffff1d;
+  border: 1px solid rgba(255, 255, 255, 0.271);
   max-height: 95vh;
   overflow-y: auto;
   z-index: 2;
@@ -102,15 +104,18 @@ canvas[class^="dominant-emotion"] {
   gap: 1px;
 }
 
+
+
 /* ===================================
    TITLES & GLOW TEXT
 =================================== */
 .section-title,
 .glow,
 .hero-title {
-  color: #bafff6;
+  color: #ffffff;
   font-weight: 700;
   text-shadow: 0 0 12px #fff;
+  
 }
 
 .section-title {
@@ -214,7 +219,7 @@ canvas[class^="dominant-emotion"] {
   pointer-events: none;
   animation: btn-glow-circle 4.5s linear infinite;
 }
-@keyframes btn-glow-circle {
+/*@keyframes btn-glow-circle {
   0%, 100% {
     box-shadow:
       0 0 12px 4px rgba(255, 0, 0, 0.363),
@@ -256,7 +261,7 @@ canvas[class^="dominant-emotion"] {
     opacity: 0.4;
   }
 }
-
+*/
 
 /* ===================================
    SPEED CONTROL SLIDER
@@ -302,33 +307,34 @@ canvas[class^="dominant-emotion"] {
 
 @keyframes slider-glow {
   0% {
-    box-shadow: 0 0 32px 8px #ff000040, 0 0 9px 12px #ff7f003f, 0 0 48px 16px #ffff003f;
+    box-shadow: 0 0 8px 2px #ff000018, 0 0 2px 3px #ff7f0012, 0 0 10px 3px #ffff0012;
   }
   12.5% {
-    box-shadow: 0 0 32px 8px #7fff003f, 0 0 9px 12px #00ff003f, 0 0 48px 16px #00ff7f3f;
+    box-shadow: 0 0 8px 2px #7fff0012, 0 0 2px 3px #00ff0012, 0 0 10px 3px #00ff7f12;
   }
   25% {
-    box-shadow: 0 0 32px 8px #00ff003f, 0 0 9px 12px #00ff7f3f, 0 0 48px 16px #00ffff3f;
+    box-shadow: 0 0 8px 2px #00ff0012, 0 0 2px 3px #00ff7f12, 0 0 10px 3px #00ffff12;
   }
   37.5% {
-    box-shadow: 0 0 32px 8px #007fff3f, 0 0 9px 12px #0000ff3f, 0 0 48px 16px #7f00ff3f;
+    box-shadow: 0 0 8px 2px #007fff12, 0 0 2px 3px #0000ff12, 0 0 10px 3px #7f00ff12;
   }
   50% {
-    box-shadow: 0 0 32px 8px #ff00ff3f, 0 0 9px 12px #ff007f3f, 0 0 48px 16px #ff00003f;
+    box-shadow: 0 0 8px 2px #ff00ff12, 0 0 2px 3px #ff007f12, 0 0 10px 3px #ff000012;
   }
   62.5% {
-    box-shadow: 0 0 32px 8px #ff007f3f, 0 0 9px 12px #ff7f003f, 0 0 48px 16px #ffff003f;
+    box-shadow: 0 0 8px 2px #ff007f12, 0 0 2px 3px #ff7f0012, 0 0 10px 3px #ffff0012;
   }
   75% {
-    box-shadow: 0 0 32px 8px #7fff003f, 0 0 9px 12px #00ff003f, 0 0 48px 16px #00ff7f3f;
+    box-shadow: 0 0 8px 2px #7fff0012, 0 0 2px 3px #00ff0012, 0 0 10px 3px #00ff7f12;
   }
   87.5% {
-    box-shadow: 0 0 32px 8px #00ff7f3f, 0 0 9px 12px #00ffff3f, 0 0 48px 16px #007fff3f;
+    box-shadow: 0 0 8px 2px #00ff7f12, 0 0 2px 3px #00ffff12, 0 0 10px 3px #007fff12;
   }
   100% {
-    box-shadow: 0 0 32px 8px #ff00003f, 0 0 9px 12px #ff7f003f, 0 0 48px 16px #ffff003f;
+    box-shadow: 0 0 8px 2px #ff000012, 0 0 2px 3px #ff7f0012, 0 0 10px 3px #ffff0012;
   }
-}
+  }
+
 
 
 /* ===================================

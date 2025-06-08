@@ -10,8 +10,8 @@ const COLS = 200;
 const ROWS = 200;
 const MAX_AGE = 800;
 const MUTATION_CHANCE = 0.002;
-const BIRTH_DELAY = 1; // minimum dead ticks before a cell can grow again
-let UPDATES_PER_FRAME = 1;
+const BIRTH_DELAY = 5; // minimum dead ticks before a cell can grow again
+let UPDATES_PER_FRAME = 10;
 
 let running = false;
 let hasStarted = false;
@@ -121,22 +121,35 @@ function animate() {
   worker.postMessage({ type: 'update', updates: UPDATES_PER_FRAME });
 }
 
+let hasSeeded = false;
+
 canvas.addEventListener('mousedown', (e) => {
-  if (!running && hasStarted) {
-    canvas.classList.add('seed-denied');
-    setTimeout(() => canvas.classList.remove('seed-denied'), 500);
-    return;
-  }
   const rect = canvas.getBoundingClientRect();
   const x = Math.floor((e.clientX - rect.left) / CELL_SIZE);
   const y = Math.floor((e.clientY - rect.top) / CELL_SIZE);
-  worker.postMessage({ type: 'seed', x, y });
+
+  // Always allow seeding when simulation is running
+  if (running) {
+    worker.postMessage({ type: 'seed', x, y });
+    return;
+  }
+
+  // On first seed, also start the 
+  
   if (!hasStarted) {
+    worker.postMessage({ type: 'seed', x, y });
     hasStarted = true;
     running = true;
     animate();
+  } else {
+    // Optional: feedback if paused
+    canvas.classList.add('seed-denied');
+    setTimeout(() => canvas.classList.remove('seed-denied'), 500);
   }
 });
+
+
+
 
 const hideUiBtn = document.getElementById('hide-ui-btn');
 const uiPanel = document.getElementById('ui');
