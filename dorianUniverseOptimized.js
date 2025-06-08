@@ -1,13 +1,19 @@
 import { EMOTIONS, EMOTION_LIST, EMOTION_ID_TO_NAME, getZone, terrainZones } from './emotions.js';
 
 export class DorianUniverseOptimized {
-  constructor({ cols = 200, rows = 200, maxAge = 2000, mutationChance = 0.05, birthDelay = 1 } = {}) {
-    this.cols = cols;
-    this.rows = rows;
-    this.size = cols * rows;
-    this.maxAge = maxAge;
-    this.mutationChance = mutationChance;
-    this.birthDelay = birthDelay;
+  constructor({ 
+  cols, 
+  rows, 
+  maxAge, 
+  mutationChance, 
+  birthDelay 
+} = {}) {
+  this.cols = cols !== undefined ? cols : 150 + Math.floor(Math.random() * 101); // 150-250
+  this.rows = rows !== undefined ? rows : 150 + Math.floor(Math.random() * 101); // 150-250
+  this.size = this.cols * this.rows;
+  this.maxAge = maxAge !== undefined ? maxAge : 1000 + Math.floor(Math.random() * 2001); // 1000-3000
+  this.mutationChance = mutationChance !== undefined ? mutationChance : 0.01 + Math.random() * 0.09; // 0.01-0.10
+  this.birthDelay = birthDelay !== undefined ? birthDelay : 1 + Math.floor(Math.random() * 5); // 1-5
 
     this.lifeForce = new Float32Array(this.size);
     this.emotion = new Uint8Array(this.size);
@@ -25,16 +31,19 @@ export class DorianUniverseOptimized {
     this.resistMap = new Array(this.size);
     this.neighborMap = new Array(this.size);
 
-    this.emotionRelations = {
-      0: { helps: [1], harms: [6] }, // Joy helps Trust, harmed by Anger
-      1: { helps: [0, 4], harms: [] }, // Trust helps Joy and Sadness
-      2: { helps: [], harms: [3] }, // Fear harms Surprise
-      3: { helps: [], harms: [5] }, // Surprise harms Disgust
-      4: { helps: [], harms: [0] }, // Sadness harms Joy
-      5: { helps: [], harms: [2] }, // Disgust harms Fear
-      6: { helps: [], harms: [1, 0] }, // Anger harms Trust, Joy
-      7: { helps: [3], harms: [] }  // Anticipation helps Surprise
-    };
+    // Dynamically build emotionRelations based on EMOTIONS object
+    this.emotionRelations = {};
+    for (const [id, emotion] of Object.entries(EMOTIONS)) {
+      // Each emotion object in EMOTIONS may have .helps and .harms arrays (of emotion names or ids)
+      // Convert emotion names to ids if needed
+      const helps = (emotion.helps || []).map(e => 
+      typeof e === 'number' ? e : EMOTION_LIST.indexOf(e)
+      ).filter(eid => eid !== -1);
+      const harms = (emotion.harms || []).map(e => 
+      typeof e === 'number' ? e : EMOTION_LIST.indexOf(e)
+      ).filter(eid => eid !== -1);
+      this.emotionRelations[id] = { helps, harms };
+    }
 
     for (let y = 0; y < this.rows; y++) {
       for (let x = 0; x < this.cols; x++) {
@@ -63,14 +72,17 @@ export class DorianUniverseOptimized {
   index(x, y) {
     return y * this.cols + x;
   }
-
+// Convert a linear index to 2D coordinates
   coords(idx) {
     return [idx % this.cols, Math.floor(idx / this.cols)];
   }
-
+ // Generate a random emotion from the list
   randomEmotion() {
     return EMOTION_LIST[Math.floor(Math.random() * EMOTION_LIST.length)];
   }
+
+
+  // Seed a new group of emotions at a specific coordinate
 
   seed(cx, cy) {
     const group = this.nextGroupId++;
@@ -98,6 +110,9 @@ export class DorianUniverseOptimized {
     }
   }
 
+
+
+  //Update loop
   update() {
     const nextActive = new Set();
     const toUpdate = Array.from(this.active);
@@ -116,13 +131,41 @@ export class DorianUniverseOptimized {
 
       if (lf <= 0) continue;
 
+
+
+
       // Terrain influence
       if (this.supportMap[idx].has(EMOTION_ID_TO_NAME[emotion])) {
-        this.energy[idx] *= 1.02;
+        this.energy[idx] *= 0.90;
+        this.lifeForce[idx] *= 1.02;
       } else if (this.resistMap[idx].has(EMOTION_ID_TO_NAME[emotion])) {
         this.energy[idx] *= 0.95;
-        this.lifeForce[idx] *= 0.98;
+        this.lifeForce[idx] *= 0.88;
       }
+
+      //Spread Mutation
+      // Spread
+for (const n of neighbors) {
+  if (this.lifeForce[n] <= 0 && Math.random() < meta.spreadRate) {
+    this.lifeForce[n] = 0.3 + Math.random() * 0.3;
+    this.energy[n] = 0.1 + Math.random() * 0.2;
+    this.intensity[n] = 0.6 + Math.random() * 0.3;
+    // Mutation: chance to become a different emotion
+    if (Math.random() < this.mutationChance) {
+      // Pick a random emotion different from the current one
+      let newEmotion;
+      do {
+        newEmotion = this.randomEmotion();
+      } while (newEmotion === emotion && EMOTION_LIST.length > 1);
+      this.emotion[n] = newEmotion;
+    } else {
+      this.emotion[n] = emotion;
+    }
+    this.groupId[n] = group;
+    this.age[n] = 0;
+    nextActive.add(n);
+  }
+}
 
       // Emotion relations
       const relations = this.emotionRelations[emotion] || {};
@@ -133,16 +176,17 @@ export class DorianUniverseOptimized {
           this.energy[n] += 0.01;
         }
         if (relations.harms?.includes(neighborEmotion)) {
-          this.lifeForce[n] *= 0.97;
+          this.lifeForce[n] *= 5.97;
         }
       }
 
-      // Spread
+      // Spread (much slower)
       for (const n of neighbors) {
-        if (this.lifeForce[n] <= 0 && Math.random() < meta.spreadRate) {
-          this.lifeForce[n] = 0.3 + Math.random() * 0.3;
-          this.energy[n] = 0.1 + Math.random() * 0.2;
-          this.intensity[n] = 0.6 + Math.random() * 0.3;
+        // Reduce spread chance by an order of magnitude
+        if (this.lifeForce[n] <= 0 && Math.random() < meta.spreadRate * 0.1) {
+          this.lifeForce[n] = 0.015 + Math.random() * 0.05; // Lower initial life force
+          this.energy[n] = 0.05 + Math.random() * 0.1;      // Lower initial energy
+          this.intensity[n] = 0.1 + Math.random() * 0.05;   // Lower initial intensity
           this.emotion[n] = emotion;
           this.groupId[n] = group;
           this.age[n] = 0;
@@ -153,7 +197,7 @@ export class DorianUniverseOptimized {
       // Decay
       this.age[idx]++;
       this.energy[idx] -= 0.02 + Math.random() * 0.03;
-      this.intensity[idx] = Math.max(0.05, this.intensity[idx] - (0.003 + Math.random() * 0.005));
+      this.intensity[idx] = Math.max(0.05, this.intensity[idx] - (0.003 + Math.random() * 0.05));
       this.lifeForce[idx] -= 0.002 + Math.random() * 0.003;
 
       if (this.energy[idx] <= 0 || this.lifeForce[idx] <= 0) {
