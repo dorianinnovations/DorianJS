@@ -34,7 +34,6 @@ function initWorker() {
 
 initWorker();
 
-document.getElementById('tick').textContent = 'Click the canvas to begin!';
 
 const speedSlider = document.getElementById('speed-slider');
 const speedValue = document.getElementById('speed-value');
@@ -81,7 +80,7 @@ resetBtn.addEventListener('click', () => {
   hasStarted = false;
   running = false;
   document.getElementById('tick').textContent = 'Click the canvas to begin!';
-  pauseBtn.textContent = 'Pause';
+  pauseBtn.textContent = 'Resume';
 });
 
 function updateCanvasBorderEmotion(dominant) {
@@ -135,7 +134,7 @@ canvas.addEventListener('mousedown', (e) => {
   }
 
   // On first seed, also start the 
-  
+
   if (!hasStarted) {
     worker.postMessage({ type: 'seed', x, y });
     hasStarted = true;

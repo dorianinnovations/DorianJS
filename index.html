@@ -4,142 +4,93 @@
   <meta charset="UTF-8">
   <title>Dorian</title>
   <link rel="stylesheet" href="style.css">
-  <link href="https://cdn.jsdelivr.net/npm/bootswatch@5.3.3/dist/darkly/bootstrap.min.css" rel="stylesheet">
   <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;700&display=swap" rel="stylesheet">
 </head>
 <body>
-  <button class="custom-btn homepage-btn" onclick="window.location.href='https://dorian-ichpbusiness.replit.app/'">Dorian</button>
-    <div class="hero-glow"></div>
-    <div id="canvas-container" style="display:inline-block; position:relative;">
-  <canvas id="dorian-canvas" width="1000" height="1000" style="width:1000px; height:1000px;"></canvas>
-  <!-- Resize button removed -->
-</div>
-  <div id="ui" style="max-width:1000px;">
-    <div class="card-body p-3">
-      <div class="row mb-2">
-        <div class="col-auto ms-auto">
-            <button id="hide-ui-btn" title="Hide UI" class="hide-btn">👁️</button>
-        </div>
-        <script>
-          document.addEventListener('DOMContentLoaded', () => {
-            const hideBtn = document.getElementById('hide-ui-btn');
-            const ui = document.getElementById('ui');
-            hideBtn.addEventListener('click', () => {
-              if (ui.style.display !== 'none') {
-          ui.style.display = 'none';
-          hideBtn.textContent = '👁';
-          hideBtn.title = 'Show UI';
-          hideBtn.style.position = 'fixed';
-          hideBtn.style.top = '10px';
-          hideBtn.style.right = '10px';
-          document.body.appendChild(hideBtn);
-              } else {
-          ui.style.display = '';
-          hideBtn.textContent = '👁️';
-          hideBtn.title = 'Hide UI';
-          // Move button back to UI
-          const row = ui.querySelector('.row.mb-2');
-          if (row) row.appendChild(hideBtn);
-          hideBtn.style.position = '';
-          hideBtn.style.top = '';
-          hideBtn.style.right = '';
-              }
-            });
-          });
-        </script>
-      </div>
-      <div class="row text-center mb-2 ui-stats">
-        <div class="col">
-          <div id="tick">
-        <span class="stat-title">Tick:</span>
-        <span class="stat-metric" id="tick-metric">0</span>
-          </div>
-        </div>
-        <div class="col">
-          <div id="dominant">
-        <span class="stat-title">Current Emotional State:</span>
-        <span class="stat-metric" id="dominant-metric">None</span>
-          </div>
-        </div>
-        <div class="col">
-          <div id="diversity">
-        <span class="stat-title">Diversity:</span>
-        <span class="stat-metric" id="diversity-metric">0</span>
-          </div>
-        </div>
-        <div class="col">
-          <div id="entropy">
-        <span class="stat-title">Entropy:</span>
-        <span class="stat-metric" id="entropy-metric">0.00</span>
-          </div>
-        </div>
-        <div class="col">
-          <div id="alive">
-        <span class="stat-title">Alive:</span>
-        <span class="stat-metric" id="alive-metric">0</span>
-          </div>
-        </div>
-        <div class="col">
-          <div id="growth">
-        <span class="stat-title">Growth:</span>
-        <span class="stat-metric" id="growth-metric">0</span>
-          </div>
-        </div>
-      </div>
-      <div id="logic-toggles" class="row g-2 justify-content-center mb-3">
-        <div class="col-auto">
-          <div class="form-check form-switch">
-        <input class="form-check-input" type="checkbox" id="toggle-mutation" checked>
-        <label class="form-check-label" for="toggle-mutation">Mutation</label>
-          </div>
-        </div>
-      </div>
-      </div>
-      </div>
-      <form class="row align-items-center mb-3 g-2" id="speed-control" style="max-width:1000px;">
-        <div class="col-auto">
-          <label for="speed-slider" class="form-label">Speed:</label>
-        </div>
-        <div class="col-auto d-flex align-items-center" style="gap: 8px;">
-          <input type="range" id="speed-slider" min="1" max="10" value="1" class="slider">
-          <span>x <span id="speed-value">1</span></span>
-        </div>
-        <div class="col-auto">
-          <button id="pause-btn" type="button" class="custom-btn">Pause</button>
-        </div>
-        <div class="col-auto">
-          <button id="reset-btn" type="button" class="custom-btn">Reset</button>
-        </div>
-      </form>
-      <script type="module" src="dorian.js"></script>
+    
+  <a href="https://DorianAI.replit.app" type="button" class="heading-title" target="_blank">Dorian</a>
 
 
-  <script>
-const canvas = document.getElementById('dorian-canvas');
-const container = document.getElementById('canvas-container');
+    
+    <!-- Main Content Layout -->
+<main class="layout">
+
+      <!-- Canvas Section -->
+      <section id="canvas-container" class="layout" style="display: flex; align-items: center; justify-content: center; max-width: 1000px; margin: 0 auto;">
+        <canvas id="dorian-canvas" width="1000" height="1000" style="width:1000px; height:1000px;"></canvas>
+      </section>
+        <div class="ui-card">
+
+          
+
+          <!-- Metrics Panel -->
+          <div class="metrics-panel">
+            <div class="metric-box">Tick: <span id="tick-metric">0</span></div>
+            <div class="metric-box">Diversity: <span id="diversity-metric">0</span></div>
+            <div class="metric-box">Entropy: <span id="entropy-metric">0.00</span></div>
+            <div class="metric-box">Alive: <span id="alive-metric">0</span></div>
+            <div class="metric-box">Growth: <span id="growth-metric">0</span></div>
+            <div class="metric-box">Current Emotional State: <span id="dominant-metric">None</span></div>
+          </div>
+
+
+            <div class="ui-speed-box">
+              <form class="ui-speed-control" id="speed-control" style="max-width:1000px;">
+                <div class="ui-speed-label">
+                  <label for="speed-slider">Speed:</label>
+                </div>
+                <div class="ui-speed-slider" style="display: flex; align-items: center; gap: 8px;">
+                  <input type="range" id="speed-slider" min="1" max="10" value="1" class="slider">
+                  <span>x <span id="speed-value">1</span></span>
+                </div>
+                <div class="ui-speed-btns">
+                  <button id="pause-btn" type="button" class="custom-btn">Pause</button>
+                  <button id="reset-btn" type="button" class="custom-btn">Reset</button>
+                </div>
+              </form>
+          </div>
+          <!-- Logic Toggles -->
+          <div id="logic-toggles" class="ui-toggles">
+            <div class="ui-toggle">
+              <input type="checkbox" id="toggle-mutation" checked>
+              <label for="toggle-mutation">Mutation</label>
+            </div>
+          </div>
+        </div>
+      </section>
+</main>
 
 
 
-const ui = document.getElementById('ui');
-ui.style.cursor = 'move';
-let isUIDragging = false, uiStartX, uiStartY, uiOrigX, uiOrigY;
-ui.addEventListener('mousedown', (e) => {
-  // Only drag if not clicking a button or input
-  if (e.target.tagName === 'BUTTON' || e.target.tagName === 'INPUT' || e.target.tagName === 'LABEL') return;
-  isUIDragging = true;
-  uiStartX = e.clientX;
-  uiStartY = e.clientY;
-  uiOrigX = ui.offsetLeft;
-  uiOrigY = ui.offsetTop;
-});
-document.addEventListener('mousemove', (e) => {
-  if (isUIDragging) {
-    ui.style.left = uiOrigX + (e.clientX - uiStartX) + 'px';
-    ui.style.top = uiOrigY + (e.clientY - uiStartY) + 'px';
-    ui.style.transform = 'none';
-  }
-});
-document.addEventListener('mouseup', () => isUIDragging = false);
-</script>
+    <!-- Scripts -->
+    <script>
+      // UI Hide/Show Button Logic
+      document.addEventListener('DOMContentLoaded', () => {
+        const hideBtn = document.getElementById('hide-ui-btn');
+        const ui = document.getElementById('ui');
+        hideBtn.addEventListener('click', () => {
+          if (ui.style.display !== 'none') {
+            ui.style.display = 'none';
+            hideBtn.textContent = '👁';
+            hideBtn.title = 'Show UI';
+            hideBtn.style.position = 'fixed';
+            hideBtn.style.top = '10px';
+            hideBtn.style.right = '10px';
+            document.body.appendChild(hideBtn);
+          } else {
+            ui.style.display = '';
+            hideBtn.textContent = '👁️';
+            hideBtn.title = 'Hide UI';
+            // Move button back to UI
+            const header = ui.querySelector('.ui-header');
+            if (header) header.appendChild(hideBtn);
+            hideBtn.style.position = '';
+            hideBtn.style.top = '';
+            hideBtn.style.right = '';
+          }
+        });
+      });
+    </script>
+    <script type="module" src="dorian.js"></script>
 </body>
 </html>
