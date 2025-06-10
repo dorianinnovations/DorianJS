@@ -2,12 +2,12 @@
 
 //Archetpypes and emergent emotions based on primary emotions
 export const EMOTIONS = {
-  0: { name: "Joyful", color: [255, 255, 0] },
-  1: { name: "Trusting", color: [0, 255, 120] },
+  0: { name: "Joy", color: [255, 255, 0] },
+  1: { name: "Trust", color: [0, 255, 120] },
   2: { name: "Fear", color: [0, 153, 153] },
-  3: { name: "Surprised", color: [102, 0, 204] },
-  4: { name: "Sad", color: [51, 102, 204] },
-  5: { name: "Disgusted", color: [230, 0, 120] },
+  3: { name: "Surprise", color: [102, 0, 204] },
+  4: { name: "Sadness", color: [51, 102, 204] },
+  5: { name: "Disgust", color: [230, 0, 120] },
   6: { name: "Angry", color: [255, 0, 0] },
   7: { name: "Anticipation", color: [255, 128, 0] },
 

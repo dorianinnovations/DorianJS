@@ -25,33 +25,33 @@
 
           <!-- Metrics Panel -->
           <div class="metrics-panel">
-            <div class="metric-box">Tick: <span id="tick-metric">0</span></div>
-            <div class="metric-box">Diversity: <span id="diversity-metric">0</span></div>
-            <div class="metric-box">Entropy: <span id="entropy-metric">0.00</span></div>
-            <div class="metric-box">Alive: <span id="alive-metric">0</span></div>
-            <div class="metric-box">Growth: <span id="growth-metric">0</span></div>
-            <div class="metric-box">Current Emotional State: <span id="dominant-metric">None</span></div>
+              
+            <div class="metric-box"> <span id="tick-metric">Seed the canvas to Start!</span></div>
+            <div class="metric-box"> <span id="diversity-metric">Then, let it grow!</span></div>
+            <div class="metric-box"> <span id="entropy-metric"></span></div>
+            <div class="metric-box"> <span id="alive-metric"></span></div>
+            <div class="metric-box"> <span id="growth-metric"></span></div>
+            <div class="metric-box"><span id="dominant-metric"></span></div>
           </div>
 
 
             <div class="ui-speed-box">
-              <form class="ui-speed-control" id="speed-control" style="max-width:1000px;">
-                <div class="ui-speed-label">
-                  <label for="speed-slider">Speed:</label>
-                </div>
-                <div class="ui-speed-slider" style="display: flex; align-items: center; gap: 8px;">
-                  <input type="range" id="speed-slider" min="1" max="10" value="1" class="slider">
-                  <span>x <span id="speed-value">1</span></span>
-                </div>
-                <div class="ui-speed-btns">
-                  <button id="pause-btn" type="button" class="custom-btn">Pause</button>
-                  <button id="reset-btn" type="button" class="custom-btn">Reset</button>
-                </div>
-              </form>
-          </div>
+  <form id="speed-control" class="ui-speed-control">
+    <div class="speed-slider-wrapper">
+      <label for="speed-slider">Speed:</label>
+      <input type="range" id="speed-slider" min="1" max="10" value="1" class="speed-slider">
+      <span>x <span id="speed-value">1</span></span>
+    </div>
+
+    <div class="ui-speed-btns">
+      <button id="pause-btn" type="button" class="custom-btn">Pause</button>
+      <button id="reset-btn" type="button" class="custom-btn">Reset</button>
+    </div>
+  </form>
+</div>
           <!-- Logic Toggles -->
-          <div id="logic-toggles" class="ui-toggles">
-            <div class="ui-toggle">
+          <div id="logic-toggles" class="ui-mutation-box">
+            <div class="btn-mutation">
               <input type="checkbox" id="toggle-mutation" checked>
               <label for="toggle-mutation">Mutation</label>
             </div>
@@ -63,34 +63,7 @@
 
 
     <!-- Scripts -->
-    <script>
-      // UI Hide/Show Button Logic
-      document.addEventListener('DOMContentLoaded', () => {
-        const hideBtn = document.getElementById('hide-ui-btn');
-        const ui = document.getElementById('ui');
-        hideBtn.addEventListener('click', () => {
-          if (ui.style.display !== 'none') {
-            ui.style.display = 'none';
-            hideBtn.textContent = '👁';
-            hideBtn.title = 'Show UI';
-            hideBtn.style.position = 'fixed';
-            hideBtn.style.top = '10px';
-            hideBtn.style.right = '10px';
-            document.body.appendChild(hideBtn);
-          } else {
-            ui.style.display = '';
-            hideBtn.textContent = '👁️';
-            hideBtn.title = 'Hide UI';
-            // Move button back to UI
-            const header = ui.querySelector('.ui-header');
-            if (header) header.appendChild(hideBtn);
-            hideBtn.style.position = '';
-            hideBtn.style.top = '';
-            hideBtn.style.right = '';
-          }
-        });
-      });
-    </script>
+  
     <script type="module" src="dorian.js"></script>
 </body>
 </html>

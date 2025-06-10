@@ -86,15 +86,26 @@ resetBtn.addEventListener('click', () => {
 function updateCanvasBorderEmotion(dominant) {
   const emotion = dominant.toLowerCase();
   const classes = [
-    'dominant-emotion-joy',
-    'dominant-emotion-trust',
-    'dominant-emotion-fear',
-    'dominant-emotion-surprise',
-    'dominant-emotion-sadness',
-    'dominant-emotion-disgust',
-    'dominant-emotion-anger',
-    'dominant-emotion-anticipation'
-  ];
+ 
+  'dominant-emotion-joy',
+  'dominant-emotion-trust',
+  'dominant-emotion-fear',
+  'dominant-emotion-surprise',
+  'dominant-emotion-sadness',
+  'dominant-emotion-disgust',
+  'dominant-emotion-anger',
+  'dominant-emotion-anticipation',
+  'dominant-emotion-affectionate',
+  'dominant-emotion-shocked',
+  'dominant-emotion-contempt',
+  'dominant-emotion-hopeful',
+  'dominant-emotion-depressed',
+  'dominant-emotion-delight',
+  'dominant-emotion-anxiety',
+  'dominant-emotion-aggression'
+];
+
+
   canvas.classList.remove(...classes);
   if (classes.includes('dominant-emotion-' + emotion)) {
     canvas.classList.add('dominant-emotion-' + emotion);
@@ -106,12 +117,12 @@ function updateHUD(stats) {
   const growth = alive - lastAlive;
   lastAlive = alive;
 
-  document.getElementById('tick').textContent = `Tick: ${stats.tick}`;
-  document.getElementById('dominant').textContent = `Current Emotional State: ${stats.dominant}`;
-  document.getElementById('diversity').textContent = `Diversity: ${stats.diversity}`;
-  document.getElementById('entropy').textContent = `Entropy: ${stats.entropy}`;
-  document.getElementById('alive').textContent = `Alive: ${alive}`;
-  document.getElementById('growth').textContent = `Growth: ${growth}`;
+  document.getElementById('tick-metric').textContent = `Tick: ${stats.tick}`;
+  document.getElementById('dominant-metric').textContent = `Dominant Emotion: ${stats.dominant}`;
+  document.getElementById('diversity-metric').textContent = `Diversity: ${stats.diversity}`;
+  document.getElementById('entropy-metric').textContent = `Entropy: ${stats.entropy}`;
+  document.getElementById('alive-metric').textContent = `Alive: ${alive}`;
+  document.getElementById('growth-metric').textContent = `Growth: ${growth}`;
   updateCanvasBorderEmotion(stats.dominant);
 }
 
