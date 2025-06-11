@@ -17,6 +17,57 @@ let running = true;
 let hasStarted = false;
 let lastAlive = 0;
 let worker;
+let currentStats = null;
+
+
+
+async function sendStatsToClaude(stats) {
+  const prompt = `
+You are an interpreter of synthetic organism behavior.
+
+Given the following internal stats of an emergent artificial life system:
+
+- Tick: ${stats.tick}
+- Diversity: ${stats.diversity}
+- Entropy: ${stats.entropy}
+- Alive: ${stats.alive}
+- Growth: ${stats.growth}
+- Dominant Emotion (previous): ${stats.dominant}
+
+Choose the most appropriate dominant emotion **from this exact list**:
+["joy", "trust", "fear", "surprise", "sadness", "disgust", "anger", "anticipation", "affectionate", "shocked", "contempt", "hopeful", "depressed", "delight", "anxiety", "aggression"]
+
+⚠️ Interpret as if your name was Dorian, a living emergent artifical life system.
+`;
+
+  try {
+    const res = await fetch('http://localhost:3000/ask', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ prompt })
+    });
+
+    const data = await res.json();
+    console.log("Claude raw reply:", data.reply);
+    return data.reply?.toLowerCase().trim();
+  } catch (err) {
+    console.error("Claude error:", err);
+    return null;
+  }
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 function initWorker() {
   if (worker) worker.terminate();
@@ -122,18 +173,40 @@ function updateHUD(stats) {
 function animate() {
   if (!running) return;
   worker.postMessage({ type: 'update', updates: UPDATES_PER_FRAME });
-  // Only schedule the next frame here, after the worker responds
 }
-
 worker.onmessage = ({ data }) => {
   if (data.type === 'frame') {
     const img = new ImageData(new Uint8ClampedArray(data.imageData.data), data.imageData.width, data.imageData.height);
     ctx.putImageData(img, 0, 0);
     updateHUD(data.stats);
-    // Only schedule the next frame if running
+    currentStats = data.stats;
+
+    // Trigger Claude every 100 ticks
+    if (currentStats && currentStats.tick % 100 === 0) {
+      sendStatsToClaude(currentStats).then(emotion => {
+        if (!emotion) return;
+
+        const emotions = [
+          'joy', 'trust', 'fear', 'surprise', 'sadness', 'disgust',
+          'anger', 'anticipation', 'affectionate', 'shocked',
+          'contempt', 'hopeful', 'depressed', 'delight',
+          'anxiety', 'aggression'
+        ];
+
+        canvas.classList.remove(...emotions.map(e => `dominant-emotion-${e}`));
+
+        if (emotions.includes(emotion)) {
+          canvas.classList.add(`dominant-emotion-${emotion}`);
+          console.log(`🌟 Claude suggests: ${emotion}`);
+        }
+      });
+    }
+
     if (running) requestAnimationFrame(animate);
   }
 };
+
+
 
 let hasSeeded = false;
 
@@ -164,6 +237,24 @@ if (!hasStarted) {
   }
 });
 
+document.getElementById("input-text-box").addEventListener("submit", function (e) {
+  e.preventDefault(); // Prevent form from refreshing the page
 
+  const input = document.getElementById("input-text-box");
+  const message = input.value;
+
+  if (message.trim() !== "") {
+    // Here, you'd typically send the message to a server or display it in a chat window
+    console.log("Message sent:", message);
+
+    input.value = ""; // Clear the input field
+  }
+});
+
+
+
+
+
+  
 
 
