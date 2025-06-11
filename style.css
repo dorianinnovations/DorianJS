@@ -522,8 +522,8 @@ background: linear-gradient(
     font-size: 1.8rem;
   }
 
-.heading-title {
-font-size: 1.8rem
+  .heading-title {
+font-size: 2.5rem
 }
 
   .main-canvas {
@@ -542,6 +542,7 @@ font-size: 1.8rem
   .column-right-column {
     width: 100%;
     flex-direction: column;
+    font-size: 1.8rem;
     align-items: center;
   }
 
@@ -551,9 +552,6 @@ font-size: 1.8rem
   }
 }
 
-.gpt-output {
-font-size: 1.8rem;
-}
 
 
 @keyframes scale-in-center {
