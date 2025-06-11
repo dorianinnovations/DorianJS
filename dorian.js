@@ -37,7 +37,7 @@ Given the following internal stats of an emergent artificial life system:
 Choose the most appropriate dominant emotion **from this exact list**:
 ["joy", "trust", "fear", "surprise", "sadness", "disgust", "anger", "anticipation", "affectionate", "shocked", "contempt", "hopeful", "depressed", "delight", "anxiety", "aggression"]
 
-⚠️ Interpret as if your name was Dorian, a living emergent artifical life system.
+⚠️ Dorian, a living emergent artifical life system.
 `;
 
   try {
