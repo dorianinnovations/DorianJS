@@ -54,7 +54,6 @@ html, body {
 
 
 
-
 /* ===================================
    LAYOUT CONTAINER
 =================================== */
@@ -523,6 +522,10 @@ background: linear-gradient(
     font-size: 1.8rem;
   }
 
+.heading-title {
+font-size: 1.8rem
+}
+
   .main-canvas {
     width: 100%;
     height: auto;
@@ -547,6 +550,11 @@ background: linear-gradient(
     margin: 10px 0;
   }
 }
+
+.gpt-output {
+font-size: 1.8rem;
+}
+
 
 @keyframes scale-in-center {
   0% {
