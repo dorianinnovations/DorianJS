@@ -7,39 +7,53 @@
 
 html, body {
   background-color: #000 !important;
-  min-height: 100vh;
+  min-height: auto;
   margin: 0;
   font-family: 'Space Grotesk', 'Fira Code', monospace;
   padding: 0;
-  overflow: hidden;
+ 
 }
 
+
+
 .heading-title {
-  font-size: 3.2em;
+  font-size: 8.7rem;
   display: flex;
   align-items: center;
   flex-direction: column;
   letter-spacing: -0.23rem;
   justify-content: center;
   font-family: 'Space Grotesk', 'Fira Code', monospace;
-  font-weight: 8000;
+  font-weight: 1000;
   color: #ffffff;
   text-align: center;
-  margin-top: 20px;
-  margin-bottom: 40px;
-  text-shadow: 0 0 10px rgb(255, 255, 255);
+  margin-top: 60px;
+  margin-bottom: 50px;
   text-decoration: none;
+  text-shadow: 0 0 10px rgb(255, 255, 255);
   color: #ffffff;
+  transition:  all.5s ease-in-out;
+  animation-name: heartbeat;
+  animation-duration: 10s;
+  animation-iteration-count: infinite;
+  animation-direction: alternate;
   cursor: pointer;
   
 }
 .heading-title:hover {
-  text-decoration: none;
-  color: #ffffff;
-  text-shadow: 0 0 20px rgba(255,255,255,0.7);
-  transition: text-shadow 0.3s ease-in-out;
+  border-radius: 12px;
+  scale: 1.2;
+  transition-duration: 3s;
+  animation-name: heartbeat;
+  animation-duration: 3s;
+  animation-iteration-count: infinite;
+  animation-timing-function: ease-in-out;
+  
 
 }
+
+
+
 
 /* ===================================
    LAYOUT CONTAINER
@@ -52,28 +66,33 @@ html, body {
   gap: 40px;
   padding: 20px;
   margin-top: 40px;
+
 }
 
 .column {
   display: flex;
   flex-direction: column;
-  gap: 20px;
+  gap: 25px;
   width: 250px;
 }
 
 .main-canvas {
   width: 1000px;
   height: 1000px;
-  border: 2px solid rgba(255, 255, 255, 0.074);
+  margin: 20px;
+  padding: 20px;
   display: flex;
-  align-items: center;
-  justify-content: center;
 }
 
 canvas {
-  width: 100%;
-  height: 100%;
-  
+  width: auto;
+  border:none;
+  height: auto;
+  box-shadow: #ffffff4f 0 0 0 2px;
+  border-radius: 13px;
+  transition: box-shadow 0.5s ease-in-out, box-glow 0.6s ease-in-out;
+  backdrop-filter: blur(15px) saturate(130%);
+  box-shadow: 0 0 60px rgba(255, 255, 255, 0.05), 0 0 8px #ffffff17;
 }
 
 
@@ -85,29 +104,28 @@ canvas:hover {
 
 }
 
-canvas.dominant-emotion-joy           { box-shadow: 0 0 400px 0 rgba(255, 251, 0, 0.4) !important; }
-canvas.dominant-emotion-trust         { box-shadow: 0 0 400px 0 rgba(  0, 255, 120, 0.4) !important; }
-canvas.dominant-emotion-fear          { box-shadow: 0 0 400px 0 rgba(  0, 153, 153, 0.4) !important; }
-canvas.dominant-emotion-surprise      { box-shadow: 0 0 400px 0 rgba(102,   0, 204, 0.4) !important; }
-canvas.dominant-emotion-sadness       { box-shadow: 0 0 400px 0 rgba( 51, 102, 204, 0.4) !important; }
-canvas.dominant-emotion-disgust       { box-shadow: 0 0 400px 0 rgba(230,   0, 120, 0.4) !important; }
-canvas.dominant-emotion-anger         { box-shadow: 0 0 400px 0 rgba(255,   0,   0, 0.4) !important; }
-canvas.dominant-emotion-anticipation  { box-shadow: 0 0 400px 0 rgba(255, 128,   0, 0.4) !important; }
+canvas.dominant-emotion-joy           { box-shadow: 0 0 290px 0 rgba(255, 251, 0, 0.4) !important; }
+canvas.dominant-emotion-trust         { box-shadow: 0 0 290px 0 rgba(  0, 255, 120, 0.4) !important; }
+canvas.dominant-emotion-fear          { box-shadow: 0 0 290px 0 rgba(  0, 153, 153, 0.4) !important; }
+canvas.dominant-emotion-surprise      { box-shadow: 0 0 290px 0 rgba(102,   0, 204, 0.4) !important; }
+canvas.dominant-emotion-sadness       { box-shadow: 0 0 290px 0 rgba( 51, 102, 204, 0.4) !important; }
+canvas.dominant-emotion-disgust       { box-shadow: 0 0 290px 0 rgba(230,   0, 120, 0.4) !important; }
+canvas.dominant-emotion-anger         { box-shadow: 0 0 290px 0 rgba(255,   0,   0, 0.4) !important; }
+canvas.dominant-emotion-anticipation  { box-shadow: 0 0 290px 0 rgba(255, 128,   0, 0.4) !important; }
 
-canvas.dominant-emotion-affectionate  { box-shadow: 0 0 400px 0 rgba(255, 200, 100, 0.4) !important; }
-canvas.dominant-emotion-shocked       { box-shadow: 0 0 400px 0 rgba(150,  50, 200, 0.4) !important; }
-canvas.dominant-emotion-contempt      { box-shadow: 0 0 400px 0 rgba(200,   0, 100, 0.4) !important; }
-canvas.dominant-emotion-hopeful       { box-shadow: 0 0 400px 0 rgba(100, 255, 180, 0.4) !important; }
-canvas.dominant-emotion-depressed     { box-shadow: 0 0 400px 0 rgba(100, 100, 180, 0.4) !important; }
-canvas.dominant-emotion-delight       { box-shadow: 0 0 400px 0 rgba(255, 220,  50, 0.4) !important; }
-canvas.dominant-emotion-anxiety       { box-shadow: 0 0 400px 0 rgba( 50, 100, 200, 0.4) !important; }
-canvas.dominant-emotion-aggression    { box-shadow: 0 0 400px 0 rgba(255,  50,  50, 0.4) !important; }
+canvas.dominant-emotion-affectionate  { box-shadow: 0 0 290px 0 rgba(255, 200, 100, 0.4) !important; }
+canvas.dominant-emotion-shocked       { box-shadow: 0 0 290px 0 rgba(150,  50, 200, 0.4) !important; }
+canvas.dominant-emotion-contempt      { box-shadow: 0 0 290px 0 rgba(200,   0, 100, 0.4) !important; }
+canvas.dominant-emotion-hopeful       { box-shadow: 0 0 290px 0 rgba(100, 255, 180, 0.4) !important; }
+canvas.dominant-emotion-depressed     { box-shadow: 0 0 290px 0 rgba(100, 100, 180, 0.4) !important; }
+canvas.dominant-emotion-delight       { box-shadow: 0 0 290px 0 rgba(255, 220,  50, 0.4) !important; }
+canvas.dominant-emotion-anxiety       { box-shadow: 0 0 290px 0 rgba( 50, 100, 200, 0.4) !important; }
+canvas.dominant-emotion-aggression    { box-shadow: 0 0 290px 0 rgba(255,  50,  50, 0.4) !important; }
 
 
 canvas[class^="dominant-emotion"] {
   transition: box-shadow 0.6s cubic-bezier(0.4, 0, 0.2, 1);
 }
-
 
 /* ===================================
    COLUMN STYLING
@@ -122,7 +140,13 @@ canvas[class^="dominant-emotion"] {
 }
 
 
-
+.column-left-column {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  width: 250px;
+  align-items: center;
+}
 
 
 /* ===================================
@@ -143,14 +167,14 @@ canvas[class^="dominant-emotion"] {
   flex-wrap: nowrap;
   overflow: hidden;
   border-radius: 24px;
-  background: linear-gradient(180deg, rgba(0, 0, 0, 0.6) 20%, rgba(15, 15, 15, 0.9) 100%);
+  background: linear-gradient(180deg, rgba(0, 0, 0, 0.153) 20%, rgba(15, 15, 15, 0.229) 100%);
   box-shadow: 0 0 60px rgba(255, 255, 255, 0.05), 0 0 8px #ffffff17;
   border: 1.5px solid rgba(255, 255, 255, 0.08);
   backdrop-filter: blur(12px) saturate(130%);
   font-family: 'Space Grotesk', 'Fira Code', monospace;
-  font-weight: 400;
+  font-weight: 100;
   font-size: 15px;
-  letter-spacing: 0.6px;
+  letter-spacing: 1px;
   color: #cfcfcf;
   z-index: 10;
   transition: all 0.4s ease;
@@ -159,13 +183,18 @@ canvas[class^="dominant-emotion"] {
 
 
 .ui-card:hover {
-  box-shadow: 
-    0 0 40px rgba(255, 255, 255, 0.08), 
-    0 8px 28px rgba(0, 0, 0, 0.6),
-    0 2px 12px rgba(255, 255, 255, 0.1);
-  background: linear-gradient(135deg, rgba(25, 25, 25, 0.92) 30%, rgba(0, 0, 0, 0.6) 100%);
-  transition: all 0.5s cubic-bezier(0.4, 0.1, 0.2, 1);
+  scale: 1.05;
+  transition-duration: 3s;
+  animation: infinite;
+  animation-name: heartbeat;
+  animation-duration: 3s;
+  animation-iteration-count: infinite;
+  animation-timing-function: ease-in-out;
+  
+
 }
+
+
 
 .ui-speed-section {
   font-size: 1.1rem;
@@ -198,6 +227,10 @@ canvas[class^="dominant-emotion"] {
   background-color: transparent;
   padding: 12px 24px;
 }
+
+
+
+
 
 .btn-submit-right-column {
   position: relative;
@@ -285,7 +318,7 @@ canvas[class^="dominant-emotion"] {
   display: flex;
   align-items: center;
   width: 100%;
-  gap: 8px;
+  gap: 1px;
 }
 
 /* === Speed Slider === */
@@ -335,32 +368,15 @@ canvas[class^="dominant-emotion"] {
   border: none;
   font-size: 14px;
   cursor: pointer;
+  margin: 5px 0;
 }
 
-.custom-btn:hover {
-  background: #555;
-}
-
-
-
-
-
-.btn-mutation {
+.dorian-response-section {
   display: flex;
+  flex-direction: row;
   align-items: center;
-  justify-content: center;
-  padding: 8px 16px;
-  border-radius: 25px;
-  background-color: #ffffff1a;
-  color: #ffffff;
-  font-size: 1em;
-  font-weight: 600;
-  border: none;
-  cursor: pointer;
-  transition: background-color 0.3s, box-shadow 0.3s, color 0.3s;
-}
-
-.input-text-box   {
+  gap: 10px;
+  width: 100%;
   display: flex;
   flex-direction: row;
   align-items: center;
@@ -378,10 +394,94 @@ canvas[class^="dominant-emotion"] {
   background: linear-gradient(180deg, rgba(0, 0, 0, 0.6) 20%, rgba(15, 15, 15, 0.9) 100%);
 }
 
+.gpt-output {
+  font-family: "Space Grotesk", "Fira Code", monospace;
+  font-size: 1.2em;
+  color: #ffffff;
+
+}
+
+
+.btn-mutation {
+  position: relative;
+  color: #ffffff;
+  overflow: hidden;
+  font-family: 'Courier New', monospace;
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+  border-radius: 24px;
+  border: 2px solid #ffffff33;
+  background-color: transparent;
+  padding: 12px 24px;
+}
+
+
+.btn-mutation::before {
+  content: '';
+  position: absolute;
+
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(
+    to right,
+    transparent,
+    rgba(255, 255, 255, 0.5),
+    transparent
+  );
+  transform: skewX(-20deg);
+  transition: right 0.5s ease;
+  z-index: 1;
+}
+
+.btn-mutation:hover::before {
+  left: 100%;
+}
+
+.btn-mutation-btn:hover {
+background: linear-gradient(
+    to right,
+    transparent,
+    rgba(255, 255, 255, 0.5),
+    transparent
+  );
+  transform: skewX(-20deg);
+  transition: right 0.5s ease;
+  z-index: 1;
+}
+
+/* Make sure text stays above shine */
+.btn-mutation-btn {
+  z-index: 2;
+}
+
+
+
+.input-text-box   {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  padding: 12px 16px;
+  border-radius: 15px;
+  font-family: "Space Grotesk", "Fira Code", monospace;
+  background-color: #ffffff1a;
+  color: #ffffff;
+  font-size: 1em;
+  font-weight: 600;
+  border: none;
+  box-shadow: 0 0 20px rgba(255, 255, 255, 0.05), 0 0 8px #ffffff17;
+  transition: background-color 0.3s, box-shadow 0.3s, color 0.3s; 
+  background: linear-gradient(180deg, rgba(0, 0, 0, 0.6) 20%, rgba(15, 15, 15, 0.9) 100%);
+}
+
 .input-text {
   width: 100%;
   border: none;
   background: transparent;
+  font-family: "Space Grotesk", "Fira Code", monospace;
   color: #ffffff;
   font-size: 1em;
   font-weight: 600;
@@ -396,5 +496,40 @@ canvas[class^="dominant-emotion"] {
     0 8px 28px rgba(0, 0, 0, 0.6),
     0 2px 12px rgba(255, 255, 255, 0.1);
   background: linear-gradient(135deg, rgba(25, 25, 25, 0.92) 30%, rgba(0, 0, 0, 0.6) 100%);
-  transition: all 0.5s cubic-bezier(0.4, 0.1, 0.2, 1);
+  transition: all 0.09s cubic-bezier(0.4, 0.1, 0.2, 1);
+   animation-name: scale-in-center;
+  animation-duration: 0.09;
+  animation-iteration-count: infinite;
+  animation-timing-function: ease-in-out;
+  cursor: pointer;
+  transform: scale(1.01);
+  transition: transform 0.3s ease-in-out;
+  background-color: #ffffff1a;
+  color: #ffffff;
+  box-shadow: 0 0 20px rgba(255, 255, 255, 0.05), 0 0 8px #ffffff17;
+  backdrop-filter: blur(12px) saturate(130%);
 }
+
+@keyframes scale-in-center {
+  0% {
+    transform: scale(0.8);
+    opacity: 0;
+  }
+  100% {
+    transform: scale(1);
+    opacity: 1;
+  }
+}
+
+
+/* Slower animation: increase duration where used */
+.input-text-box:hover {
+  /* ...existing styles... */
+  animation-duration: 1.5s;
+  animation-name: rubberBand;
+  animation-iteration-count: infinite;
+  animation-timing-function: ease-in-out;
+}
+
+
+  

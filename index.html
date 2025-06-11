@@ -39,9 +39,9 @@
   <div class="column-right-column">
     <div class="ui-card">
       <div class="ui-speed-box">
-        <form id="speed-control" class="ui-speed-control">
           <div class="speed-slider-wrapper">
             <label for="speed-slider">Speed:</label>
+            
             <input type="range" id="speed-slider" min="1" max="10" value="1" class="speed-slider">
             <span>x <span id="speed-value">1</span></span>
           </div>
@@ -58,13 +58,71 @@
         </div>
       </div>
     </div>
+
+
+
+
+
     <div class="input-text-box">
-      <input type="text" placeholder="Type something..." class="input-text" id="input-text">
-      <button id="submit-text" class="btn-submit-right-column">Submit</button>
-    </div>
+      <input type="text" placeholder="Ask Dorian something..." class="input-text" id="gpt-input"/>
+      <form type="submit" onclick="sendToClaude()" class="btn-submit-right-column">Go</form>
   </div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div class="dorian-response-section">
+  <p id="gpt-output" class ="input-text-box">thinking...</p>
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
 </main>
+
+
+
     <!-- Scripts -->
     <script type="module" src="dorian.js"></script>
+    <script>
+  async function sendToClaude() {
+    const input = document.getElementById('gpt-input').value;
+    const output = document.getElementById('gpt-output');
+    output.textContent = "Thinking...";
+
+    try {
+      const res = await fetch('http://localhost:3000/ask', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ prompt: input })
+      });
+
+      const data = await res.json();
+      output.textContent = data.reply || "No response.";
+    } catch (err) {
+      output.textContent = "Error contacting Claude.";
+      console.error(err);
+    }
+  }
+</script>
+
 </body>
 </html>
