@@ -510,6 +510,42 @@ background: linear-gradient(
   backdrop-filter: blur(12px) saturate(130%);
 }
 
+/* ===================================
+   RESPONSIVE LAYOUT FOR MOBILE
+=================================== */
+
+@media (max-width: 768px) {
+  .layout {
+    flex-direction: column;
+    align-items: center;
+    gap: 20px;
+  }
+
+  .main-canvas {
+    width: 100%;
+    height: auto;
+    margin: 0;
+    padding: 0;
+  }
+
+  canvas {
+    width: 100%;
+    height: auto;
+  }
+
+  .column-left-column,
+  .column-right-column {
+    width: 100%;
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .ui-card {
+    width: 90%;
+    margin: 10px 0;
+  }
+}
+
 @keyframes scale-in-center {
   0% {
     transform: scale(0.8);
