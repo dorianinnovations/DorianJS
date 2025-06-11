@@ -518,12 +518,12 @@ background: linear-gradient(
   .layout {
     flex-direction: column;
     align-items: center;
-    gap: 24px;
+    gap: 10px;
     font-size: 1.8rem;
   }
 
   .heading-title {
-font-size: 5.5rem
+font-size: 4.2rem
 margin-bottom: 20px;
 }
 
@@ -543,13 +543,12 @@ margin-bottom: 20px;
   .column-right-column {
     width: 100%;
     flex-direction: column;
-    font-size: 1.8rem;
     align-items: center;
   }
 
   .ui-card {
-    width: 96%;
-    margin: 7px;
+    width: 99%;
+    margin: 3px;
   }
 }
 
