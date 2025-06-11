@@ -15,56 +15,56 @@
     
     <!-- Main Content Layout -->
 <main class="layout">
-
-      <!-- Canvas Section -->
-      <section id="canvas-container" class="layout" style="display: flex; align-items: center; justify-content: center; max-width: 1000px; margin: 0 auto;">
-        <canvas id="dorian-canvas" width="1000" height="1000" style="width:1000px; height:1000px;"></canvas>
-      </section>
-        <div class="ui-card">
-
-          
-
-          <!-- Metrics Panel -->
-          <div class="metrics-panel">
-              
-            <div class="metric-box"> <span id="tick-metric">Seed the canvas to Start!</span></div>
-            <div class="metric-box"> <span id="diversity-metric">Then, let it grow!</span></div>
-            <div class="metric-box"> <span id="entropy-metric"></span></div>
-            <div class="metric-box"> <span id="alive-metric"></span></div>
-            <div class="metric-box"> <span id="growth-metric"></span></div>
-            <div class="metric-box"><span id="dominant-metric"></span></div>
-          </div>
-
-
-            <div class="ui-speed-box">
-  <form id="speed-control" class="ui-speed-control">
-    <div class="speed-slider-wrapper">
-      <label for="speed-slider">Speed:</label>
-      <input type="range" id="speed-slider" min="1" max="10" value="1" class="speed-slider">
-      <span>x <span id="speed-value">1</span></span>
+  <!-- Left Panel -->
+  <div class="column left-column">
+    <div class="ui-card">
+      <!-- Metrics Panel -->
+      <div class="metrics-panel">
+        <div class="metric-box"><span id="tick-metric">Seed the canvas to Start!</span></div>
+        <div class="metric-box"><span id="diversity-metric">Then, let it grow!</span></div>
+        <div class="metric-box"><span id="entropy-metric"></span></div>
+        <div class="metric-box"><span id="alive-metric"></span></div>
+        <div class="metric-box"><span id="growth-metric"></span></div>
+        <div class="metric-box"><span id="dominant-metric"></span></div>
+      </div>
     </div>
+  </div>
 
-    <div class="ui-speed-btns">
-      <button id="pause-btn" type="button" class="custom-btn">Pause</button>
-      <button id="reset-btn" type="button" class="custom-btn">Reset</button>
-    </div>
-  </form>
-</div>
-          <!-- Logic Toggles -->
-          <div id="logic-toggles" class="ui-mutation-box">
-            <div class="btn-mutation">
-              <input type="checkbox" id="toggle-mutation" checked>
-              <label for="toggle-mutation">Mutation</label>
-            </div>
+  <!-- Canvas Panel -->
+  <div class="main-canvas">
+    <canvas id="dorian-canvas" width="1000" height="1000"></canvas>
+  </div>
+
+  <!-- Right Panel -->
+  <div class="column-right-column">
+    <div class="ui-card">
+      <div class="ui-speed-box">
+        <form id="speed-control" class="ui-speed-control">
+          <div class="speed-slider-wrapper">
+            <label for="speed-slider">Speed:</label>
+            <input type="range" id="speed-slider" min="1" max="10" value="1" class="speed-slider">
+            <span>x <span id="speed-value">1</span></span>
           </div>
+          <div class="ui-speed-btns">
+            <button id="pause-btn" type="button" class="custom-btn">Pause</button>
+            <button id="reset-btn" type="button" class="custom-btn">Reset</button>
+          </div>
+        </form>
+      </div>
+      <div class="ui-mutation-box">
+        <div class="btn-mutation">
+          <input type="checkbox" id="toggle-mutation" checked>
+          <label for="toggle-mutation">Mutation</label>
         </div>
-      </section>
+      </div>
+    </div>
+    <div class="input-text-box">
+      <input type="text" placeholder="Type something..." class="input-text" id="input-text">
+      <button id="submit-text" class="btn-submit-right-column">Submit</button>
+    </div>
+  </div>
 </main>
-
-
-
     <!-- Scripts -->
-  
     <script type="module" src="dorian.js"></script>
 </body>
 </html>

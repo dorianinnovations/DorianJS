@@ -13,7 +13,7 @@ const MUTATION_CHANCE = 0.002;
 const BIRTH_DELAY = 5; // minimum dead ticks before a cell can grow again
 let UPDATES_PER_FRAME = 10;
 
-let running = false;
+let running = true;
 let hasStarted = false;
 let lastAlive = 0;
 let worker;
@@ -64,14 +64,7 @@ pauseBtn.addEventListener('click', () => {
   if (running) animate();
 });
 
-window.addEventListener('keydown', (e) => {
-  if (e.code === 'Space') {
-    running = !running;
-    pauseBtn.textContent = running ? 'Pause' : 'Resume';
-    if (running) animate();
-    e.preventDefault();
-  }
-});
+
 
 resetBtn.addEventListener('click', () => {
   initWorker();
@@ -129,7 +122,18 @@ function updateHUD(stats) {
 function animate() {
   if (!running) return;
   worker.postMessage({ type: 'update', updates: UPDATES_PER_FRAME });
+  // Only schedule the next frame here, after the worker responds
 }
+
+worker.onmessage = ({ data }) => {
+  if (data.type === 'frame') {
+    const img = new ImageData(new Uint8ClampedArray(data.imageData.data), data.imageData.width, data.imageData.height);
+    ctx.putImageData(img, 0, 0);
+    updateHUD(data.stats);
+    // Only schedule the next frame if running
+    if (running) requestAnimationFrame(animate);
+  }
+};
 
 let hasSeeded = false;
 
@@ -139,12 +143,14 @@ canvas.addEventListener('mousedown', (e) => {
   const y = Math.floor((e.clientY - rect.top) / CELL_SIZE);
 
   // Always allow seeding when simulation is running
-  if (running) {
-    worker.postMessage({ type: 'seed', x, y });
-    return;
-  }
+worker.postMessage({ type: 'seed', x, y });
 
-  // On first seed, also start the 
+if (!hasStarted) {
+  hasStarted = true;
+  running = true;
+  animate();
+}
+
 
   if (!hasStarted) {
     worker.postMessage({ type: 'seed', x, y });
@@ -161,15 +167,3 @@ canvas.addEventListener('mousedown', (e) => {
 
 
 
-const hideUiBtn = document.getElementById('hide-ui-btn');
-const uiPanel = document.getElementById('ui');
-hideUiBtn.addEventListener('click', () => {
-  uiPanel.classList.toggle('hide-ui');
-  if (uiPanel.classList.contains('hide-ui')) {
-    hideUiBtn.textContent = '🙈';
-    hideUiBtn.title = 'Show UI';
-  } else {
-    hideUiBtn.textContent = '👁️';
-    hideUiBtn.title = 'Hide UI';
-  }
-});

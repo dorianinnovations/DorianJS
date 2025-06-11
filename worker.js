@@ -36,7 +36,6 @@ self.onmessage = (e) => {
   const { type, opts, x, y, updates, mutationChance } = e.data;
   switch (type) {
     case 'init':
-      // opts may include birthDelay to control how long cells stay dead before regrowth
       universe = new DorianUniverseOptimized(opts);
       cellSize = opts.cellSize || cellSize;
       break;
@@ -44,10 +43,15 @@ self.onmessage = (e) => {
       if (universe) universe.seed(x, y);
       break;
     case 'update':
-      if (typeof updates === 'number') {
-        speed = updates;
+      if (universe && typeof updates === 'number') {
+        // Do the update(s)
+        for (let i = 0; i < updates; i++) {
+          universe.update();
+        }
+        const imageData = universe.getImageData(cellSize);
+        const stats = universe.getStats();
+        self.postMessage({ type: 'frame', imageData, stats }, [imageData.data.buffer]);
       }
-      startAnimationLoop();
       break;
     case 'setMutation':
       if (universe && typeof mutationChance === 'number') {
