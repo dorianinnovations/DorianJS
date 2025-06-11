@@ -327,13 +327,14 @@ canvas[class^="dominant-emotion"] {
   appearance: none;
   height: 6px;
   border-radius: 3px;
-  background: linear-gradient(to right, #888 0%, #444 100%);
+  background: linear-gradient(to right, #444 0%, #222 100%);
   transition: background 0.3s ease;
   cursor: pointer;
+  outline: none;
 }
 
 .speed-slider:hover {
-  background: linear-gradient(to right, #aaa 0%, #666 100%);
+  background: linear-gradient(to right, #666 0%, #333 100%);
 }
 
 .speed-slider::-webkit-slider-thumb,
@@ -341,8 +342,8 @@ canvas[class^="dominant-emotion"] {
   width: 16px;
   height: 16px;
   border-radius: 50%;
-  background: #ccc;
-  border: 2px solid #222;
+  background: #666;
+  border: 2px solid #000;
   box-shadow: 0 0 4px rgba(255, 255, 255, 0.3);
   transition: transform 0.2s ease, background 0.2s ease;
 }
@@ -350,7 +351,7 @@ canvas[class^="dominant-emotion"] {
 .speed-slider:hover::-webkit-slider-thumb,
 .speed-slider:hover::-moz-range-thumb {
   transform: scale(1.2);
-  background: #fff;
+  background: #999;
 }
 
 /* === Buttons === */

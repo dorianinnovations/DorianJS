@@ -11,7 +11,7 @@ const ROWS = 200;
 const MAX_AGE = 800;
 const MUTATION_CHANCE = 0.002;
 const BIRTH_DELAY = 5; // minimum dead ticks before a cell can grow again
-let UPDATES_PER_FRAME = 10;
+let UPDATES_PER_FRAME = 5;
 
 let running = true;
 let hasStarted = false;
@@ -99,13 +99,13 @@ mutationToggle.addEventListener('change', () => {
   }
 });
 
-speedSlider.max = '10';
+speedSlider.max = '5';
 speedSlider.addEventListener('input', () => {
-  if (parseInt(speedSlider.value) > 10) speedSlider.value = '10';
+  if (parseInt(speedSlider.value) > 5) speedSlider.value = '5';
   UPDATES_PER_FRAME = parseInt(speedSlider.value);
   speedValue.textContent = speedSlider.value;
 });
-if (parseInt(speedSlider.value) > 10) speedSlider.value = '10';
+if (parseInt(speedSlider.value) > 5) speedSlider.value = '5';
 UPDATES_PER_FRAME = parseInt(speedSlider.value);
 speedValue.textContent = speedSlider.value;
 
