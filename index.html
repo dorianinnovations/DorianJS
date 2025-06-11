@@ -5,18 +5,18 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Dorian</title>
   <link rel="stylesheet" href="style.css">
-  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;700&display=swap" rel="stylesheet">
-</head>
+  <link href="https://fonts.googleapis.com/css2?family=Chakra+Petch&display=swap" rel="stylesheet">
+
 <body>
-    
-  <a href="https://DorianAI.replit.app" type="button" class="heading-title" target="_blank">Dorian</a>
-
-
+    <div class="header">
+      <h2 class="heading-title">Dorian</h2>
+      <p class="heading-subtitle">A project by DorianAI<a href="https://dorianai.replit.app/"></a></p>
+    </div>>
     
     <!-- Main Content Layout -->
 <main class="layout">
   <!-- Left Panel -->
-  <div class="column left-column">
+  <div class="column-left-column">
     <div class="ui-card">
       <!-- Metrics Panel -->
       <div class="metrics-panel">
@@ -30,14 +30,19 @@
     </div>
   </div>
 
+
+
+
+
   <!-- Canvas Panel -->
   <div class="main-canvas">
     <canvas id="dorian-canvas" width="1000" height="1000"></canvas>
   </div>
 
-  <!-- Right Panel -->
+
+  <!-- column-right-column --> 
   <div class="column-right-column">
-    <div class="ui-card">
+    <div class="column-right-column-upper">
       <div class="ui-speed-box">
           <div class="speed-slider-wrapper">
             <label for="speed-slider">Speed:</label>
@@ -57,15 +62,18 @@
           <label for="toggle-mutation">Mutation</label>
         </div>
       </div>
+      </div>
+      <div class ="column-right-column-middle">
+      <div class="input-text-box">
+        <input type="text" placeholder="Ask anything" class="input-text" id="gpt-input"/>
+        <form type="submit" onclick="sendToClaude()" class="btn-go-right-column">Go</form>
+      </div>
+      <div class="dorian-response-section">
+      
     </div>
-
-
-
-
-
-    <div class="input-text-box">
-      <input type="text" placeholder="Ask anything" class="input-text" id="gpt-input"/>
-      <form type="submit" onclick="sendToClaude()" class="btn-submit-right-column">Go</form>
+    <div class="column-right-column-lower">
+    <p id="gpt-output" class ="gpt-answer-text-box">thinking...</p>
+    </div>
   </div>
 
 
@@ -80,10 +88,6 @@
 
 
 
-
-<div class="dorian-response-section">
-  <p id="gpt-output" class ="input-text-box">thinking...</p>
-</div>
 
 
 

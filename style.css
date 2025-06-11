@@ -5,124 +5,185 @@
   box-sizing: border-box;
 }
 
-html, body {
-  background-color: #000 !important;
+html,
+body {
+  background-color: #000000 !important;
   min-height: auto;
   margin: 0;
-  font-family: 'Space Grotesk', 'Fira Code', monospace;
+  font-family: 'Chakra Petch';
   padding: 0;
- 
 }
 
-
+.header {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 10px;
+  border-radius: 15px;
+  background-color: #000000a0;
+  box-shadow: inset 0 0 20px 0 rgba(255, 255, 255, 0.05), inset 0 0 8px 0 #00000050;
+}
 
 .heading-title {
-  font-size: 8.7rem;
-  display: flex;
-  align-items: center;
-  flex-direction: column;
-  letter-spacing: -0.23rem;
-  justify-content: center;
-  font-family: 'Space Grotesk', 'Fira Code', monospace;
-  font-weight: 1000;
+  font-size: 5rem;
   color: #ffffff;
   text-align: center;
-  margin-top: 60px;
-  margin-bottom: 50px;
-  text-decoration: none;
-  text-shadow: 0 0 10px rgb(255, 255, 255);
-  color: #ffffff;
-  transition:  all.5s ease-in-out;
-  animation-name: heartbeat;
-  animation-duration: 10s;
-  animation-iteration-count: infinite;
-  animation-direction: alternate;
+  margin-top: 20px;
+  margin-bottom: 10px;
+  text-shadow: 0 0 30px rgb(255, 255, 255);
+  font-family: 'Chakra Petch';
+  font-weight: 1000;
+  letter-spacing: -0.42rem;
+  transition: scale 0.2s ease-in-out, animation-duration 0.5s ease-in-out,
+    animation-timing-function ease-in-out;
   cursor: pointer;
-  
 }
+
 .heading-title:hover {
-  border-radius: 12px;
-  scale: 1.2;
-  transition-duration: 3s;
-  animation-name: heartbeat;
-  animation-duration: 3s;
-  animation-iteration-count: infinite;
+  scale: 1.1;
+  transition-duration: 0.2s;
+  animation-duration: 0.5s;
   animation-timing-function: ease-in-out;
-  
-
 }
 
-
+.heading-subtitle {
+  font-size: 0.9rem;
+  color: #ffffff;
+  text-align: center;
+  margin-top: 1px;
+  margin-bottom: 10px;
+  font-family: 'Chakra Petch';
+  font-weight: 1000;
+  letter-spacing: -0.05rem;
+}
 
 /* ===================================
    LAYOUT CONTAINER
 =================================== */
 .layout {
+  position: relative;
   display: flex;
   flex-direction: row;
   justify-content: center;
   align-items: flex-start;
-  gap: 40px;
   padding: 20px;
-  margin-top: 40px;
+  margin: 40px auto;
+  max-width: 3000px;
+  width: 100%; /* ✅ Ensure it stretches fully */
+  min-height: 1000px; /* ✅ Matches your canvas at least */
+  z-index: 0; /* ✅ Let ::before be behind but visible */
+}
 
+.layout::before {
+  content: "";
+  position: absolute;
+  top: 0; left: 0;
+  width: 100%;
+  height: 100%;
+  background: radial-gradient(
+    circle at top center,
+    rgba(0, 0, 0, 0.2) 0%,
+    rgba(0, 0, 0, 0.85) 60%,
+    #000000 100%
+  ),
+  repeating-linear-gradient(
+    to bottom,
+    rgb(68, 68, 68) 0px,
+    rgba(255, 255, 255, 0.015) 2px,
+    transparent 2px,
+    transparent 6px
+  );
+
+  background-size: cover;
+  z-index: -1; /* ✅ Behind all children */
+  pointer-events: none;
 }
 
 .column {
   display: flex;
   flex-direction: column;
-  gap: 25px;
-  width: 250px;
+  gap: 10px;
+  width: 100%;
+  max-width: 400px;
 }
 
 .main-canvas {
   width: 1000px;
   height: 1000px;
-  margin: 20px;
+  border-radius: 23px;;
+  box-shadow: 0 0 16px rgba(255, 255, 255, 0.05), 0 0 8px #ffffff17;
+  margin: 10px;
   padding: 20px;
   display: flex;
 }
 
 canvas {
   width: auto;
-  border:none;
+  background: #000;
+  border: none;
   height: auto;
   box-shadow: #ffffff4f 0 0 0 2px;
-  border-radius: 13px;
-  transition: box-shadow 0.5s ease-in-out, box-glow 0.6s ease-in-out;
-  backdrop-filter: blur(15px) saturate(130%);
-  box-shadow: 0 0 60px rgba(255, 255, 255, 0.05), 0 0 8px #ffffff17;
+  border-radius: 23px;
+  transition: box-shadow 0.2s ease-in-out, box-glow 0.2s ease-in-out;
+  box-shadow: 0 0 40px rgba(255, 255, 255, 0.05), 0 0 9px #ffffffb1;
 }
-
 
 canvas:hover {
-  box-shadow:
-    0 0 36px 8px #ffffff33,
-    0 0 15px 8px #ffffff4f,
-    0 0 0 2px #0000;
-
+  box-shadow: 0 0 36px 8px #ffffff33, 0 0 15px 8px #ffffff4f, 0 0 0 2px #0000;
 }
 
-canvas.dominant-emotion-joy           { box-shadow: 0 0 290px 0 rgba(255, 251, 0, 0.4) !important; }
-canvas.dominant-emotion-trust         { box-shadow: 0 0 290px 0 rgba(  0, 255, 120, 0.4) !important; }
-canvas.dominant-emotion-fear          { box-shadow: 0 0 290px 0 rgba(  0, 153, 153, 0.4) !important; }
-canvas.dominant-emotion-surprise      { box-shadow: 0 0 290px 0 rgba(102,   0, 204, 0.4) !important; }
-canvas.dominant-emotion-sadness       { box-shadow: 0 0 290px 0 rgba( 51, 102, 204, 0.4) !important; }
-canvas.dominant-emotion-disgust       { box-shadow: 0 0 290px 0 rgba(230,   0, 120, 0.4) !important; }
-canvas.dominant-emotion-anger         { box-shadow: 0 0 290px 0 rgba(255,   0,   0, 0.4) !important; }
-canvas.dominant-emotion-anticipation  { box-shadow: 0 0 290px 0 rgba(255, 128,   0, 0.4) !important; }
+canvas.dominant-emotion-joy {
+  box-shadow: 0 0 290px 0 rgba(255, 251, 0, 0.4);
+}
+canvas.dominant-emotion-trust {
+  box-shadow: 0 0 290px 0 rgba(0, 255, 120, 0.4);
+}
+canvas.dominant-emotion-fear {
+  box-shadow: 0 0 290px 0 rgba(0, 153, 153, 0.4);
+}
+canvas.dominant-emotion-surprise {
+  box-shadow: 0 0 290px 0 rgba(102, 0, 204, 0.4);
+}
+canvas.dominant-emotion-sadness {
+  box-shadow: 0 0 290px 0 rgba(51, 102, 204, 0.4);
+}
+canvas.dominant-emotion-disgust {
+  box-shadow: 0 0 290px 0 rgba(230, 0, 120, 0.4);
+}
+canvas.dominant-emotion-anger {
+  box-shadow: 0 0 290px 0 rgba(255, 0, 0, 0.4);
+}
+canvas.dominant-emotion-anticipation {
+  box-shadow: 0 0 290px 0 rgba(255, 128, 0, 0.4);
+}
 
-canvas.dominant-emotion-affectionate  { box-shadow: 0 0 290px 0 rgba(255, 200, 100, 0.4) !important; }
-canvas.dominant-emotion-shocked       { box-shadow: 0 0 290px 0 rgba(150,  50, 200, 0.4) !important; }
-canvas.dominant-emotion-contempt      { box-shadow: 0 0 290px 0 rgba(200,   0, 100, 0.4) !important; }
-canvas.dominant-emotion-hopeful       { box-shadow: 0 0 290px 0 rgba(100, 255, 180, 0.4) !important; }
-canvas.dominant-emotion-depressed     { box-shadow: 0 0 290px 0 rgba(100, 100, 180, 0.4) !important; }
-canvas.dominant-emotion-delight       { box-shadow: 0 0 290px 0 rgba(255, 220,  50, 0.4) !important; }
-canvas.dominant-emotion-anxiety       { box-shadow: 0 0 290px 0 rgba( 50, 100, 200, 0.4) !important; }
-canvas.dominant-emotion-aggression    { box-shadow: 0 0 290px 0 rgba(255,  50,  50, 0.4) !important; }
+canvas.dominant-emotion-affectionate {
+  box-shadow: 0 0 290px 0 rgba(255, 200, 100, 0.4) !important;
+}
+canvas.dominant-emotion-shocked {
+  box-shadow: 0 0 290px 0 rgba(150, 50, 200, 0.4) !important;
+}
+canvas.dominant-emotion-contempt {
+  box-shadow: 0 0 290px 0 rgba(200, 0, 100, 0.4) !important;
+}
+canvas.dominant-emotion-hopeful {
+  box-shadow: 0 0 290px 0 rgba(100, 255, 180, 0.4) !important;
+}
+canvas.dominant-emotion-depressed {
+  box-shadow: 0 0 290px 0 rgba(100, 100, 180, 0.4) !important;
+}
+canvas.dominant-emotion-delight {
+  box-shadow: 0 0 290px 0 rgba(255, 220, 50, 0.4) !important;
+}
+canvas.dominant-emotion-anxiety {
+  box-shadow: 0 0 290px 0 rgba(50, 100, 200, 0.4) !important;
+}
+canvas.dominant-emotion-aggression {
+  box-shadow: 0 0 290px 0 rgba(255, 50, 50, 0.4) !important;
+}
 
-
-canvas[class^="dominant-emotion"] {
+canvas[class^='dominant-emotion'] {
   transition: box-shadow 0.6s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
@@ -132,22 +193,121 @@ canvas[class^="dominant-emotion"] {
 .column-right-column {
   display: flex;
   flex-direction: column;
-  gap: 20px;
-  width: 250px;
+  height: 980px;
+  justify-content: space-between;
+  gap: 10px;
+  width: 400px;
   align-items: center;
-  
 }
-
 
 .column-left-column {
   display: flex;
   flex-direction: column;
-  gap: 20px;
-  width: 250px;
+  gap: 10px;
+  height: 980px;
+  
   align-items: center;
+  justify-content: flex-start;
+  margin-top: 120px;
+}
+
+.column-left-column-upper {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  padding: 12px 16px;
+  border-radius: 13px;
+  background-color: #ffffff00;
+  color: #ffffff;
+  font-size: 1.2em;
+  font-weight: 600;
+  box-shadow: linear-gradient(180deg, rgba(0, 0, 0, 0.6) 20%, rgba(15, 15, 15, 0.9) 100%);
+}
+
+.column-left-column-middle {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  padding: 12px 16px;
+  border-radius: 15px;
+  background-color: #ffffff00;
+  color: #ffffff;
+  font-size: 1.2em;
+  font-weight: 600;
+  box-shadow: linear-gradient(180deg, rgba(0, 0, 0, 0.6) 20%, rgba(15, 15, 15, 0.9) 100%);
 }
 
 
+.column-left-column-lower {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  padding: 12px 16px;
+  border-radius: 15px;
+  background-color: #ffffff00;
+  color: #ffffff;
+  font-size: 1.2em;
+  font-weight: 600;
+  box-shadow: linear-gradient(180deg, rgba(0, 0, 0, 0.6) 20%, rgba(15, 15, 15, 0.9) 100%);
+}
+
+
+.column-right-column-upper {
+display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 100px;
+  margin-top: 200px;
+  width: 100%;
+  padding: 12px 16px;
+  border-radius: 15px;
+  background-color: #ffffff00;
+  color: #ffffff;
+  font-size: 1.2em;
+  font-weight: 600;
+  box-shadow: linear-gradient(180deg, rgba(0, 0, 0, 0.6) 20%, rgba(15, 15, 15, 0.9) 100%);
+
+}
+
+.column-right-column-middle {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 300px;
+  margin-top: 100px;
+  width: 100%;
+  padding: 12px 16px;
+  border-radius: 15px;
+  background-color: #ffffff00;
+  color: #ffffff;
+  font-size: 1.2em;
+  font-weight: 600;
+  box-shadow: linear-gradient(180deg, rgba(0, 0, 0, 0.6) 20%, rgba(15, 15, 15, 0.9) 100%);
+
+}
+.column-right-column-lower {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  padding: 12px 16px;
+  border-radius: 15px;
+  background-color: #ffffff00;
+  color: #ffffff;
+  font-size: 1.2em;
+  font-weight: 600;
+  box-shadow: linear-gradient(180deg, rgba(0, 0, 0, 0.6) 20%, rgba(15, 15, 15, 0.9) 100%);
+}
+/* ====
 /* ===================================
    UI STYLING
 =================================== */
@@ -156,12 +316,14 @@ canvas[class^="dominant-emotion"] {
   display: flex;
   flex-direction: column;
   align-items: center;
-  width: 220px;
+  width: 100%;
+  max-width: 280px;
   align-items: stretch;
-  justify-content:flex-start;
+  justify-content: flex-start;
   gap: 20px;
-  padding: 24px;
-  margin: 16px;
+  padding: 16px 16px;
+  cursor: pointer;
+  margin: 10px;
   position: relative;
   flex-wrap: nowrap;
   overflow: hidden;
@@ -170,30 +332,21 @@ canvas[class^="dominant-emotion"] {
   box-shadow: 0 0 60px rgba(255, 255, 255, 0.05), 0 0 8px #ffffff17;
   border: 1.5px solid rgba(255, 255, 255, 0.08);
   backdrop-filter: blur(12px) saturate(130%);
-  font-family: 'Space Grotesk', 'Fira Code', monospace;
+  font-family: 'Chakra Petch';
   font-weight: 100;
-  font-size: 15px;
+  font-size: 1.9rem;
   letter-spacing: 1px;
+  text-shadow: white 0 0 6px, black 0 0 2px;
   color: #cfcfcf;
   z-index: 10;
-  transition: all 0.4s ease;
 }
-
-
 
 .ui-card:hover {
   scale: 1.05;
-  transition-duration: 3s;
-  animation: infinite;
-  animation-name: heartbeat;
-  animation-duration: 3s;
-  animation-iteration-count: infinite;
+  transition-duration: 0.2s;
+  animation-duration: 0.5s;
   animation-timing-function: ease-in-out;
-  
-
 }
-
-
 
 .ui-speed-section {
   font-size: 1.1rem;
@@ -212,7 +365,6 @@ canvas[class^="dominant-emotion"] {
   text-shadow: 0 0 6px rgba(255, 255, 255, 0.1);
 }
 
-
 /* BUTTON STYLING */
 
 .custom-btn {
@@ -221,61 +373,33 @@ canvas[class^="dominant-emotion"] {
   overflow: hidden;
   font-family: 'Courier New', monospace;
   letter-spacing: 1.5px;
+  text-shadow: 0 0 6px rgba(255, 255, 255, 0.1);
   text-transform: uppercase;
   border: 2px solid #ffffff33;
   background-color: transparent;
-  padding: 12px 24px;
+  transition: scale 0.2s ease-in-out, animation-duration 0.5s ease-in-out,  
+    animation-timing-function ease-in-out;
+  cursor: pointer;
+  padding: 12px 14px;
 }
 
-
-
-
-
-.btn-submit-right-column {
+.btn-go-right-column {
   position: relative;
-  display: flex;
-  cursor: pointer;
-  text-align: left;
-  align-items: center;
-  justify-content: center;
   color: #ffffff;
+  border-radius: 4.6px;
+
   overflow: hidden;
   font-family: 'Courier New', monospace;
-  letter-spacing: 1.3;
+  letter-spacing: 1.5px;
+  text-shadow: 0 0 6px rgba(255, 255, 255, 0.1);
   text-transform: uppercase;
-  border: 2px solid #ffffff33;
+  border: 2px solid #ffffff;
   background-color: transparent;
-  border-radius: 24px;
+  transition: scale 0.2s ease-in-out, animation-duration 0.5s ease-in-out,
+    animation-timing-function ease-in-out;
+  cursor: pointer;
+  margin: 5px 0;
   padding: 12px 24px;
-  transition: all 0.3s ease;
-  box-shadow: 0 0 20px rgba(255, 255, 255, 0.05), 0 0 8px #ffffff17;
-  backdrop-filter: blur(12px) saturate(130%);
-  font-size: 1.1em;
-  font-weight: 600;
-}
-
-/* Shine effect */
-.custom-btn::before {
-  content: '';
-  position: absolute;
-  ;
-  top: 0;
-  left: -100%;
-  width: 100%;
-  height: 100%;
-  background: linear-gradient(
-    to right,
-    transparent,
-    rgba(255, 255, 255, 0.5),
-    transparent
-  );
-  transform: skewX(-20deg);
-  transition: left 0.5s ease;
-  z-index: 1;
-}
-
-.custom-btn:hover::before {
-  left: 100%;
 }
 
 .custom-btn:hover {
@@ -289,7 +413,8 @@ canvas[class^="dominant-emotion"] {
 }
 
 @keyframes pulse-glow {
-  0%, 100% {
+  0%,
+  100% {
     box-shadow: 0 0 6px #ffffff22;
   }
   50% {
@@ -300,11 +425,6 @@ canvas[class^="dominant-emotion"] {
 .custom-btn.pulse {
   animation: pulse-glow 3s infinite ease-in-out;
 }
-
-
-
-
-
 
 /* === Speed Control === */
 .ui-speed-control {
@@ -317,6 +437,9 @@ canvas[class^="dominant-emotion"] {
   display: flex;
   align-items: center;
   width: 100%;
+  transition: scale 0.2s ease-in-out, animation-duration 0.5s ease-in-out,
+    animation-timing-function ease-in-out;
+
   gap: 1px;
 }
 
@@ -324,10 +447,11 @@ canvas[class^="dominant-emotion"] {
 .speed-slider {
   width: 100%;
   appearance: none;
-  height: 6px;
+  height: 3px;
   border-radius: 3px;
   background: linear-gradient(to right, #444 0%, #222 100%);
-  transition: background 0.3s ease;
+  transition: scale 0.2s ease-in-out, animation-duration 0.5s ease-in-out,
+    animation-timing-function ease-in-out;
   cursor: pointer;
   outline: none;
 }
@@ -357,50 +481,47 @@ canvas[class^="dominant-emotion"] {
 .ui-speed-btns {
   display: flex;
   gap: 10px;
+
   justify-content: center;
 }
 
 .custom-btn {
   background: #333;
   color: white;
-  padding: 8px 16px;
-  border-radius: 8px;
+  justify-content: center;
+  align-items: center;
+  border-radius: 28px;
   border: none;
-  font-size: 14px;
+  font-size: 1.2em;
+  translate: (-50%, -50%);
   cursor: pointer;
   margin: 5px 0;
 }
 
-.dorian-response-section {
+.column-right-column-lower {
   display: flex;
   flex-direction: row;
   align-items: center;
   gap: 10px;
   width: 100%;
   display: flex;
-  flex-direction: row;
   align-items: center;
   justify-content: center;
-  width: 100%;
   padding: 12px 16px;
   border-radius: 15px;
-  background-color: #ffffff1a;
+  background-color: #ffffff00;
   color: #ffffff;
   font-size: 1em;
   font-weight: 600;
-  border: none;
-  box-shadow: 0 0 20px rgba(255, 255, 255, 0.05), 0 0 8px #ffffff17;
-  transition: background-color 0.3s, box-shadow 0.3s, color 0.3s; 
-  background: linear-gradient(180deg, rgba(0, 0, 0, 0.6) 20%, rgba(15, 15, 15, 0.9) 100%);
+  box-shadow: linear-gradient(180deg, rgba(0, 0, 0, 0.6) 20%, rgba(15, 15, 15, 0.9) 100%);
+  background: linear-gradient(180deg, rgba(0, 0, 0, 0.139) 20%, rgba(0, 0, 0, 0.293) 100%);
 }
 
 .gpt-output {
-  font-family: "Space Grotesk", "Fira Code", monospace;
+  font-family: 'Chakra Petch';
   font-size: 1.2em;
-  color: #ffffff;
-
+  color: #bebebe;
 }
-
 
 .btn-mutation {
   position: relative;
@@ -415,7 +536,6 @@ canvas[class^="dominant-emotion"] {
   padding: 12px 24px;
 }
 
-
 .btn-mutation::before {
   content: '';
   position: absolute;
@@ -424,12 +544,7 @@ canvas[class^="dominant-emotion"] {
   left: -100%;
   width: 100%;
   height: 100%;
-  background: linear-gradient(
-    to right,
-    transparent,
-    rgba(255, 255, 255, 0.5),
-    transparent
-  );
+  background: linear-gradient(to right, transparent, rgba(255, 255, 255, 0.5), transparent);
   transform: skewX(-20deg);
   transition: right 0.5s ease;
   z-index: 1;
@@ -440,12 +555,7 @@ canvas[class^="dominant-emotion"] {
 }
 
 .btn-mutation-btn:hover {
-background: linear-gradient(
-    to right,
-    transparent,
-    rgba(255, 255, 255, 0.5),
-    transparent
-  );
+  background: linear-gradient(to right, transparent, rgba(255, 255, 255, 0.5), transparent);
   transform: skewX(-20deg);
   transition: right 0.5s ease;
   z-index: 1;
@@ -456,9 +566,7 @@ background: linear-gradient(
   z-index: 2;
 }
 
-
-
-.input-text-box   {
+.input-text-box {
   display: flex;
   flex-direction: row;
   align-items: center;
@@ -466,50 +574,39 @@ background: linear-gradient(
   width: 100%;
   padding: 12px 16px;
   border-radius: 15px;
-  font-family: "Space Grotesk", "Fira Code", monospace;
-  background-color: #ffffff1a;
+  font-family: 'Chakra Petch', 'Space Grotesk', 'Fira Code', monospace;
+  background:#000000e5;
   color: #ffffff;
-  font-size: 1em;
+    transition: box-shadow 0.4s ease-in-out;
+
   font-weight: 600;
-  border: none;
-  box-shadow: 0 0 20px rgba(255, 255, 255, 0.05), 0 0 8px #ffffff17;
-  transition: background-color 0.3s, box-shadow 0.3s, color 0.3s; 
-  background: linear-gradient(180deg, rgba(0, 0, 0, 0.6) 20%, rgba(15, 15, 15, 0.9) 100%);
+  border: solid 1px rgba(255, 255, 255, 0.1);
 }
 
 .input-text {
   width: 100%;
   border: none;
   background: transparent;
-  font-family: "Space Grotesk", "Fira Code", monospace;
+  font-family: 'Chakra Petch', 'Space Grotesk', 'Fira Code', monospace;
   color: #ffffff;
-  font-size: 1em;
+  font-size: 1.23em;
   font-weight: 600;
   outline: none;
 }
 
-
-
 .input-text-box:hover {
-  box-shadow: 
-    0 0 40px rgba(255, 255, 255, 0.08), 
-    0 8px 28px rgba(0, 0, 0, 0.6),
-    0 2px 12px rgba(255, 255, 255, 0.1);
-  background: linear-gradient(135deg, rgba(25, 25, 25, 0.92) 30%, rgba(0, 0, 0, 0.6) 100%);
-  transition: all 0.09s cubic-bezier(0.4, 0.1, 0.2, 1);
-   animation-name: scale-in-center;
-  animation-duration: 0.09;
-  animation-iteration-count: infinite;
-  animation-timing-function: ease-in-out;
-  cursor: pointer;
-  transform: scale(1.01);
-  transition: transform 0.3s ease-in-out;
-  background-color: #ffffff1a;
-  color: #ffffff;
-  box-shadow: 0 0 20px rgba(255, 255, 255, 0.05), 0 0 8px #ffffff17;
-  backdrop-filter: blur(12px) saturate(130%);
+  box-shadow: 0 0 40px rgba(255, 255, 255, 0.15), 0 0 80px rgba(255, 255, 255, 0.25),
+    0 0 100px rgba(255, 255, 255, 0.3);
 }
-
+.gpt-answer-text-box {
+  background: #000000;
+  flex-direction: column;
+  align-items: center;
+  border-radius: 23px;
+  justify-content: center;
+  width: 100%;
+  padding: 12px 16px;
+}
 /* ===================================
    RESPONSIVE LAYOUT FOR MOBILE
 =================================== */
@@ -523,9 +620,8 @@ background: linear-gradient(
   }
 
   .heading-title {
-font-size: 4.2rem
-margin-bottom: 20px;
-}
+    font-size: 4.2rem;
+  }
 
   .main-canvas {
     width: 100%;
@@ -539,11 +635,19 @@ margin-bottom: 20px;
     height: auto;
   }
 
-  .column-left-column,
-  .column-right-column {
+  .column-left-column {
     width: 100%;
     flex-direction: column;
     align-items: center;
+  }
+
+  .column-right-column {
+    width: 260px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-evenly;
+    height: 100%;
   }
 
   .ui-card {
@@ -552,28 +656,10 @@ margin-bottom: 20px;
   }
 }
 
-
-
-@keyframes scale-in-center {
-  0% {
-    transform: scale(0.8);
-    opacity: 0;
-  }
-  100% {
-    transform: scale(1);
-    opacity: 1;
-  }
-}
-
-
-/* Slower animation: increase duration where used */
 .input-text-box:hover {
-  /* ...existing styles... */
-  animation-duration: 1.5s;
-  animation-name: rubberBand;
-  animation-iteration-count: infinite;
-  animation-timing-function: ease-in-out;
+  box-shadow: 0 0 40px rgba(255, 255, 255, 0.15), 0 0 80px rgba(255, 255, 255, 0.25),
+    0 0 100px rgba(255, 255, 255, 0.3);
+  transition: box-shadow 0.4s ease-in-out;
+  cursor: pointer;
+  z-index: 10;
 }
-
-
-  
