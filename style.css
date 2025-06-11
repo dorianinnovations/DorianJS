@@ -523,7 +523,8 @@ background: linear-gradient(
   }
 
   .heading-title {
-font-size: 2.5rem
+font-size: 5.5rem
+margin-bottom: 20px;
 }
 
   .main-canvas {
@@ -548,7 +549,7 @@ font-size: 2.5rem
 
   .ui-card {
     width: 96%;
-    margin: 10px 0;
+    margin: 7px;
   }
 }
 
