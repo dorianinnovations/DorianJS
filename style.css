@@ -271,7 +271,7 @@ canvas[class^="dominant-emotion"] {
     transparent
   );
   transform: skewX(-20deg);
-  transition: left 0.5s ease;
+  transition: left 0.9s ease;
   z-index: 1;
 }
 
@@ -524,7 +524,6 @@ background: linear-gradient(
   .main-canvas {
     width: 100%;
     height: auto;
-    margin: 0;
     padding: 0;
   }
 
@@ -542,7 +541,7 @@ background: linear-gradient(
 
   .ui-card {
     width: 90%;
-    margin: 10px 0;
+    margin: 10px;
   }
 }
 
