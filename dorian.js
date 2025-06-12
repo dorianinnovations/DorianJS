@@ -69,22 +69,47 @@ function initWorker() {
       if (running) requestAnimationFrame(animate);
     }
   };
-  worker.postMessage({ type: 'init', opts: { cols: COLS, rows: ROWS, maxAge: MAX_AGE, mutationChance: MUTATION_CHANCE, birthDelay: BIRTH_DELAY, cellSize: CELL_SIZE } });
+  worker.postMessage({
+    type: 'init',
+    opts: {
+      cols: COLS,
+      rows: ROWS,
+      maxAge: MAX_AGE,
+      mutationChance: MUTATION_CHANCE,
+      birthDelay: BIRTH_DELAY,
+      cellSize: CELL_SIZE,
+      agentCount: parseInt(agentCountSlider.value),
+      reproductionRate: parseFloat(reproductionRateSlider.value)
+    }
+  });
 }
 
-initWorker();
-
-
+const agentCountSlider = document.getElementById('agent-count-slider');
+const reproductionRateSlider = document.getElementById('reproduction-rate-slider');
 const speedSlider = document.getElementById('speed-slider');
 const speedValue = document.getElementById('speed-value');
 const pauseBtn = document.getElementById('pause-btn');
 const mutationToggle = document.getElementById('toggle-mutation');
 const resetBtn = document.getElementById('reset-btn');
 
+initWorker();
+
 mutationToggle.addEventListener('change', () => {
   const chance = mutationToggle.checked ? MUTATION_CHANCE : 0;
   if (worker) {
     worker.postMessage({ type: 'setMutation', mutationChance: chance });
+  }
+});
+
+agentCountSlider.addEventListener('input', () => {
+  if (worker) {
+    worker.postMessage({ type: 'setAgentCount', count: parseInt(agentCountSlider.value) });
+  }
+});
+
+reproductionRateSlider.addEventListener('input', () => {
+  if (worker) {
+    worker.postMessage({ type: 'setReproductionRate', rate: parseFloat(reproductionRateSlider.value) });
   }
 });
 

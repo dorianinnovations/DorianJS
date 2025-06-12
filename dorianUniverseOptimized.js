@@ -1,12 +1,14 @@
 import { EMOTIONS, EMOTION_LIST, EMOTION_ID_TO_NAME, getZone, terrainZones } from './emotions.js';
 
 export class DorianUniverseOptimized {
-  constructor({ 
-  cols, 
-  rows, 
-  maxAge, 
-  mutationChance, 
-  birthDelay 
+  constructor({
+  cols,
+  rows,
+  maxAge,
+  mutationChance,
+  birthDelay,
+  agentCount,
+  reproductionRate
 } = {}) {
   this.cols = cols !== undefined ? cols : 150 + Math.floor(Math.random() * 101); // 150-250
   this.rows = rows !== undefined ? rows : 150 + Math.floor(Math.random() * 101); // 150-250
@@ -14,6 +16,8 @@ export class DorianUniverseOptimized {
   this.maxAge = maxAge !== undefined ? maxAge : 1000 + Math.floor(Math.random() * 2001); // 1000-3000
   this.mutationChance = mutationChance !== undefined ? mutationChance : 0.01 + Math.random() * 0.09; // 0.01-0.10
   this.birthDelay = birthDelay !== undefined ? birthDelay : 1 + Math.floor(Math.random() * 5); // 1-5
+  this.agentCount = agentCount !== undefined ? agentCount : 500;
+  this.reproductionRate = reproductionRate !== undefined ? reproductionRate : 0.5;
 
     this.lifeForce = new Float32Array(this.size);
     this.emotion = new Uint8Array(this.size);
@@ -89,23 +93,25 @@ export class DorianUniverseOptimized {
     const emotion = this.randomEmotion();
     this.groupMeta.set(group, {
       dominantEmotion: emotion,
-      spreadRate: 0.0001 + Math.random() * 0.05,
+      spreadRate: (0.0001 + Math.random() * 0.05) * this.reproductionRate,
       aggression: Math.random(),
       mutationBias: Math.random()
     });
-    for (let dx = -1; dx <= 1; dx++) {
-      for (let dy = -1; dy <= 1; dy++) {
-        const x = cx + dx, y = cy + dy;
-        if (x >= 0 && y >= 0 && x < this.cols && y < this.rows) {
-          const idx = this.index(x, y);
-          this.lifeForce[idx] = 0.5 + Math.random() * 0.5; // Initial life force
-          this.emotion[idx] = emotion;
-          this.intensity[idx] = 1.0;
-          this.energy[idx] = 300;
-          this.age[idx] = 0;
-          this.groupId[idx] = group;
-          this.active.add(idx);
-        }
+
+    const radius = Math.max(1, Math.floor(Math.sqrt(this.agentCount) / 2));
+    for (let i = 0; i < this.agentCount; i++) {
+      const dx = Math.floor(Math.random() * (radius * 2 + 1)) - radius;
+      const dy = Math.floor(Math.random() * (radius * 2 + 1)) - radius;
+      const x = cx + dx, y = cy + dy;
+      if (x >= 0 && y >= 0 && x < this.cols && y < this.rows) {
+        const idx = this.index(x, y);
+        this.lifeForce[idx] = 0.5 + Math.random() * 0.5;
+        this.emotion[idx] = emotion;
+        this.intensity[idx] = 1.0;
+        this.energy[idx] = 300;
+        this.age[idx] = 0;
+        this.groupId[idx] = group;
+        this.active.add(idx);
       }
     }
   }
@@ -272,5 +278,17 @@ for (const n of neighbors) {
       }
     }
     return imageData;
+  }
+
+  setAgentCount(count) {
+    this.agentCount = count;
+  }
+
+  setReproductionRate(rate) {
+    this.reproductionRate = rate;
+  }
+
+  setMutationChance(chance) {
+    this.mutationChance = chance;
   }
 }
