@@ -7,6 +7,8 @@
   <link rel="stylesheet" href="style.css">
   <link href="https://fonts.googleapis.com/css2?family=Chakra+Petch&display=swap" rel="stylesheet">
 </head>
+  <script type="module" src="dorian.js"></script>
+
 <body>
 
   <div class="header">
@@ -53,16 +55,18 @@
 
         <div class="sagA-sliders-labels">
           <label class="agent-count-label">Agent Count:</label>
-          <input type="range" min="100" max="1000" value="500" class="speed-slider">
+          <input type="range" min="100" max="1000" value="500" step="1" id="agent-count-slider" class="speed-slider">
         </div>
         <div class="sagA-sliders-labels">
           <label class="reproduction-label">Reproduction Rate:</label>
-          <input type="range" min="0.1" max="1.0" value="0.5" step="0.1" class="speed-slider">
+          <input type="range" min="0.1" max="1.0" value="0.5" step="0.1" id="reproduction-rate-slider" class="speed-slider">
         </div>
         <div class="under-reproduction-divider"></div>
         <div class="sagA-sliders-labels">
           <label class="speed-label">Speed:</label>
-          <input type="range" min="0.1" max="1.0" value="0.5" step="0.1"  class="speed-slider">
+          
+          <input type="range" min="0.1" max="1.0" value="0.5" step="0.1" id="speed-slider" class="speed-slider">
+          <span id="speed-value">0.5</span>  
         </div>    
           <div class="ui-speed-box">
             <div class="ui-speed-btns">
@@ -82,7 +86,6 @@
     </div>
   </main>
 
-  <script type="module" src="dorian.js"></script>
   <script>
     async function sendToClaude() {
       const input = document.getElementById('gpt-input').value;
