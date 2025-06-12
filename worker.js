@@ -33,11 +33,17 @@ function startAnimationLoop() {
 }
 
 self.onmessage = (e) => {
-  const { type, opts, x, y, updates, mutationChance } = e.data;
+  const { type, opts, x, y, updates, mutationChance, count, rate } = e.data;
   switch (type) {
     case 'init':
       universe = new DorianUniverseOptimized(opts);
       cellSize = opts.cellSize || cellSize;
+      if (typeof opts.agentCount === 'number') {
+        universe.setAgentCount(opts.agentCount);
+      }
+      if (typeof opts.reproductionRate === 'number') {
+        universe.setReproductionRate(opts.reproductionRate);
+      }
       break;
     case 'seed':
       if (universe) universe.seed(x, y);
@@ -56,6 +62,16 @@ self.onmessage = (e) => {
     case 'setMutation':
       if (universe && typeof mutationChance === 'number') {
         universe.setMutationChance(mutationChance);
+      }
+      break;
+    case 'setAgentCount':
+      if (universe && typeof count === 'number') {
+        universe.setAgentCount(count);
+      }
+      break;
+    case 'setReproductionRate':
+      if (universe && typeof rate === 'number') {
+        universe.setReproductionRate(rate);
       }
       break;
   }
