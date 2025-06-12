@@ -56,18 +56,7 @@ Choose the most appropriate dominant emotion **from this exact list**:
   }
 }
 
-
-
-
-
-
-
-
-
-
-
-
-
+// Initialize the worker
 
 function initWorker() {
   if (worker) worker.terminate();

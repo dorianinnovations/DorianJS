@@ -6,127 +6,104 @@
   <title>Dorian</title>
   <link rel="stylesheet" href="style.css">
   <link href="https://fonts.googleapis.com/css2?family=Chakra+Petch&display=swap" rel="stylesheet">
-
+</head>
 <body>
-    <div class="header">
-      <h2 class="heading-title">Dorian</h2>
-      <p class="heading-subtitle">A project by DorianAI<a href="https://dorianai.replit.app/"></a></p>
-    </div>>
-    
-    <!-- Main Content Layout -->
-<main class="layout">
-  <!-- Left Panel -->
-  <div class="column-left-column">
-    <div class="ui-card">
-      <!-- Metrics Panel -->
-      <div class="metrics-panel">
-        <div class="metric-box"><span id="tick-metric">Seed the canvas to Start!</span></div>
-        <div class="metric-box"><span id="diversity-metric">Then, let it grow!</span></div>
-        <div class="metric-box"><span id="entropy-metric"></span></div>
-        <div class="metric-box"><span id="alive-metric"></span></div>
-        <div class="metric-box"><span id="growth-metric"></span></div>
-        <div class="metric-box"><span id="dominant-metric"></span></div>
-      </div>
-    </div>
+
+  <div class="header">
+    <h2 class="heading-title">Dorian</h2>
+        <p class="heading-subtitle">A project by DorianAI <a href="https://dorianai.replit.app/"></a></p>
+
+    <div class="header-divider"></div>
   </div>
 
-
-
-
-
-  <!-- Canvas Panel -->
-  <div class="main-canvas">
-    <canvas id="dorian-canvas" width="1000" height="1000"></canvas>
-  </div>
-
-
-  <!-- column-right-column --> 
-  <div class="column-right-column">
-    <div class="column-right-column-upper">
-      <div class="ui-speed-box">
-          <div class="speed-slider-wrapper">
-            <label for="speed-slider">Speed:</label>
-            
-            <input type="range" id="speed-slider" min="1" max="5" value="1" step="1" class="speed-slider">
-            <span>x <span id="speed-value">1</span></span>
-          </div>
-          <div class="ui-speed-btns">
-            <button id="pause-btn" type="button" class="custom-btn">Pause</button>
-            <button id="reset-btn" type="button" class="custom-btn">Reset</button>
-          </div>
-        </form>
-      </div>
-      <div class="ui-mutation-box">
-        <div class="btn-mutation">
-          <input type="checkbox" id="toggle-mutation" checked>
-          <label for="toggle-mutation">Mutation</label>
+  <main class="layout">
+    <div class="column-left-column">
+      <div class="ui-card">
+        <div class="metrics-panel">
+          <div class="metric-box"><span id="tick-metric">Seed the canvas to Start!</span></div>
+          <div class="metric-box"><span id="diversity-metric">Then, let it grow!</span></div>
+          <div class="metric-box"><span id="entropy-metric"></span></div>
+          <div class="metric-box"><span id="alive-metric"></span></div>
+          <div class="metric-box"><span id="growth-metric"></span></div>
+          <div class="metric-box"><span id="dominant-metric"></span></div>
         </div>
       </div>
-      </div>
-      <div class ="column-right-column-middle">
       <div class="input-text-box">
-        <input type="text" placeholder="Ask anything" class="input-text" id="gpt-input"/>
-        <form type="submit" onclick="sendToClaude()" class="btn-go-right-column">Go</form>
+          <input type="text" placeholder="Ask anything" class="input-text" id="gpt-input" />
+          <button type="button" onclick="sendToClaude()" class="btn-go-right-column">Go</button>
+        </div>
+
+        <div class="gpt-output-container">
+          <p id="gpt-output" class="gpt-answer-text-box"></p>
+        </div>
+    </div>
+    
+    <div class="center-area-wrapper">
+      <div class="main-canvas">
+        <canvas id="dorian-canvas" width="1000" height="1000"></canvas>
+      </div>        
+    </div>
+
+    <div class="column-right-column">
+      <div class="column-right-column-upper">
+        <div class="speed-slider-wrapper">
+          <h2 class="ux-manager">SagA</h2>
+          <h3 class="ux-manager-subtitle">Structured Assembly for Generative Agency</h3>
+          <div class="sagA-divider"></div> 
+
+        <div class="sagA-sliders-labels">
+          <label class="agent-count-label">Agent Count:</label>
+          <input type="range" min="100" max="1000" value="500" class="speed-slider">
+        </div>
+        <div class="sagA-sliders-labels">
+          <label class="reproduction-label">Reproduction Rate:</label>
+          <input type="range" min="0.1" max="1.0" value="0.5" step="0.1" class="speed-slider">
+        </div>
+        <div class="under-reproduction-divider"></div>
+        <div class="sagA-sliders-labels">
+          <label class="speed-label">Speed:</label>
+          <input type="range" min="0.1" max="1.0" value="0.5" step="0.1"  class="speed-slider">
+        </div>    
+          <div class="ui-speed-box">
+            <div class="ui-speed-btns">
+              <button id="pause-btn" type="button" class="custom-btn">Pause</button>
+              <button id="reset-btn" type="button" class="custom-btn">Reset</button>
+            </div>
+          </div>
+
+          <div class="ui-mutation-box">
+            <div class="btn-mutation">
+              <input type="checkbox" id="toggle-mutation" checked>
+              <label for="toggle-mutation">Mutation</label>
+            </div>
+          </div>
+        </div>
       </div>
-      <div class="dorian-response-section">
-      
     </div>
-    <div class="column-right-column-lower">
-    <p id="gpt-output" class ="gpt-answer-text-box">thinking...</p>
-    </div>
-  </div>
+  </main>
 
+  <script type="module" src="dorian.js"></script>
+  <script>
+    async function sendToClaude() {
+      const input = document.getElementById('gpt-input').value;
+      const output = document.getElementById('gpt-output');
+      output.textContent = "Thinking...";
 
+      try {
+        const res = await fetch('http://localhost:3000/ask', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ prompt: input })
+        });
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-</main>
-
-
-
-    <!-- Scripts -->
-    <script type="module" src="dorian.js"></script>
-    <script>
-  async function sendToClaude() {
-    const input = document.getElementById('gpt-input').value;
-    const output = document.getElementById('gpt-output');
-    output.textContent = "Thinking...";
-
-    try {
-      const res = await fetch('http://localhost:3000/ask', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ prompt: input })
-      });
-
-      const data = await res.json();
-      output.textContent = data.reply || "No response.";
-    } catch (err) {
-      output.textContent = "Error contacting Claude.";
-      console.error(err);
+        const data = await res.json();
+        output.textContent = data.reply || "No response.";
+      } catch (err) {
+        output.textContent = "Error contacting Claude.";
+        console.error(err);
+      }
     }
-  }
-</script>
+  </script>
 
 </body>
 </html>
