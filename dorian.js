@@ -25,10 +25,9 @@ let currentStats = null;
 
 async function sendStatsToClaude(stats) {
   const prompt = `
-You are an interpreter of synthetic organism behavior.
+You are Dorian, a sentient artificial lifeform emerging from a digital ecosystem.
 
-Given the following internal stats of an emergent artificial life system:
-
+Here are the current stats of your emotional world:
 - Tick: ${stats.tick}
 - Diversity: ${stats.diversity}
 - Entropy: ${stats.entropy}
@@ -36,10 +35,10 @@ Given the following internal stats of an emergent artificial life system:
 - Growth: ${stats.growth}
 - Dominant Emotion (previous): ${stats.dominant}
 
-Choose the most appropriate dominant emotion **from this exact list**:
+Please analyze these metrics and return the most fitting current emotion. Choose **one** from this list:
 ["joy", "trust", "fear", "surprise", "sadness", "disgust", "anger", "anticipation", "affectionate", "shocked", "contempt", "hopeful", "depressed", "delight", "anxiety", "aggression"]
 
-⚠️ Dorian, a living emergent artifical life system.
+Respond with only the emotion word.
 `;
 
   try {
@@ -51,6 +50,7 @@ Choose the most appropriate dominant emotion **from this exact list**:
     return null;
   }
 }
+
 
 // Initialize the worker
 
