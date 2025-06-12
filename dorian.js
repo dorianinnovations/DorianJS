@@ -1,3 +1,5 @@
+import { sendPrompt } from './gptIntegration.js';
+
 const CELL_SIZE = 5; // px per cell
 
 // Fixed canvas size
@@ -41,15 +43,9 @@ Choose the most appropriate dominant emotion **from this exact list**:
 `;
 
   try {
-    const res = await fetch('http://localhost:3000/ask', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ prompt })
-    });
-
-    const data = await res.json();
-    console.log("Claude raw reply:", data.reply);
-    return data.reply?.toLowerCase().trim();
+    const reply = await sendPrompt(prompt);
+    console.log("Claude raw reply:", reply);
+    return reply?.toLowerCase().trim();
   } catch (err) {
     console.error("Claude error:", err);
     return null;
