@@ -197,29 +197,22 @@ worker.onmessage = ({ data }) => {
 
 
 
-let hasSeeded = false;
-
 canvas.addEventListener('mousedown', (e) => {
   const rect = canvas.getBoundingClientRect();
   const x = Math.floor((e.clientX - rect.left) / CELL_SIZE);
   const y = Math.floor((e.clientY - rect.top) / CELL_SIZE);
 
-  // Always allow seeding when simulation is running
-worker.postMessage({ type: 'seed', x, y });
-
-if (!hasStarted) {
-  hasStarted = true;
-  running = true;
-  animate();
-}
-
+  // Seed the clicked cell
+  worker.postMessage({ type: 'seed', x, y });
 
   if (!hasStarted) {
-    worker.postMessage({ type: 'seed', x, y });
     hasStarted = true;
     running = true;
     animate();
-  } else {
+    return;
+  }
+
+  if (!running) {
     // Optional: feedback if paused
     canvas.classList.add('seed-denied');
     setTimeout(() => canvas.classList.remove('seed-denied'), 500);
