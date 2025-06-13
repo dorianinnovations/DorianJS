@@ -31,9 +31,9 @@ export const EMOTION_ID_TO_NAME = Object.fromEntries(
 // Terrain zones for emotional effects (softened effects for subtle emergence)
 export const terrainZones = {
   'desert':    { supports: ['Joy', 'Anticipation'], resists: ['Sadness', 'Disgust'] },
-  'ocean':     { supports: ['Fear', 'Sadness'],     resists: ['Anger'] },
+  'ocean':     { supports: ['Fear', 'Sadness'],     resists: ['Angry'] },
   'forest':    { supports: ['Trust', 'Surprise'],   resists: ['Joy'] },
-  'mountain':  { supports: ['Anger'],               resists: ['Joy', 'Fear'] },
+  'mountain':  { supports: ['Angry'],               resists: ['Joy', 'Fear'] },
   'valley':    { supports: ['Sadness', 'Trust'],    resists: ['Disgust', 'Surprise'] }
 };
 

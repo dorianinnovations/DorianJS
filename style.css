@@ -20,17 +20,18 @@ body {
   align-items: center;
   justify-content: center;
   padding: 10px;
+  z-index: 10;
   border-radius: 15px;
   background-color: #000000a0;
   box-shadow: inset 0 0 20px 0 rgba(255, 255, 255, 0.05), inset 0 0 8px 0 #00000050;
 }
 
 .heading-title {
-  font-size: 5rem;
+  font-size: 9.2rem;
   color: #ffffff;
   text-align: center;
   margin-top: 20px;
-  margin-bottom: 10px;
+  margin-bottom: 5px;
   text-shadow: 0 0 30px rgb(255, 255, 255);
   font-family: 'Chakra Petch';
   font-weight: 1000;
@@ -41,15 +42,17 @@ body {
 }
 
 .heading-title:hover {
-  scale: 1.1;
+  scale: 1.08;
   transition-duration: 0.2s;
-  animation-duration: 0.5s;
+  animation-duration: 0.3s;
   animation-timing-function: ease-in-out;
 }
 
 .heading-subtitle {
-  font-size: 0.9rem;
+  font-size: 1.1rem;
   color: #ffffff;
+  text-shadow: 0 0 20px rgb(255, 255, 255);
+
   text-align: center;
   margin-top: 1px;
   margin-bottom: 10px;
@@ -60,35 +63,35 @@ body {
 
 .sagA-divider,
 .under-reproduction-divider {
-  width: 70%;
+  width: 50%;
   max-width: 100%;
   height: 2px;
   display: block;
   margin: 32px 0;
+  border-width: 0.1px;
   box-shadow: #ffffff52;
   border: none;
   background: linear-gradient(
     90deg,
-    rgb(255, 255, 255),
-    rgba(255, 255, 255, 0.822),
-    rgba(255, 255, 255, 0.532),
+    rgba(255, 255, 255, 0.649),
+    rgba(255, 255, 255, 0.545),
+    rgba(255, 255, 255, 0.36),
     rgba(255, 255, 255, 0.099)
   
   );
   background-size: 300% 100%;
   animation: glowFlow 8s cubic-bezier(0.4, 0, 0.2, 1) infinite;
-  border-radius: 9999px;
-  opacity: 0.4;
+  opacity: 0.1;
   position: relative;
   z-index: 1;
-  transition: background-position 1.4s ease, opacity 3.4s ease;
+  transition: background-position 0.4s ease, opacity 5.4s ease;
 }
 .header-divider {
   width: 100%;
   max-width: 100%;
   height: 1.5px;
   display: block;
-  margin: 32px 0;
+  margin: 32px;
   border: none;
   background: linear-gradient(
     90deg,
@@ -137,10 +140,9 @@ body {
   flex-direction: row; /* Keep columns side by side */
   justify-content: center;
   align-items: flex-start;
-  padding: 20px;
-  margin: 40px auto;
-  max-width: 3000px;
+  padding: 90px;
   width: 100%;
+  gap: 30px;
   min-height: 1000px;
   z-index: 1;
   box-shadow:
@@ -198,7 +200,7 @@ canvas {
 
   border: none;
   border-radius: 23px;
-  box-shadow: 0 0 5px rgba(255, 255, 255, 0.05), 0 0 30px #ffffff52;
+  box-shadow: 0 0 5px rgba(255, 255, 255, 0.05), 0 0 30px #ffffffb3;
 }
 
 
@@ -212,14 +214,18 @@ canvas {
   background: #000;
   border: none;
   border-radius: 23px;
-  box-shadow: 0 0 1x rgba(255, 255, 255, 0.05), 0 0 10px #ffffff52;
+  box-shadow: inset 0 0 0 15px rgba(0, 0, 0, 0.176), /* Inner edge */
+    inset 0 0 8px rgb(255, 255, 255), /* Subtle inner glow */
+    0 0 0 22px rgba(0, 0, 0, 0.737),      /* First outer ring */
+    0 0 44px rgba(255, 255, 255, 0.594);       /* Second soft glow */
   height: auto;
   border-radius: 23px;
   z-index:2;
+
 }
 
 canvas:hover {
-  box-shadow: 0 0 13px rgba(255, 255, 255, 0.15), 0 0 24px rgba(255, 255, 255, 0.25),
+  box-shadow: 0 0 13px rgba(255, 255, 255, 0.15), 0 0 84px rgba(255, 255, 255, 0.25),
     0 0 38px rgba(255, 255, 255, 0.3);
   cursor: pointer;
     transition: box-shadow 1.2s ease-in-out, box-glow 1.2s ease-in-out;
@@ -244,7 +250,7 @@ canvas.dominant-emotion-sadness {
 canvas.dominant-emotion-disgust {
   box-shadow: 0 0 290px 0 rgba(230, 0, 120, 0.4);
 }
-canvas.dominant-emotion-anger {
+canvas.dominant-emotion-angry {
   box-shadow: 0 0 290px 0 rgba(255, 0, 0, 0.4);
 }
 canvas.dominant-emotion-anticipation {
@@ -252,32 +258,32 @@ canvas.dominant-emotion-anticipation {
 }
 
 canvas.dominant-emotion-affectionate {
-  box-shadow: 0 0 290px 0 rgba(255, 200, 100, 0.4) !important;
+  box-shadow: 0 0 290px 0 rgba(255, 200, 100, 0.4);
 }
 canvas.dominant-emotion-shocked {
-  box-shadow: 0 0 290px 0 rgba(150, 50, 200, 0.4) !important;
+  box-shadow: 0 0 290px 0 rgba(150, 50, 200, 0.4);
 }
 canvas.dominant-emotion-contempt {
-  box-shadow: 0 0 290px 0 rgba(200, 0, 100, 0.4) !important;
+  box-shadow: 0 0 290px 0 rgba(200, 0, 100, 0.4);
 }
 canvas.dominant-emotion-hopeful {
-  box-shadow: 0 0 290px 0 rgba(100, 255, 180, 0.4) !important;
+  box-shadow: 0 0 290px 0 rgba(100, 255, 180, 0.4);
 }
 canvas.dominant-emotion-depressed {
-  box-shadow: 0 0 290px 0 rgba(100, 100, 180, 0.4) !important;
+  box-shadow: 0 0 290px 0 rgba(100, 100, 180, 0.4);
 }
 canvas.dominant-emotion-delight {
-  box-shadow: 0 0 290px 0 rgba(255, 220, 50, 0.4) !important;
+  box-shadow: 0 0 290px 0 rgba(255, 220, 50, 0.4);
 }
 canvas.dominant-emotion-anxiety {
-  box-shadow: 0 0 290px 0 rgba(50, 100, 200, 0.4) !important;
+  box-shadow: 0 0 290px 0 rgba(50, 100, 200, 0.4);
 }
 canvas.dominant-emotion-aggression {
-  box-shadow: 0 0 290px 0 rgba(255, 50, 50, 0.4) !important;
+  box-shadow: 0 0 290px 0 rgba(255, 50, 50, 0.4);
 }
 
 canvas[class='dominant-emotion'] {
-  transition: box-shadow 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+  transition: box-shadow 1.2s cubic-bezier(0.2, 0, 0.8, 1), box-glow 1.2s ease-in-out;
 }
 
 
@@ -289,11 +295,10 @@ canvas[class='dominant-emotion'] {
   align-items: center;
   justify-content: center;
   text-align: center;
-  font-size: 2em;
+  font-size: 3.2em;
   color: #ffffff;
   text-shadow: white 0 0 20px, rgba(255, 255, 255, 0.739) 0 0 2px;
-  margin-top: -90px;
-  margin-bottom: -15px;
+  margin-bottom: -25px;
 }
 
 .ux-manager-subtitle {
@@ -320,10 +325,9 @@ canvas[class='dominant-emotion'] {
   height: 860px;
   gap: 10px;
   width: 400px;
-  align-items: center;
   box-shadow: 0 0 16px rgba(255, 255, 255, 0.05), 0 0 8px #ffffff70;
-  border-radius: 23px;
-  background: #000;
+  border-radius: 13px;
+  background: #00000028;
   margin-top: 60px; /* Adjusted margin to align better with canvas */
   margin-left: 50px; /* Keep margin for spacing */
   z-index: 4;
@@ -336,42 +340,16 @@ canvas[class='dominant-emotion'] {
   gap: 10px;
   height: 980px;
   align-items: center;
-  justify-content: flex-start;
-  margin-top: 120px; /* Adjusted margin to align better with canvas */
+  box-shadow: 0 0 16px rgba(255, 255, 255, 0.05), 0 0 8px #ffffff70;
+  border-radius: 13px;
+  background: #00000028;
+  margin-top: 60px; /* Adjusted margin to align better with canvas */
   margin-right: 50px; /* Add some right margin for balance */
   z-index: 4;
-  
+  width: 400px;
+  height: 860px;  
 }
 
-.column-left-column-upper {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  width: 100%;
-  padding: 12px 16px;
-  border-radius: 13px;
-  background-color: #000000;
-  color: #ffffff;
-  font-size: 1.2em;
-  font-weight: 600;
-    box-shadow: 0 0 40px rgba(255, 255, 255, 0.05), 0 0 9px #ffffffb1;
-
-}
-
-.column-left-column-lower {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  width: 100%;
-  padding: 12px 16px;
-  border-radius: 15px;
-  background-color: #ffffff00;
-  color: #ffffff;
-  font-size: 1.2em;
-  font-weight: 600;
-}
 
 
 .column-right-column-upper {
@@ -379,8 +357,8 @@ canvas[class='dominant-emotion'] {
   flex-direction: column;
   align-items: center;
   justify-content: center;
+  margin-top: 20px;
   margin-bottom: 10px;
-  margin-top: 80px;
   width: 100%;
   padding: 12px 16px;
   border-radius: 15px;
@@ -404,19 +382,19 @@ canvas[class='dominant-emotion'] {
   display: flex;
   flex-direction: column;
   align-items: center;
-  width: 100%;
-  max-width: 330px;
-  align-items: stretch;
+  width: 89%;
+  min-height: 240px;
+  max-height: 240px;
+  align-items: flex-start;
   justify-content: flex-start;
-  gap: 20px;
   padding: 16px 16px;
   cursor: pointer;
   margin: 19px;
   position: relative;
-  flex-wrap: nowrap;
+  flex-wrap: wrap;
   overflow: hidden;
   border-radius: 24px;
-  background: linear-gradient(180deg, rgba(0, 0, 0, 0.153) 20%, rgba(15, 15, 15, 0.229) 100%);
+  background: linear-gradient(180deg, rgba(0, 0, 0, 0.798) 20%, rgba(0, 0, 0, 0.28) 100%);
   box-shadow: 0 0 16px rgba(255, 255, 255, 0.05), 0 0 8px #ffffff70;
   border: 1.5px solid rgba(255, 255, 255, 0.08);
   backdrop-filter: blur(12px) saturate(130%);
@@ -434,6 +412,7 @@ canvas[class='dominant-emotion'] {
   transition-duration: 0.2s;
   animation-duration: 0.5s;
   animation-timing-function: ease-in-out;
+  box-shadow: 0 0 16px rgba(255, 255, 255, 0.05), 0 0 8px #ffffffad;
 }
 
 .ui-speed-section {
@@ -448,8 +427,8 @@ canvas[class='dominant-emotion'] {
 /* BUTTON STYLING */
 
 
-.btn-go-right-column,
-.custom-btn {
+.btn-go-right-column
+{
   background-color: #111;
   color: #fff;
   border: 1px solid #555;
@@ -530,39 +509,52 @@ canvas[class='dominant-emotion'] {
   display: flex;
   flex-direction: column;
   align-items: center;
-  justify-content: flex-start;
-  background: linear-gradient(
-    90deg,
-  rgba(255, 255, 255, 0.02) 0%,
-rgba(255, 255, 255, 0.03) 10%,
-rgba(255, 255, 255, 0.05) 20%,
-rgba(255, 255, 255, 0.06) 30%,
-rgba(255, 255, 255, 0.07) 40%,
-rgba(255, 255, 255, 0.08) 50%,
-rgba(255, 255, 255, 0.07) 60%,
-rgba(255, 255, 255, 0.06) 70%,
-rgba(255, 255, 255, 0.05) 80%,
-rgba(255, 255, 255, 0.03) 90%,
-rgba(255, 255, 255, 0.01) 100%
-
-  );
-  border-radius: 8px;
+  border: none;
+  border-radius: 10px;
   margin-top: 10px;
-  background-color: linear-gradient(to right, #000000, #ffffff); 
+  height: 8px;
+  width: 275px;
+  justify-content: flex-start;
+  background: radial-gradient(
+    circle at bottom left,
+    rgba(118, 118, 118, 0.267) 0%,
+    rgba(255, 255, 255, 0.249) 20%,
+    rgba(105, 105, 105, 0.25) 30%,
+    rgba(133, 133, 133, 0.431) 40%,
+    rgba(44, 44, 44, 0.413) 50%,
+    rgba(76, 76, 76, 0.276) 60%,
+    #000000 100%
+  );
+  
 }
 
 .speed-slider-wrapper {
   display: flex;
   align-items: center;
+  font-size: 0.9em;
+  gap: 15px;
   flex-direction: column;
-  width: 100%;
+  width: 98%;
   transition: scale 0.2s ease-in-out, animation-duration 0.5s ease-in-out,
     animation-timing-function ease-in-out;
-
-  /* gap will change the amount of space between sliders here */  
-  gap: 32px;
   padding: 10px;
-  margin: 10px; 
+  box-shadow: inset 0 0 0 6px rgba(3, 3, 3, 0.226), /* Inner edge */
+    inset 0 0 6px rgba(255, 255, 255, 0.06), /* Subtle inner glow */
+    0 0 0 6px rgba(0, 0, 0, 0.536),      /* First outer ring */
+    0 0 10px rgba(255, 255, 255, 0.956);       /* Second soft glow */
+  background: repeating-linear-gradient(
+    180deg,
+   rgba(0, 0, 0, 1) 0%,
+rgba(0, 0, 0, 0.9) 10%,
+rgba(0, 0, 0, 0.6) 25%,
+rgba(0, 0, 0, 0.2) 40%,
+rgba(0, 0, 0, 0) 50%,
+rgba(0, 0, 0, 0.2) 60%,
+rgba(0, 0, 0, 0.6) 75%,
+rgba(0, 0, 0, 0.9) 90%,
+rgba(0, 0, 0, 1) 100%
+  );
+  border-radius: 23px; 
 }
 
 
@@ -600,17 +592,17 @@ rgba(255, 255, 255, 0.01) 100%
 }
 
 .custom-btn {
-  background: #333;
-  color: white;
-  justify-content: center;
-  align-items: center;
-  border-radius: 28px;
-  border: none;
-  font-size: 1.2em;
-  translate: (-50%, -50%);
+ background-color: #111;
+  color: #fff;
+  border: 1px solid #555;
+  padding: 16px;
+  width: 100px;
+  border-radius: 14px;
+  font-family: 'Chakra Petch', sans-serif;
+  font-size: 1.2rem;
   cursor: pointer;
-  padding: 12px 24px;
-  transition: background 0.3s ease, transform 0.2s ease;}
+  transition: box-shadow 0.3s ease, transform 0.2s ease;
+  box-shadow: 0 0 10px rgba(255, 255, 255, 0.1);}
 
 /* New container for input/output below canvas */
 
@@ -619,7 +611,7 @@ rgba(255, 255, 255, 0.01) 100%
   flex-direction: row; /* Keep input and button side-by-side */
   align-items: center;
   justify-content: space-between; /* Space out input and button */
-  width: 100%; /* Take full width of its parent */
+  width: 89%; /* Take full width of its parent */
   max-width: 400px; /* Limit width for aesthetics */
   padding: 12px 16px;
   border-radius: 15px;
@@ -628,7 +620,10 @@ rgba(255, 255, 255, 0.01) 100%
   color: #47474729;
   transition: box-shadow 0.4s ease-in-out;
   font-weight: 600;
+  margin-bottom: 20px;
   border: solid 1px rgba(255, 255, 255, 0.1);
+  background:rgba(0, 0, 0, 0.792)
+  
 }
 
 .input-text {
@@ -643,13 +638,14 @@ rgba(255, 255, 255, 0.01) 100%
   margin-right: 10px; /* Space between input and button */
 }
 
+
+/*This is the container only*/
 .gpt-output-container {
   display: flex;
   justify-content: center;
   align-items: center;
   width: 100%;
 }
-
 .gpt-answer-text-box {
   background: #000000;
   display: flex;
@@ -657,14 +653,33 @@ rgba(255, 255, 255, 0.01) 100%
   justify-content: center;
   position: relative;
   border-radius: 23px;
-  width: 100%; /* Take full width of its parent */
-  max-width: 400px; /* Limit width for aesthetics */
-  margin-bottom: 30px; /* Space below the output box */
-  padding: 15px 25px;
+  width: 85%; /* Take full width of its parent */
+  height: 300px;
+  max-height: 800px; /* Limit height for aesthetics */
+  overflow-y: auto; /* Allow scrolling if content exceeds height */
+  padding: 20px;
   font-family: 'Chakra Petch';
   font-size: 1.2em;
-  color: #bebebe;
+  color: #f4f4f4fa;
   text-align: center;
+  border: solid 1px rgba(255, 255, 255, 0.1);
+  background: repeating-linear-gradient(
+    180deg,
+   rgba(0, 0, 0, 1) 0%,
+rgba(0, 0, 0, 0.9) 10%,
+rgba(0, 0, 0, 0.6) 25%,
+rgba(0, 0, 0, 0.2) 40%,
+rgba(0, 0, 0, 0) 50%,
+rgba(0, 0, 0, 0.2) 60%,
+rgba(0, 0, 0, 0.6) 75%,
+rgba(0, 0, 0, 0.9) 90%,
+rgba(0, 0, 0, 1) 100%
+    );
+  box-shadow: inset 0 0 0 12px rgba(3, 3, 3, 0.226), /* Inner edge */
+    inset 0 0 12px rgba(255, 255, 255, 0.06), /* Subtle inner glow */
+    0 0 0 12px rgba(0, 0, 0, 0.536),      /* First outer ring */
+    0 0 24px rgba(85, 85, 85, 0.956);       /* Second soft glow */
+  
 }
 
 .btn-mutation {
@@ -675,7 +690,7 @@ rgba(255, 255, 255, 0.01) 100%
   letter-spacing: 1.5px;
   text-transform: uppercase;
   border-radius: 24px;
-  border: 2px solid #ffffff33;
+  border: 1px solid #ffffff33;
   background-color: transparent;
   padding: 12px 24px;
 }
@@ -750,21 +765,15 @@ rgba(255, 255, 255, 0.01) 100%
     height: auto;
   }
 
-  .column-left-column {
-    width: 100%;
-    flex-direction: column;
-    align-items: center;
-    margin-right: 0; /* Remove specific margin on mobile */
-  }
+  
 
   .column-right-column {
     width: 99%; /* Adjust width for better fit on small screens */
     display: flex;
     flex-direction: column;
     align-items: center;
-    justify-content: space-evenly;
     height: 100%;
-    margin-left: 0; /* Remove specific margin on mobile */
+    
   }
 
   .ui-card {

@@ -36,7 +36,7 @@ Here are the current stats of your emotional world:
 - Dominant Emotion (previous): ${stats.dominant}
 
 Please analyze these metrics and return the most fitting current emotion. Choose **one** from this list:
-["joy", "trust", "fear", "surprise", "sadness", "disgust", "anger", "anticipation", "affectionate", "shocked", "contempt", "hopeful", "depressed", "delight", "anxiety", "aggression"]
+["joy", "trust", "fear", "surprise", "sadness", "disgust", "angry", "anticipation", "affectionate", "shocked", "contempt", "hopeful", "depressed", "delight", "anxiety", "aggression"]
 
 Respond with only the emotion word.
 `;
@@ -152,7 +152,7 @@ function updateCanvasBorderEmotion(dominant) {
   'dominant-emotion-surprise',
   'dominant-emotion-sadness',
   'dominant-emotion-disgust',
-  'dominant-emotion-anger',
+  'dominant-emotion-angry',
   'dominant-emotion-anticipation',
   'dominant-emotion-affectionate',
   'dominant-emotion-shocked',
@@ -170,6 +170,7 @@ function updateCanvasBorderEmotion(dominant) {
     canvas.classList.add('dominant-emotion-' + emotion);
   }
 }
+
 
 function updateHUD(stats) {
   const alive = stats.alive;
@@ -203,7 +204,7 @@ worker.onmessage = ({ data }) => {
 
         const emotions = [
           'joy', 'trust', 'fear', 'surprise', 'sadness', 'disgust',
-          'anger', 'anticipation', 'affectionate', 'shocked',
+          'angry', 'anticipation', 'affectionate', 'shocked',
           'contempt', 'hopeful', 'depressed', 'delight',
           'anxiety', 'aggression'
         ];
@@ -263,10 +264,3 @@ document.getElementById("gpt-input").addEventListener("submit", function (e) {
   console.log()
 });
 });
-
-
-
-
-  
-
-

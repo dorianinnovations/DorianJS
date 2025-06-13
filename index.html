@@ -30,13 +30,14 @@
           <div class="metric-box"><span id="dominant-metric"></span></div>
         </div>
       </div>
-      <div class="input-text-box">
-          <input type="text" placeholder="Ask anything" class="input-text" id="gpt-input" />
-          <button type="button" onclick="sendToClaude()" class="btn-go-right-column">Go</button>
-        </div>
+      
 
         <div class="gpt-output-container">
           <p id="gpt-output" class="gpt-answer-text-box"></p>
+        </div>
+        <div class="input-text-box">
+          <input type="text" placeholder="Ask anything" class="input-text" id="gpt-input" />
+          <button type="button" onclick="sendToClaude()" class="btn-go-right-column">Go</button>
         </div>
     </div>
     
@@ -86,27 +87,7 @@
     </div>
   </main>
 
-  <script>
-    async function sendToClaude() {
-      const input = document.getElementById('gpt-input').value;
-      const output = document.getElementById('gpt-output');
-      output.textContent = "Thinking...";
-
-      try {
-        const res = await fetch('http://localhost:3000/ask', {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({ prompt: input })
-        });
-
-        const data = await res.json();
-        output.textContent = data.reply || "No response.";
-      } catch (err) {
-        output.textContent = "Error contacting Claude.";
-        console.error(err);
-      }
-    }
-  </script>
+  
 
 </body>
 </html>
