@@ -239,11 +239,14 @@ canvas.addEventListener('mousedown', (e) => {
     setTimeout(() => canvas.classList.remove('seed-denied'), 500);
   }
 });
+window.addEventListener("DOMContentLoaded", function () {
+  console.log("DOM loaded!");
 
-document.getElementById("input-text-box").addEventListener("submit", function (e) {
+console.log()
+document.getElementById("gpt-input").addEventListener("submit", function (e) {
   e.preventDefault(); // Prevent form from refreshing the page
 
-  const input = document.getElementById("input-text-box");
+  const input = document.getElementById("gpt-input");
   const message = input.value;
 
   if (message.trim() !== "") {
@@ -252,8 +255,9 @@ document.getElementById("input-text-box").addEventListener("submit", function (e
 
     input.value = ""; // Clear the input field
   }
+  console.log()
 });
-
+});
 
 
 
