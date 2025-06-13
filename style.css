@@ -31,6 +31,7 @@ body {
   color: #ffffff;
   text-align: center;
   margin-top: 20px;
+  text-decoration: none;
   margin-bottom: 5px;
   text-shadow: 0 0 30px rgb(255, 255, 255);
   font-family: 'Chakra Petch';
@@ -52,7 +53,6 @@ body {
   font-size: 1.1rem;
   color: #ffffff;
   text-shadow: 0 0 20px rgb(255, 255, 255);
-
   text-align: center;
   margin-top: 1px;
   margin-bottom: 10px;
