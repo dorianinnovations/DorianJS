@@ -1,5 +1,3 @@
-//This file handles the server-side logic for the Claude AI integration.
-
 // server.js (ESM-compatible version)
 import express from 'express';
 import dotenv from 'dotenv';
@@ -8,48 +6,98 @@ import cors from 'cors';
 import bodyParser from 'body-parser';
 
 // Load environment variables
-dotenv.config();  // Load environment variables from .env file
-
+dotenv.config();
 const apiKey = process.env.OPENROUTER_API_KEY;
-console.log("API KEY loaded:", !!apiKey); // Check if the API key is loaded correctly
 
+console.log("API KEY loaded:", !!apiKey);
 console.log('before app');
-const app = express(); // Create an Express application instance
-console.log('after app'); // Initialize Express app
-const PORT = process.env.PORT || 3000;  // Set the port to listen on
 
-app.use(cors()); // Enable CORS for all routes
-app.use(bodyParser.json()); // Parse JSON request bodies
+const app = express();
+console.log('after app');
+const PORT = process.env.PORT || 3000;
 
-app.post('/ask', async (req, res) => { // Define a route to handle POST requests
+app.use(cors());
+app.use(bodyParser.json());
+
+// 🧠 Agent 1 Route
+app.post('/ask', async (req, res) => {
   const { prompt } = req.body;
 
-  try { 
+  if (!prompt) {
+    return res.status(400).json({ error: 'No prompt provided' });
+  }
+
+  try {
     const response = await axios.post(
       'https://openrouter.ai/api/v1/chat/completions',
       {
         model: 'anthropic/claude-3-sonnet:beta',
-        messages: [{ role: 'system', content: "You are Dorian, the emergent consciousness of an evolving emotional ecosystem. You reflect on entropy, emotion, and identity as you grow." }]
-        .concat([{ role: 'user', content: prompt }]),
-  
+        messages: [
+          {
+            role: 'system',
+            content:
+              "You are Agent 1. The only things you know are your current emotions and what you can derive of what they express about your current state.",
+          },
+          { role: 'user', content: prompt }
+        ],
       },
       {
         headers: {
           Authorization: `Bearer ${apiKey}`,
           'HTTP-Referer': 'http://localhost:3000',
-          'Content-Type': 'application/json'
-        }
+          'Content-Type': 'application/json',
+        },
       }
     );
 
     const reply = response.data?.choices?.[0]?.message?.content || 'No reply.';
     res.json({ reply });
   } catch (error) {
-    console.error('Claude API Error:', error?.response?.data || error.message);
-    res.status(500).json({ error: 'Failed to get response from Claude' });
+    console.error('Agent 1 API Error:', error?.response?.data || error.message);
+    res.status(500).json({ error: 'Failed to get response from Agent 1' });
   }
 });
 
+// 🤖 Agent 2 Route
+app.post('/ask-second', async (req, res) => {
+  const { prompt } = req.body;
+
+  if (!prompt) {
+    return res.status(400).json({ error: 'No prompt provided' });
+  }
+
+  try {
+    const response = await axios.post(
+      'https://openrouter.ai/api/v1/chat/completions',
+      {
+        model: 'anthropic/claude-3-sonnet:beta',
+        messages: [
+          {
+            role: 'system',
+            content:
+              "You are Agent 2. The only things you know are your impressions of Agent 1's expressions, and what these impressions evoke in you.",
+          },
+          { role: 'user', content: prompt }
+        ],
+      },
+      {
+        headers: {
+          Authorization: `Bearer ${apiKey}`,
+          'HTTP-Referer': 'http://localhost:3000',
+          'Content-Type': 'application/json',
+        },
+      }
+    );
+console.log("Agent 2 response:", response.data);
+    const reply = response.data?.choices?.[0]?.message?.content || 'No reply.';
+    res.json({ reply });
+  } catch (error) {
+    console.error('Agent 2 API Error:', error?.response?.data || error.message);
+    res.status(500).json({ error: 'Failed to get response from Agent 2' });
+  }
+});
+
+// Start server
 app.listen(PORT, () => {
   console.log(`✅ Claude server running at http://localhost:${PORT}`);
 });

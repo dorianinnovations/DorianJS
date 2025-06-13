@@ -21,7 +21,17 @@ let lastAlive = 0;
 let worker;
 let currentStats = null;
 
+const input = document.getElementById("gpt-input");
+const button = document.querySelector('.btn-go-right-column');
+const output = document.getElementById("gpt-output");
 
+const toggle = document.getElementById("menu-toggle");
+const menu = document.getElementById("dropdown");
+
+toggle.addEventListener("click", () => {
+  toggle.classList.toggle("open");
+  menu.classList.toggle("hidden");
+})
 
 async function sendStatsToClaude(stats) {
   const prompt = `
@@ -35,10 +45,9 @@ Here are the current stats of your emotional world:
 - Growth: ${stats.growth}
 - Dominant Emotion (previous): ${stats.dominant}
 
-Please analyze these metrics and return the most fitting current emotion. Choose **one** from this list:
+Please analyze these metrics and return how you feel. Tell me why you think you feel that. Keep your answer concise. Choose  from this list:
 ["joy", "trust", "fear", "surprise", "sadness", "disgust", "angry", "anticipation", "affectionate", "shocked", "contempt", "hopeful", "depressed", "delight", "anxiety", "aggression"]
 
-Respond with only the emotion word.
 `;
 
   try {
@@ -185,7 +194,8 @@ function updateHUD(stats) {
   document.getElementById('growth-metric').textContent = `Growth: ${growth}`;
   updateCanvasBorderEmotion(stats.dominant);
 }
-
+ 
+let lastClaudeTick = -1;
 function animate() {
   if (!running) return;
   worker.postMessage({ type: 'update', updates: UPDATES_PER_FRAME });
@@ -197,8 +207,8 @@ worker.onmessage = ({ data }) => {
     updateHUD(data.stats);
     currentStats = data.stats;
 
-    // Trigger Claude every 100 ticks
-    if (currentStats && currentStats.tick % 100 === 0) {
+    // Trigger Claude 
+    if (currentStats && currentStats.tick % 1200 === 0 && currentStats.tick !== lastClaudeTick) {
       sendStatsToClaude(currentStats).then(emotion => {
         if (!emotion) return;
 
@@ -263,4 +273,20 @@ document.getElementById("gpt-input").addEventListener("submit", function (e) {
   }
   console.log()
 });
-});
+
+button.addEventListener("click", async () => {
+  const userInput = input.value.trim();
+  if (!userInput) return;
+
+  try {
+    const reply = await sendPrompt(userInput);
+output.innerText = reply || 'No reply received.';
+
+  } catch (err) {
+    console.error('Error sending promp to Claude:', err);
+    output.innerText = 'Error contacting Agent 1.';
+  }
+
+    });
+  });
+

@@ -9,7 +9,7 @@ html,
 body {
   background-color: #000000 !important;
   min-height: auto;
-  margin: 0;
+  margin-top: 100;
   font-family: 'Chakra Petch';
   padding: 0;
 }
@@ -647,39 +647,20 @@ rgba(0, 0, 0, 1) 100%
   width: 100%;
 }
 .gpt-answer-text-box {
-  background: #000000;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  position: relative;
-  border-radius: 23px;
-  width: 85%; /* Take full width of its parent */
-  height: 300px;
-  max-height: 800px; /* Limit height for aesthetics */
+  width: 89%; /* Take full width of its parent */
+  max-width: 400px; /* Limit width for aesthetics */
+  padding: 12px;
+  font-size:  1.5em;
+  max-height: 450px;
   overflow-y: auto; /* Allow scrolling if content exceeds height */
-  padding: 20px;
-  font-family: 'Chakra Petch';
-  font-size: 1.2em;
-  color: #f4f4f4fa;
-  text-align: center;
+  border-radius: 15px;
+  font-family: 'Chakra Petch', 'Space Grotesk', 'Fira Code', monospace;
+    background: rgba(0, 0, 0, 0.3);
+  color: #ffffff;
+  transition: box-shadow 0.4s ease-in-out;
+  font-weight: 600;
+  margin-bottom: 20px;
   border: solid 1px rgba(255, 255, 255, 0.1);
-  background: repeating-linear-gradient(
-    180deg,
-   rgba(0, 0, 0, 1) 0%,
-rgba(0, 0, 0, 0.9) 10%,
-rgba(0, 0, 0, 0.6) 25%,
-rgba(0, 0, 0, 0.2) 40%,
-rgba(0, 0, 0, 0) 50%,
-rgba(0, 0, 0, 0.2) 60%,
-rgba(0, 0, 0, 0.6) 75%,
-rgba(0, 0, 0, 0.9) 90%,
-rgba(0, 0, 0, 1) 100%
-    );
-  box-shadow: inset 0 0 0 12px rgba(3, 3, 3, 0.226), /* Inner edge */
-    inset 0 0 12px rgba(255, 255, 255, 0.06), /* Subtle inner glow */
-    0 0 0 12px rgba(0, 0, 0, 0.536),      /* First outer ring */
-    0 0 24px rgba(85, 85, 85, 0.956);       /* Second soft glow */
-  
 }
 
 .btn-mutation {
@@ -731,64 +712,115 @@ rgba(0, 0, 0, 1) 100%
 }
 
 
-
-
-/* ===================================
-   RESPONSIVE LAYOUT FOR MOBILE
-=================================== */
-
-@media (max-width: 768px) {
-  .layout {
-    flex-direction: column;
-    align-items: center;
-    gap: 10px;
-    font-size: 1.8rem;
-  }
-
-  .heading-title {
-    font-size: 4.2rem;
-  }
-
-  .center-content {
-    margin: 0; /* Remove side margins on mobile */
-  }
-
-  .main-canvas {
-    width: 100%;
-    height: auto;
-    margin: 0;
-    padding: 0;
-  }
-
-  canvas {
-    width: 100%;
-    height: auto;
-  }
-
-  
-
-  .column-right-column {
-    width: 99%; /* Adjust width for better fit on small screens */
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    height: 100%;
-    
-  }
-
-  .ui-card {
-    width: 99%;
-    margin: 3px;
-  }
-
-  .under-canvas-elements {
-    width: 99%;
-    padding: 10px;
-  }
-
-  .input-text-box,
-  .gpt-answer-text-box {
-    max-width: 95%; /* Adjust for smaller screens */
-    z-index: 5;
-  }
+.sticky-navigation-bar-container {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  height: 90px;
+  width: 100%;
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 1000;
+  padding: 0 2rem;
+  background-color: rgba(10, 10, 10, 0.95); /* semi-transparent or solid */
+  backdrop-filter: blur(6px); /* optional glassy look */
+  color: white;
+  font-family: 'Chakra Petch', sans-serif;
+  font-size: 2rem;
+  font-weight: 600;
+  text-shadow: white 0 0 13px, rgba(163, 163, 163, 0.739) 0 0 2px;
 }
+
+/* Dropdown positioning below the sticky nav */
+.dropdown {
+  position: absolute;
+  top: 90px; /* directly below sticky header */
+  left: 0;
+  width: 100%;
+  background-color: rgba(255, 255, 255, 0.051);
+  z-index: 999;
+  display: flex;
+  justify-content: space-around;
+  padding: 1rem;
+  transition: all 0.3s ease;
+
+}
+
+/* Hidden state (when not toggled) */
+.dropdown.hidden {
+  display: none;
+}
+
+.hamburger {
+  position: fixed;
+  top: 80px;
+  align-items: center;
+  justify-content: center;
+  left: 80px;
+  z-index: 1001;
+  padding-top: 3px;
+  padding-bottom: 10px;
+  padding-right: 20px;
+  padding-left: 20px;
+  font-size: 3em;
+  color: white;
+  cursor: pointer;
+  transition: transform 0.3s ease;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 20px;
+}
+
+.hamburger:hover {
+  transform: scale(1.1);
+  color: #ddd;
+}
+.dropdown {
+  position: fixed;
+  top: 180px; 
+  left: 80px;
+  width: 250px;
+  background-color: rgba(0, 0, 0, 0.9);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 10px;
+  z-index: 1000;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  padding-left: 45px;
+  gap: 0.5rem;
+  transition: opacity 0.3s ease, transform 0.3s ease;
+  box-shadow: 0 0 10px rgba(255, 255, 255, 0.515);
+}
+
+/* Hide it initially */
+.dropdown.hidden {
+  display: none;
+}
+
+.dropdown a {
+  color: white;
+  text-decoration: none;
+  font-size: 4rem;
+  padding: 0.25rem 0;
+  width: 300px;
+  transition: all 0.2s ease-in-out;
+  font-family: 'Chakra Petch', sans-serif;
+  font-weight: 300;
+  text-shadow: white 0 0 13px, rgba(163, 163, 163, 0.739) 0 0 2px;
+  letter-spacing: -0.1rem;
+}
+
+.dropdown a:hover {
+  text-decoration: underline;
+  color: #ddd;
+  animation-name: pulse-glow;
+  animation-duration: 0.3s;
+  animation-iteration-count: infinite;
+  animation-timing-function: ease-in-out;
+  transform: scale(1.05);
+}
+
+
+
+
