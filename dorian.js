@@ -125,18 +125,23 @@ pauseBtn.addEventListener('click', () => {
   if (running) animate();
 });
 
+window.addEventListener('DOMContentLoaded', () => {
+  const resetBtn = document.getElementById('reset-btn');
 
-
+  if (!resetBtn) {
+    console.warn("Reset button not found!");
+    return;
+  }
 resetBtn.addEventListener('click', () => {
   initWorker();
   ctx.clearRect(0, 0, canvas.width, canvas.height);
   lastAlive = 0;
   hasStarted = false;
   running = false;
-  document.getElementById('tick').textContent = 'Click the canvas to begin!';
+  document.getElementById('tick-metric').textContent = 'Click the canvas to begin!';
   pauseBtn.textContent = 'Resume';
 });
-
+});
 function updateCanvasBorderEmotion(dominant) {
   const emotion = dominant.toLowerCase();
   const classes = [
