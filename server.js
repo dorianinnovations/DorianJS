@@ -19,9 +19,16 @@ app.use(cors());
 app.use(bodyParser.json());
 app.use('/media', express.static('media'));
 
-app.listen(3000, () => {
-  console.log(`Server is running on port ${PORT}`);
-});
+// Add static file serving for your frontend
+app.use(express.static('.')); // Serve your HTML/CSS/JS files
+
+
+// Consistent response parsing for both agents
+const parseResponse = (response) => {
+  return response.data?.choices?.[0]?.message?.content 
+    || response.data?.choices?.[0]?.text 
+    || 'No reply.';
+};
 
 // 🧠 Agent 1 Route
 app.post('/ask', async (req, res) => {
@@ -54,9 +61,8 @@ app.post('/ask', async (req, res) => {
       }
     );
 
-  const reply = response.data?.choices?.[0]?.message?.content 
-            || response.data?.choices?.[0]?.text 
-            || 'No reply.';
+  // Agent 1 has fallback parsing, Agent 2 doesn't
+  const reply = parseResponse(response);
 
   /* console.log("Agent 1 response:", reply); */
 
@@ -68,7 +74,7 @@ app.post('/ask', async (req, res) => {
 });
 
 memory.meta.currentTick += 1;
-/* saveMemory(memory); */
+saveMemory(memory);
 
     res.json({ reply });
   } catch (error) {
@@ -112,7 +118,7 @@ app.post('/ask-second', async (req, res) => {
       }
     );
 console.log("Agent 2 response:", response.data);
-    const reply = response.data?.choices?.[0]?.message?.content || 'No reply.';
+    const reply = parseResponse(response);
     res.json({ reply });
   } catch (error) {
     console.error('Agent 2 API Error:', error?.response?.data || error.message);
