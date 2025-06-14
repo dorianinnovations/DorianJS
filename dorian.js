@@ -208,7 +208,7 @@ worker.onmessage = ({ data }) => {
     currentStats = data.stats;
 
     // Trigger Claude 
-    if (currentStats && currentStats.tick % 1200 === 0 && currentStats.tick !== lastClaudeTick) {
+    if (currentStats && currentStats.tick % 2000 === 0 && currentStats.tick !== lastClaudeTick) {
       sendStatsToClaude(currentStats).then(emotion => {
         if (!emotion) return;
 
@@ -278,15 +278,40 @@ button.addEventListener("click", async () => {
   const userInput = input.value.trim();
   if (!userInput) return;
 
+  // Show animated loader while waiting
+  output.innerHTML = `
+    <div class="bubble-loader">
+      <div class="bubble"></div>
+      <div class="bubble"></div>
+      <div class="bubble"></div>
+    </div>
+  `;
+
   try {
     const reply = await sendPrompt(userInput);
-output.innerText = reply || 'No reply received.';
 
+    if (reply && reply.trim()) {
+      output.innerText = reply.trim();
+    } else {
+      output.innerText = 'No reply received.';
+
+      // Optional: return to loader after a pause
+      setTimeout(() => {
+        output.innerHTML = `
+          <div class="bubble-loader">
+            <div class="bubble"></div>
+            <div class="bubble"></div>
+            <div class="bubble"></div>
+          </div>
+        `;
+      }, 3000);
+    }
   } catch (err) {
-    console.error('Error sending promp to Claude:', err);
+    console.error('Error sending prompt to Claude:', err);
     output.innerText = 'Error contacting Agent 1.';
   }
+});
 
-    });
+    
   });
 

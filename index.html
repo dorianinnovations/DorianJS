@@ -23,9 +23,13 @@
 
 
           <div class="header">
-    <a href="https://dorianai.replit.app/" class="heading-title">Dorian</a>
-        <p class="heading-subtitle">A project by DorianAI <a href="https://dorianai.replit.app/"></a></p>
-    <div class="header-divider"></div>
+            <video autoplay muted loop playsinline class="header-video">
+              <source src="./media/rpd.webm" type="video/webm" />
+              Your browser does not support the video tag.     
+              </video>
+              <a href="https://dorianai.replit.app/" class="heading-title">Dorian</a>
+              <p class="heading-subtitle">A project by DorianAI <a href="https://dorianai.replit.app/"></a></p>
+              <div class="header-divider"></div>
   </div>
 
   <main class="layout">
@@ -33,11 +37,11 @@
       <div class="ui-card">
         <div class="metrics-panel">
           <div class="metric-box"><span id="tick-metric">Seed the canvas to Start!</span></div>
-          <div class="metric-box"><span id="diversity-metric">Then, let it grow!</span></div>
+          <div class="metric-box"><span id="diversity-metric"></span></div>
           <div class="metric-box"><span id="entropy-metric"></span></div>
           <div class="metric-box"><span id="alive-metric"></span></div>
           <div class="metric-box"><span id="growth-metric"></span></div>
-          <div class="metric-box"><span id="dominant-metric"></span></div>
+          <div class="metric-box"><span id="dominant-metric">Adjust the speed as needed.</span></div>
         </div>
       </div>
       
@@ -46,7 +50,7 @@
           <p id="gpt-output" class="gpt-answer-text-box"></p>
         </div>
         <div class="input-text-box">
-          <input type="text" placeholder="Ask anything" class="input-text" id="gpt-input" />
+          <input type="text" placeholder="Ask anything" class="input-text" id="gpt-input"/>
           <button type="button" class="btn-go-right-column">Go</button>
         </div>
     </div>
