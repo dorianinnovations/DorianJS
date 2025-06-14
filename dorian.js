@@ -23,6 +23,7 @@ let currentStats = null;
 
 const input = document.getElementById("gpt-input");
 const button = document.querySelector('.btn-go-right-column');
+const form = document.getElementById('gpt-form');
 const output = document.getElementById("gpt-output");
 
 const toggle = document.getElementById("menu-toggle");
@@ -257,24 +258,12 @@ canvas.addEventListener('mousedown', (e) => {
 });
 window.addEventListener("DOMContentLoaded", function () {
   console.log("DOM loaded!");
-
-console.log()
-document.getElementById("gpt-input").addEventListener("submit", function (e) {
-  e.preventDefault(); // Prevent form from refreshing the page
-
-  const input = document.getElementById("gpt-input");
-  const message = input.value;
-
-  if (message.trim() !== "") {
-    // Here, you'd typically send the message to a server or display it in a chat window
-    console.log("Message sent:", message);
-
-    input.value = ""; // Clear the input field
-  }
-  console.log()
+  form.addEventListener("submit", handlePromptSubmit);
 });
 
-button.addEventListener("click", async () => {
+async function handlePromptSubmit(e) {
+  if (e) e.preventDefault();
+
   const userInput = input.value.trim();
   if (!userInput) return;
 
@@ -310,8 +299,9 @@ button.addEventListener("click", async () => {
     console.error('Error sending prompt to Claude:', err);
     output.innerText = 'Error contacting Agent 1.';
   }
-});
 
-    
-  });
+  input.value = "";
+}
+
+
 
