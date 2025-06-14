@@ -785,10 +785,10 @@ canvas[class='dominant-emotion'] {
 
 .hamburger {
   position: fixed;
-  top: 80px;
+  top: 50px;
+  left: 50px;
   align-items: center;
   justify-content: center;
-  left: 80px;
   z-index: 1001;
   padding-top: 3px;
   padding-bottom: 10px;

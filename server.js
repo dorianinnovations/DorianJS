@@ -17,6 +17,11 @@ const PORT = process.env.PORT || 3000;
 
 app.use(cors());
 app.use(bodyParser.json());
+app.use('/media', express.static('media'));
+
+app.listen(3000, () => {
+  console.log(`Server is running on port ${PORT}`);
+});
 
 // 🧠 Agent 1 Route
 app.post('/ask', async (req, res) => {

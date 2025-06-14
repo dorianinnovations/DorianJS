@@ -24,9 +24,17 @@ let currentStats = null;
 const input = document.getElementById("gpt-input");
 const button = document.querySelector('.btn-go-right-column');
 const output = document.getElementById("gpt-output");
-
 const toggle = document.getElementById("menu-toggle");
 const menu = document.getElementById("dropdown");
+const userMsg = document.getElementById("gpt-input");
+
+  userMsg.addEventListener("keypress", function (event) {
+    if (event.key === "Enter") {
+      event.preventDefault();
+      button.click();
+      userMsg.value = "";
+    }
+  });
 
 toggle.addEventListener("click", () => {
   toggle.classList.toggle("open");
@@ -208,7 +216,7 @@ worker.onmessage = ({ data }) => {
     currentStats = data.stats;
 
     // Trigger Claude 
-    if (currentStats && currentStats.tick % 2000 === 0 && currentStats.tick !== lastClaudeTick) {
+    if (currentStats && currentStats.tick % 1375 === 0 && currentStats.tick !== lastClaudeTick) {
       sendStatsToClaude(currentStats).then(emotion => {
         if (!emotion) return;
 
@@ -256,7 +264,6 @@ canvas.addEventListener('mousedown', (e) => {
   }
 });
 window.addEventListener("DOMContentLoaded", function () {
-  console.log("DOM loaded!");
 
 console.log()
 document.getElementById("gpt-input").addEventListener("submit", function (e) {
@@ -269,7 +276,6 @@ document.getElementById("gpt-input").addEventListener("submit", function (e) {
     // Here, you'd typically send the message to a server or display it in a chat window
     console.log("Message sent:", message);
 
-    input.value = ""; // Clear the input field
   }
   console.log()
 });
@@ -293,7 +299,7 @@ button.addEventListener("click", async () => {
     if (reply && reply.trim()) {
       output.innerText = reply.trim();
     } else {
-      output.innerText = 'No reply received.';
+      output.innerText = 'No response... Try again';
 
       // Optional: return to loader after a pause
       setTimeout(() => {
@@ -310,8 +316,7 @@ button.addEventListener("click", async () => {
     console.error('Error sending prompt to Claude:', err);
     output.innerText = 'Error contacting Agent 1.';
   }
+
+  
 });
-
-    
-  });
-
+});
