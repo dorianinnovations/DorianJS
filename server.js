@@ -4,16 +4,15 @@ import dotenv from 'dotenv';
 import axios from 'axios';
 import cors from 'cors';
 import bodyParser from 'body-parser';
+import { loadMemory, saveMemory } from './memory.js';
 
 // Load environment variables
 dotenv.config();
 const apiKey = process.env.OPENROUTER_API_KEY;
 
 console.log("API KEY loaded:", !!apiKey);
-console.log('before app');
 
 const app = express();
-console.log('after app');
 const PORT = process.env.PORT || 3000;
 
 app.use(cors());
@@ -50,13 +49,32 @@ app.post('/ask', async (req, res) => {
       }
     );
 
-    const reply = response.data?.choices?.[0]?.message?.content || 'No reply.';
+  const reply = response.data?.choices?.[0]?.message?.content 
+            || response.data?.choices?.[0]?.text 
+            || 'No reply.';
+
+  /* console.log("Agent 1 response:", reply); */
+
+  const memory = loadMemory();
+  memory.emotionLog.push({
+    tick: memory.meta.currentTick,
+    reflection: reply,
+     
+});
+
+memory.meta.currentTick += 1;
+/* saveMemory(memory); */
+
     res.json({ reply });
   } catch (error) {
     console.error('Agent 1 API Error:', error?.response?.data || error.message);
     res.status(500).json({ error: 'Failed to get response from Agent 1' });
   }
 });
+
+
+
+
 
 // 🤖 Agent 2 Route
 app.post('/ask-second', async (req, res) => {

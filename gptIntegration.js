@@ -3,7 +3,7 @@
 
 //FRONTEND
 // This file handles the integration with the GPT API for sending prompts and receiving responses.
-
+console.log("🟢 GPT sendPrompt() running...");
 export async function sendPrompt(userInput) {
   const simulationMetrics = {
     tick: document.getElementById("tick-metric").textContent,
@@ -14,7 +14,7 @@ export async function sendPrompt(userInput) {
     growth: document.getElementById("growth-metric").textContent
   };
 
-  const fullPrompt = `Dear Agent 1, you are reflecting your current emotional state and your current emotional world.
+  const fullPrompt = `Dear Dorian, you are reflecting on your emotional world.
 
 Here are the current stats of your emotional world:
 
@@ -34,13 +34,15 @@ ${userInput}`;
     const res = await fetch('http://localhost:3000/ask', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ prompt: fullPrompt })
+      body: JSON.stringify({ 
+        prompt: fullPrompt
+      })
     });
-
+        
     const data = await res.json();
-    console.log("📨 Claude Reply:", data.reply);
     document.getElementById("gpt-output").innerText = data.reply; // 💡 Ensure it shows in UI
     return data.reply;
+
   } catch (err) {
     console.error('GPT integration error:', err);
     return null;

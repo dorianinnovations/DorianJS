@@ -74,5 +74,5 @@ self.onmessage = (e) => {
         universe.setReproductionRate(rate);
       }
       break;
-  }
-};
+
+  }};
