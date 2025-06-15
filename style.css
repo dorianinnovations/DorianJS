@@ -51,7 +51,7 @@ body {
   margin-top: 20px;
   text-decoration: none;
   margin-bottom: 5px;
-  text-shadow: 0 0 100px rgb(255, 255, 255);
+  text-shadow: 0 0 20px rgb(255, 255, 255);
   font-family: 'Chakra Petch';
   font-weight: 1000;
   letter-spacing: -0.9rem;
@@ -318,15 +318,14 @@ canvas[class='dominant-emotion'] {
   text-align: center;
   font-size: 3.2em;
   color: #ffffff;
-  text-shadow: white 0 0 20px, rgba(255, 255, 255, 0.739) 0 0 2px;
-  margin-bottom: -25px;
+  text-shadow: white 0 0 4px, rgba(255, 255, 255, 0.739) 0 0 2px;
 }
 
 .ux-manager-subtitle {
   font-family: 'Chakra Petch', sans-serif;
   font-size: 0.7em;
   color: #ffffff;
-  text-shadow: white 0 0 13px, rgba(163, 163, 163, 0.739) 0 0 2px;
+  text-shadow: white 0 0 4px, rgba(163, 163, 163, 0.739) 0 0 2px;
   margin-bottom: 20px;
 }
 
@@ -910,7 +909,7 @@ canvas[class='dominant-emotion'] {
   display: flex;
   flex-direction: column;
   align-items: center;
-  background: linear-gradient(180deg, rgb(10, 10, 10), rgb(0, 0, 0), rgb(0, 0, 0), rgba(0, 30, 255, 0.146));
+  background: linear-gradient(180deg, rgb(0, 0, 0), rgb(0, 0, 0), rgb(0, 0, 0), rgba(0, 15, 130, 0.146));
   justify-content: center;
 
 }
@@ -945,14 +944,16 @@ canvas[class='dominant-emotion'] {
   .layout {
     flex-direction: column;
     width: 100%;
-    margin: 0 auto;
+    padding: 0;
+    flex-wrap: wrap;
+    gap: clamp(10px, 3vw, 30px);
   }
 
   .column-left-column,
   .column-right-column {
     width: 100%;
-    height: 100%;
-    margin: 0 auto;
+    max-width: 400px;
+    margin: 20px auto;
     
   }
 
@@ -976,7 +977,33 @@ canvas[class='dominant-emotion'] {
     font-size: 1em;
   }
 
-  .layout {
-    padding: 20px;
+  .thought-log-title {
+    font-size: 2.5em;
+    letter-spacing: -0.1em;
+    align-items: center;
+    justify-content: center;
   }
-}
+
+  .thought-log-parent {
+    margin-left: 15px;
+    margin-right: 15px;
+    overflow: none;
+    text-wrap: wrap;;
+  }
+
+  .thought-log-section.visible {
+    justify-content: center;
+    align-items: center;
+    margin-top: 50px;
+  }
+
+  .thought-log {
+ text-align: flex-start;
+ max-width: 100%;
+ font-size: 0.4em;
+ gap: 10px;
+  }
+
+  
+
+  }
