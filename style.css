@@ -1,17 +1,7 @@
-
-
-
-
-
 /* ===================================
    GLOBAL STYLES
 =================================== */
 
-input[type="range"] {
-  -webkit-appearance: none;
-  width: 100%;
-  margin: 9px 0;
-}
 input[type="range"]:focus {
   outline: none;
 }
@@ -21,27 +11,35 @@ input[type="range"]::-webkit-slider-thumb {
   width: 16px;
   height: 16px;
   border-radius: 50%;
-  background: #fff;
+  background: #000;
+  border: 1px solid #999;
+  border-radius: 10px;
   cursor: pointer;
 }
 input[type="range"]::-moz-range-thumb {
   width: 16px;
   height: 16px;
   border-radius: 50%;
-  background: #fff;
+  background: #000;
+  border: 1px solid #999;
+  border-radius: 10px;
   cursor: pointer;
 }
 input[type="range"]::-webkit-slider-runnable-track {
   width: 100%;
   height: 8px;
   cursor: pointer;
-  background: #fff;
+  background: #000;
+  border: 1px solid #999;
+  border-radius: 10px;
 }
 input[type="range"]::-moz-range-track {
   width: 100%;
   height: 8px;
   cursor: pointer;
-  background: #fff;
+  background: #000;
+  border: 1px solid #999;
+  border-radius: 10px;
 }
 input[type="range"]::-ms-track {
   width: 100%;
@@ -52,23 +50,27 @@ input[type="range"]::-ms-track {
   color: transparent;
 }
 input[type="range"]::-ms-fill-lower {
-  background: #fff;
+  background: #000;
+  border: 1px solid #999;
+  border-radius: 10px;
 }
 input[type="range"]::-ms-fill-upper {
-  background: #fff;
+  background: #000;
+  border: 1px solid #999;
+  border-radius: 10px;
 }
 input[type="range"]::-ms-thumb {
   width: 16px;
   height: 16px;
   border-radius: 50%;
-  background: #fff;
+  background: #000;
+  border: 1px solid #999;
+  border-radius: 10px;
   cursor: pointer;
 }
 input[type="range"]::-ms-tooltip {
   display: none;
 }
-
-
 
 * {
   box-sizing: border-box;
@@ -79,14 +81,12 @@ body {
   background-color: #000000;
   min-height: auto;
   font-family: "Chakra Petch";
-  padding: 0;
+  overflow-x: hidden;
   animation-name: slide;
   animation-duration: 1s;
   animation-timing-function: ease-in;
   animation-fill-mode: forwards;
 }
-
-
 
 @keyframes slide {
   0% {
@@ -98,10 +98,6 @@ body {
     transform: translateY(0);
   }
 }
-
-
-
-
 
 .thought-log-video {
   position: absolute;
@@ -141,7 +137,7 @@ body {
   margin-top: 20px;
   margin-bottom: 5px;
   text-decoration: none;
-  text-shadow: 0 0 clamp(4px, 1vw, 18px) rgba(255, 255, 255, 0.8);
+  text-shadow: 0 0 clamp(4px, 1vw, 10px), rgb(255, 255, 255);
   font-family: "Chakra Petch";
   font-weight: 1000;
   letter-spacing: clamp(-0.2rem, -1vw, -0.9rem);
@@ -170,7 +166,6 @@ body {
   letter-spacing: -0.05rem;
 }
 
-.sagA-divider,
 .under-reproduction-divider {
   width: 50%;
   max-width: 100%;
@@ -178,37 +173,41 @@ body {
   display: block;
   margin: 32px 0;
   border-width: 0.1px;
-  box-shadow: 0 0 8px rgb(255, 255, 255);
-  border: none;
   background: linear-gradient(
     90deg,
-    rgba(255, 255, 255, 0.649),
+    rgba(255, 0, 0, 0.649),
     rgba(255, 255, 255, 0.545),
-    rgba(255, 255, 255, 0.36),
-    rgba(255, 255, 255, 0.099)
+    rgba(0, 255, 42, 0.36),
+    rgb(255, 255, 255)
   );
   background-size: 300% 100%;
-  opacity: 0.1;
+  opacity: 0.9;
+  animation: glowFlow 8s cubic-bezier(0.4, 0, 0.2, 1) infinite;
   position: relative;
   z-index: 1;
   transition: background-position 0.4s ease, opacity 5.4s ease;
 }
-.header-divider {
+
+.header-divider,
+.under-reproduction-divider {
   width: 100%;
   max-width: 100%;
   height: 1.5px;
   display: block;
-  margin: 32px;
   border: none;
   background: linear-gradient(
     90deg,
-    rgba(255, 255, 255, 0.149),
-    rgb(0, 0, 0),
-    rgba(255, 255, 255, 0.099),
-    rgb(0, 0, 0)
+    rgba(255, 0, 0, 0.25),
+    rgba(255, 123, 0, 0.24),
+    rgba(255, 247, 0, 0.25),
+    rgba(9, 255, 0, 0.26),
+    rgba(0, 255, 242, 0.25),
+    rgba(0, 13, 255, 0.27),
+    rgba(111, 0, 255, 0.23),
+    rgba(238, 0, 255, 0.25)
   );
   background-size: 300% 100%;
-  animation: glowFlow 8s cubic-bezier(0.4, 0, 0.2, 1) infinite;
+  animation: glowFlow 5s cubic-bezier(0.4, 0, 0.2, 1) infinite;
   border-radius: 9999px;
   opacity: 0.9;
   position: relative;
@@ -245,7 +244,7 @@ body {
   flex-direction: row; /* Keep columns side by side */
   justify-content: center;
   align-items: flex-start;
-  padding: 20px;
+  padding: 110px 100px 100px 100px;
   width: 100vw;
   gap: 30px;
   min-height: 1000px;
@@ -255,7 +254,7 @@ body {
     /* Inner edge */ inset 0 0 12px rgba(255, 255, 255, 0.06),
     /* Subtle inner glow */ 0 0 0 2px rgba(255, 255, 255, 0.04),
     /* First outer ring */ 0 0 24px rgba(255, 255, 255, 0.07); /* Second soft glow */
-} 
+}
 
 .layout::before {
   content: "";
@@ -318,13 +317,10 @@ canvas {
   border: none;
   border-radius: 23px;
   box-shadow: 0 0 0 15px rgba(0, 0, 0, 0.176),
-    /* Inner edge */ 0 0 8px rgb(255, 255, 255),
-    /* Subtle inner glow */ 0 0 0 12px rgba(0, 0, 0, 0.737),
-    /* First outer ring */ 0 0 13px rgba(255, 255, 255, 0.594); /* Second soft glow */
+    0 0 0 2px rgba(255, 255, 255, 0.594); /* Second soft glow */
   border-radius: 23px;
   z-index: 2;
   gap: 10px;
-
 }
 
 canvas:hover {
@@ -396,11 +392,12 @@ canvas[class="dominant-emotion"] {
   display: flex;
   flex-direction: column;
   align-items: center;
+  margin: 0;
   justify-content: center;
   text-align: center;
   font-size: 3.2em;
   color: #ffffff;
-  text-shadow: white 0 0 4px, rgba(255, 255, 255, 0.739) 0 0 2px;
+  text-shadow: white 0 0 1px, rgba(255, 255, 255, 0.739) 0 0 3px;
 }
 
 .ux-manager-subtitle {
@@ -409,6 +406,9 @@ canvas[class="dominant-emotion"] {
   color: #ffffff;
   text-shadow: white 0 0 4px, rgba(163, 163, 163, 0.739) 0 0 2px;
   margin-bottom: 20px;
+  margin-top: -10px;
+  width: 150px;
+  text-align: center;
 }
 
 /* ===================================
@@ -443,7 +443,6 @@ canvas[class="dominant-emotion"] {
   height: 860px;
   box-shadow: 0 0 0 2px #5f5f5f;
   margin-right: 50px;
-
 }
 
 .column-right-column-upper {
@@ -498,14 +497,6 @@ canvas[class="dominant-emotion"] {
   z-index: 10;
 }
 
-.ui-card:hover {
-  scale: 1.01;
-  transition-duration: 0.2s;
-  animation-duration: 0.5s;
-  animation-timing-function: ease-in-out;
-  box-shadow: 0 0 16px rgba(255, 255, 255, 0.05), 0 0 8px #ffffffad;
-}
-
 .ui-speed-section {
   font-size: 1.1rem;
   font-weight: 600;
@@ -521,9 +512,7 @@ canvas[class="dominant-emotion"] {
   background-color: #111;
   color: #fff;
   border: 1px solid #555;
-  width: 50px;
-  height: 45px;
-  padding: 0.5rem 1rem;
+  padding: 1.8rem 2.3rem;
   flex-shrink: 0;
   border-radius: 8px;
   font-family: "Chakra Petch", sans-serif;
@@ -536,14 +525,16 @@ canvas[class="dominant-emotion"] {
 .btn-go-right-column:hover,
 .custom-btn:hover {
   box-shadow: 0 0 12px rgb(255, 255, 255);
-  transform: scale(1.2);
-  border-color: #888;
+  transform: scale(1.1);
+  color: black;
+  background-color: white;
+  border-color: #000000;
+  border: 2px solid black;
 }
 
 .btn-go-right-column:active,
 .custom-btn:active {
-  transform: scale(1.1);
-  box-shadow: 0 0 6px rgb(255, 255, 255);
+  transform: scale(1.18);
 }
 
 /* Make sure text stays above shine */
@@ -572,22 +563,45 @@ canvas[class="dominant-emotion"] {
 }
 
 .custom-btn.pulse {
-  animation: grow 3s infinite ease-in-out;
-  width: 100%;
-  border-radius: 23px;
-
+  animation: shrinkey 2s infinite ease-in-out;
+  width: 15%;
+  padding: 14px 0;
+  font-family: "Orbitron", sans-serif;
+  font-size: 0.8rem;
+  color: rgb(186, 186, 186);
+  background: rgba(0, 0, 0, 0.1);
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  text-align: center;
+  cursor: pointer;
+  position: absolute;
+  bottom: 10px;
+  border-radius: 20px;
+  left: calc(50% - 7.5%);
+  z-index: 10;
+  overflow: hidden;
+  transition: background 0.3s ease-in-out;
 }
-@keyframes grow {
+
+.custom-btn.pulse:hover {
+  background: rgb(255, 255, 255);
+  color: black;
+}
+
+@keyframes shrinkey {
   0% {
-    transform: scale(1);
+    transform: scale(1.01);
+    box-shadow: 0 0 6px rgba(255, 0, 0, 0.426);
   }
   50% {
-    transform: scale(1.01);
+    transform: scale(1.03);
+    box-shadow: 0 0 12px rgba(0, 255, 17, 0.4);
   }
   100% {
-    transform: scale(1);
+    transform: scale(1.01);
+    box-shadow: 0 0 6px rgba(4, 0, 255, 0.2);
   }
 }
+
 /* =====
     Speed Slider Styles
     ===== */
@@ -687,62 +701,56 @@ canvas[class="dominant-emotion"] {
   box-shadow: 0 0 10px rgba(255, 255, 255, 0.1);
 }
 
-/* New container for input/output below canvas */
-
 .input-text-box {
   display: flex;
   flex-direction: row; /* Keep input and button side-by-side */
   align-items: center;
   justify-content: space-between; /* Space out input and button */
   width: 89%; /* Take full width of its parent */
-  border-radius: 15px;
-  font-family: "Chakra Petch", "Space Grotesk", "Fira Code", monospace;
-  background: #000000e5;
+  border-radius: 10px;
+  font-family: "Chakra Petch";
+  background: #000000;
   padding: 10px;
-  animation-name: fade, pulse;
-  box-shadow: 0 0 0 6px rgba(255, 255, 255, 0.05), 0 0 8px #ffffff;
-  animation-duration: 2s;
-  animation-timing-function: ease-in-out;
-  animation-iteration-count: infinite;
-  animation-direction: alternate;
   transition: box-shadow 0.4s ease-in-out;
-  font-weight: 600;
+  font-weight: 1000;
   margin-bottom: 20px;
-  border: solid 1px rgba(255, 255, 255, 0.1);
+  border: solid 1px rgba(255, 255, 255, 0.658);
 }
 
-
-@keyframes fade
-   {
+@keyframes fade {
   0% {
-    opacity: 0.5;
-    box-shadow: 0 0 0 6px rgba(255, 255, 255, 0.05), 0 0 8px #ffffff;
-
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.8;
   }
   100% {
     opacity: 1;
-    box-shadow: 0 0 0 6px rgba(255, 255, 255, 0.05), 0 0 8px #ffffff;
-
   }
 }
 .input-text {
   flex-grow: 1;
   border: none;
   border-radius: 9px;
-  background: transparent;
-  font-family: "Chakra Petch", "Space Grotesk", "Fira Code", monospace;
-  color: #ffffff;
-  flex-grow: 1;
+  font-family: "Orbitron", sans-serif;
+  color: white;
   min-width: 0;
-  font-size: 1.2em;
-  font-weight: 1000;
-  outline: none;
+  letter-spacing: -0.05rem;
+  font-size: 1.85em;
+  background: linear-gradient(
+    to right,
+    #000000,
+    rgba(3, 3, 3, 0.916),
+    rgba(61, 61, 61, 0.437),
+    rgba(26, 26, 26, 0.57)
+  );
+
+  font-weight: 500;
   margin-right: 10px;
-  padding: 14px;
-  box-shadow: 0 0 10px rgb(255, 255, 255);
-  background-color: rgba(0, 0, 0, 0.47);
-  text-shadow: white 0 0 8px, rgb(255, 255, 255) 0 0 2px;
-  border-radius: 15px;
+  outline: none;
+  padding: 17px;
+  border: 1px solid rgba(255, 255, 255, 0.427);
+  border-radius: 10px;
 }
 
 /*This is the container only*/
@@ -853,12 +861,12 @@ canvas[class="dominant-emotion"] {
 
 .hamburger:hover {
   transform: scale(1.1);
-  color: #ddd;
+  color: #000000;
   animation-name: pulse-glow;
   animation-duration: 0.3s;
   animation-timing-function: ease-in;
   box-shadow: 0 0 10px rgba(255, 255, 255, 0.515);
-  background-color: rgba(255, 255, 255, 0.051);
+  background-color: rgb(255, 255, 255);
   text-shadow: white 0 0 13px, rgba(163, 163, 163, 0.739) 0 0 2px;
   background-color: repeating-linear-gradient(
     45deg,
@@ -866,8 +874,6 @@ canvas[class="dominant-emotion"] {
     rgba(255, 255, 255, 0.05) 50%,
     rgba(255, 255, 255, 0.1) 100%
   );
-  box-shadow: inset 0 0 0 40px rgba(255, 255, 255, 0.1),
-    inset 0 0 10px rgba(255, 255, 255, 0.2), 0 0 20px rgba(255, 255, 255, 0.3);
   transition: transform 0.2s ease, box-shadow 0.6s ease,
     background-color 0.3s ease;
 }
@@ -1010,8 +1016,8 @@ canvas[class="dominant-emotion"] {
 }
 
 @media (max-width: 768px) {
-
-  html, body {
+  html,
+  body {
     overflow-x: hidden;
   }
 
@@ -1025,9 +1031,11 @@ canvas[class="dominant-emotion"] {
   .ui-speed-btns,
   .input-text-box,
   .gpt-output-container {
-    
     border-radius: 5px;
-    
+  }
+
+  .main-canvas {
+    box-shadow: none;
   }
 
   .hamburger {
@@ -1048,6 +1056,7 @@ canvas[class="dominant-emotion"] {
     padding: 0;
     box-sizing: border-box;
     flex-wrap: wrap;
+    gap: 80px;
   }
 
   .column-left-column,
@@ -1105,55 +1114,89 @@ canvas[class="dominant-emotion"] {
     font-size: 0.4em;
     gap: 10px;
   }
+
   @media (max-width: 768px) {
-  .heading-title {
-    font-size: clamp(3.5rem, 10vw, 5rem);
-    letter-spacing: -0.3rem;
-    text-shadow: 0 0 8px rgba(255, 255, 255, 0.6);
+    .heading-title {
+      font-size: clamp(5rem, 10vw, 5rem);
+      letter-spacing: -0.3rem;
+      text-shadow: 0 0 3px rgb(255, 255, 255);
+    }
+
+    .column-left-column,
+    .column-right-column {
+      width: 100%;
+      height: auto;
+      margin: 0 auto;
+    }
+
+    .thought-log {
+      font-size: 1.1rem;
+      text-align: left;
+      width: 100%;
+      padding: 0 10px;
+    }
+
+    .thought-log-title {
+      font-size: 2rem;
+      text-align: center;
+    }
+
+    .thought-log-section.visible {
+      margin-top: 60px;
+      padding: 10px;
+    }
+
+    .thought-log-parent {
+      margin: 0 15px;
+      text-align: center;
+    }
+
+    .input-text-box {
+      border-radius: 10px;
+      color: white;
+      margin: 15px;
+    }
+
+    .custom-btn.pulse {
+      animation: shrinkey 2s infinite ease-in-out;
+      padding: 8px;
+      font-family: "Orbitron", sans-serif;
+      font-size: 0.5rem;
+      color: rgb(186, 186, 186);
+      background: rgba(0, 0, 0, 0.1);
+      border: 1px solid rgba(255, 255, 255, 0.3);
+      text-align: center;
+      cursor: pointer;
+      position: absolute;
+      border-radius: 10px;
+      left: 15px;
+      z-index: 10;
+      overflow: hidden;
+      transition: background 0.3s ease-in-out;
+    }
   }
-
-  
-
-  .column-left-column,
-  .column-right-column {
-    width: 100%;
-    height: auto;
-    margin: 0 auto;
-  }
-
-  .thought-log {
-    font-size: 1.1rem;
-    text-align: left;
-    width: 100%;
-    padding: 0 10px;
-  }
-
-  .thought-log-title {
-    font-size: 2rem;
+  .ux-manager {
+    font-family: "Chakra Petch", sans-serif;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    font-weight: 800;
     text-align: center;
+    padding: 2rem;
+    font-size: 3.5rem;
+    color: #ffffff;
+    text-shadow: white 0 0 4px, rgba(255, 255, 255, 0.739) 0 0 2px;
   }
 
-  .thought-log-section.visible {
-    margin-top: 60px;
-    padding: 10px;
+  .ux-manager-subtitle {
+    font-family: "Chakra Petch", sans-serif;
+    font-size: 0.7em;
+    color: #ffffff;
+    text-shadow: white 0 0 4px, rgba(163, 163, 163, 0.739) 0 0 2px;
   }
 
-  .thought-log-parent {
-    margin: 0 15px;
-    text-align: center;
+  .ui-card {
+    font-size: 1.2em;
   }
-  
-  .input-text-box {
-    box-shadow: 0 0 3px rgba(111, 111, 111, 0.114),
-    0 0 7px rgba(255, 255, 255, 0.133), 0 0 10px rgba(255, 255, 255, 0.755);
-    border-radius: 10px;
-    margin: 15px;
-  }
-
-  .custom-btn-pulse {
-    border-radius: 0;
-  }
-  
-}
-
 }
