@@ -9,9 +9,25 @@ html,
 body {
   background-color: #000000;
   min-height: auto;
-  font-family: 'Chakra Petch';
+  font-family: "Chakra Petch";
   padding: 0;
+  animation-name: slide;
+  animation-duration: 1s;
+  animation-timing-function: ease-in;
+  animation-fill-mode: forwards;
 }
+
+@keyframes slide {
+  0% {
+    opacity: 0.7;
+    transform: translateY(-5px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
 
 .thought-log-video {
   position: absolute;
@@ -44,19 +60,18 @@ body {
 }
 
 .heading-title {
-  font-size: 9.2rem;
+  font-size: clamp(6rem, 9vw, 9.2rem);
   color: #ffffff;
   position: relative;
   text-align: center;
   margin-top: 20px;
-  text-decoration: none;
   margin-bottom: 5px;
-  text-shadow: 0 0 20px rgb(255, 255, 255);
-  font-family: 'Chakra Petch';
+  text-decoration: none;
+  text-shadow: 0 0 clamp(4px, 1vw, 18px) rgba(255, 255, 255, 0.8);
+  font-family: "Chakra Petch";
   font-weight: 1000;
-  letter-spacing: -0.9rem;
-  transition: scale 0.2s ease-in-out, animation-duration 0.5s ease-in-out,
-    animation-timing-function ease-in-out;
+  letter-spacing: clamp(-0.2rem, -1vw, -0.9rem);
+  transition: scale 0.2s ease-in-out;
   cursor: pointer;
   z-index: 10;
 }
@@ -68,9 +83,7 @@ body {
   animation-timing-function: ease-in-out;
 }
 
-.heading-subtitle
-
- {
+.heading-subtitle {
   font-size: 1.1rem;
   color: #ffffff;
   text-shadow: 0 0 20px rgb(255, 255, 255);
@@ -78,7 +91,7 @@ body {
   margin-top: 1px;
   z-index: 1;
   margin-bottom: 10px;
-  font-family: 'Chakra Petch';
+  font-family: "Chakra Petch";
   font-weight: 1000;
   letter-spacing: -0.05rem;
 }
@@ -99,7 +112,6 @@ body {
     rgba(255, 255, 255, 0.545),
     rgba(255, 255, 255, 0.36),
     rgba(255, 255, 255, 0.099)
-  
   );
   background-size: 300% 100%;
   opacity: 0.1;
@@ -150,8 +162,6 @@ body {
   }
 }
 
-
-
 /* ===================================
    LAYOUT CONTAINER
 =================================== */
@@ -161,67 +171,63 @@ body {
   flex-direction: row; /* Keep columns side by side */
   justify-content: center;
   align-items: flex-start;
-  padding: 90px;
-  width: 100%;
+  padding: 20px;
+  width: 100vw;
   gap: 30px;
   min-height: 1000px;
   z-index: 1;
-  box-shadow:
-  inset 0 0 0 12px rgba(255, 255, 255, 0.03), /* Inner edge */
-  inset 0 0 12px rgba(255, 255, 255, 0.06), /* Subtle inner glow */
-  0 0 0 2px rgba(255, 255, 255, 0.04),      /* First outer ring */
-  0 0 24px rgba(255, 255, 255, 0.07);       /* Second soft glow */
-
-}
+  overflow-x: hidden;
+  box-shadow: inset 0 0 0 12px rgba(255, 255, 255, 0.03),
+    /* Inner edge */ inset 0 0 12px rgba(255, 255, 255, 0.06),
+    /* Subtle inner glow */ 0 0 0 2px rgba(255, 255, 255, 0.04),
+    /* First outer ring */ 0 0 24px rgba(255, 255, 255, 0.07); /* Second soft glow */
+} 
 
 .layout::before {
   content: "";
   position: absolute;
-  top: 0; left: 0;
+  top: 0;
+  left: 0;
   width: 100%;
   height: 100%;
   background-image: linear-gradient(
-  to bottom,
-  rgba(255, 255, 255, 0.05) 1px,
-  transparent 1px
-);
-background-size: 100% 4px;
-
-    
-  background: radial-gradient(
-    circle at top center,
-    rgba(0, 0, 0, 0.2) 0%,
-    rgba(0, 0, 0, 0.85) 60%,
-    #000000 100%
-  ),
-  repeating-linear-gradient(
     to bottom,
-    rgb(68, 68, 68) 0px,
-    rgba(255, 255, 255, 0.015) 2px,
-    transparent 2px,
-    transparent 4px
-  ); 
+    rgba(255, 255, 255, 0.05) 1px,
+    transparent 1px
+  );
+  background-size: 100% 4px;
+
+  background: radial-gradient(
+      circle at top center,
+      rgba(0, 0, 0, 0.2) 0%,
+      rgba(0, 0, 0, 0.85) 60%,
+      #000000 100%
+    ),
+    repeating-linear-gradient(
+      to bottom,
+      rgb(23, 23, 23) 0px,
+      rgba(255, 255, 255, 0.015) 2px,
+      transparent 2px,
+      transparent 4px
+    );
 
   background-size: cover;
   z-index: -1;
   pointer-events: none;
 }
 
-
 /* ===================================
    MAIN CANVAS
 =================================== */
 
-
 canvas {
-
   border: none;
   border-radius: 23px;
   box-shadow: 0 0 5px rgba(255, 255, 255, 0.05), 0 0 30px #ffffffb3;
   width: 100%;
   height: auto;
 }
- 
+
 .canvas-overlay {
   justify-content: center;
   align-items: center;
@@ -237,22 +243,24 @@ canvas {
   background: #000;
   border: none;
   border-radius: 23px;
-  box-shadow:  0 0 0 15px rgba(0, 0, 0, 0.176), /* Inner edge */
-     0 0 8px rgb(255, 255, 255), /* Subtle inner glow */
-    0 0 0 12px rgba(0, 0, 0, 0.737),      /* First outer ring */
-    0 0 13px rgba(255, 255, 255, 0.594);       /* Second soft glow */
+  box-shadow: 0 0 0 15px rgba(0, 0, 0, 0.176),
+    /* Inner edge */ 0 0 8px rgb(255, 255, 255),
+    /* Subtle inner glow */ 0 0 0 12px rgba(0, 0, 0, 0.737),
+    /* First outer ring */ 0 0 13px rgba(255, 255, 255, 0.594); /* Second soft glow */
   border-radius: 23px;
-  z-index:2;
+  z-index: 2;
+  gap: 10px;
 
 }
 
 canvas:hover {
-  box-shadow: 0 0 13px rgba(255, 255, 255, 0.15), 0 0 84px rgba(255, 255, 255, 0.25),
-    0 0 38px rgba(255, 255, 255, 0.3);
+  box-shadow: 0 0 13px rgba(255, 255, 255, 0.15),
+    0 0 84px rgba(255, 255, 255, 0.25), 0 0 38px rgba(255, 255, 255, 0.3);
   cursor: pointer;
-    transition: box-shadow 1.2s ease-in-out, box-glow 1.2s ease-in-out;
+  transition: box-shadow 1.2s ease-in-out, box-glow 1.2s ease-in-out;
 
-  z-index: 3;}
+  z-index: 3;
+}
 
 canvas.dominant-emotion-joy {
   box-shadow: 0 0 100px 0 rgba(255, 251, 0, 0.4) !important;
@@ -276,10 +284,10 @@ canvas.dominant-emotion-angry {
   box-shadow: 0 0 100px 0 rgba(255, 0, 0, 0.4) !important;
 }
 canvas.dominant-emotion-anticipation {
-  box-shadow: 0 0 100px 0 rgba(255, 128, 0, 0.4)  !important;
+  box-shadow: 0 0 100px 0 rgba(255, 128, 0, 0.4) !important;
 }
 canvas.dominant-emotion-affectionate {
-  box-shadow: 0 0 100px 0 rgba(255, 200, 100, 0.4)  !important;
+  box-shadow: 0 0 100px 0 rgba(255, 200, 100, 0.4) !important;
 }
 canvas.dominant-emotion-shocked {
   box-shadow: 0 0 100px 0 rgba(150, 50, 200, 0.4) !important;
@@ -303,14 +311,14 @@ canvas.dominant-emotion-aggression {
   box-shadow: 0 0 100px 0 rgba(255, 50, 50, 0.4) !important;
 }
 
-canvas[class='dominant-emotion'] {
-  transition: box-shadow 1.2s cubic-bezier(0.2, 0, 0.8, 1), box-glow 1.2s ease-in-out;
+canvas[class="dominant-emotion"] {
+  transition: box-shadow 1.2s cubic-bezier(0.2, 0, 0.8, 1),
+    box-glow 1.2s ease-in-out;
 }
 
-
 /*UX MANAGER TEXT STYLING*/
-.ux-manager{
-  font-family: 'Chakra Petch', sans-serif;
+.ux-manager {
+  font-family: "Chakra Petch", sans-serif;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -322,18 +330,12 @@ canvas[class='dominant-emotion'] {
 }
 
 .ux-manager-subtitle {
-  font-family: 'Chakra Petch', sans-serif;
+  font-family: "Chakra Petch", sans-serif;
   font-size: 0.7em;
   color: #ffffff;
   text-shadow: white 0 0 4px, rgba(163, 163, 163, 0.739) 0 0 2px;
   margin-bottom: 20px;
 }
-
-
-
-
-
-
 
 /* ===================================
    COLUMN STYLING
@@ -345,17 +347,12 @@ canvas[class='dominant-emotion'] {
   height: 860px;
   gap: 10px;
   width: 400px;
-  box-shadow: inset 0 0 0 12px rgba(3, 3, 3, 0.226), /* Inner edge */
-    inset 0 0 35px rgba(255, 255, 255, 0.241), /* Subtle inner glow */
-    0 0 16px rgba(255, 255, 255, 0.05), 0 0 8px #ffffff70,
-    inset 0 0 0 10px rgba(255, 255, 255, 0.05),
-    0 0 16px rgba(255, 255, 255, 0.05), 0 0 8px #ffffff70;
-  border-radius: 13px;
-  background: #00000028;
+  border-radius: 16px;
+  background: #00000095;
+  box-shadow: 0 0 0 2px #5f5f5f;
   margin-top: 60px; /* Adjusted margin to align better with canvas */
   margin-left: 50px; /* Keep margin for spacing */
   z-index: 4;
-
 }
 
 .column-left-column {
@@ -367,18 +364,13 @@ canvas[class='dominant-emotion'] {
   border-radius: 13px;
   background: #00000028;
   margin-top: 60px; /* Adjusted margin to align better with canvas */
-  margin-right: 50px; /* Add some right margin for balance */
   z-index: 4;
   width: 400px;
-  height: 860px;  
-  box-shadow: inset 0 0 0 12px rgba(3, 3, 3, 0.226), /* Inner edge */
-    inset 0 0 35px rgba(255, 255, 255, 0.241), /* Subtle inner glow */
-    0 0 16px rgba(255, 255, 255, 0.05), 0 0 8px #ffffff70,
-    inset 0 0 0 10px rgba(255, 255, 255, 0.05),
-    0 0 16px rgba(255, 255, 255, 0.05), 0 0 8px #ffffff70;
+  height: 860px;
+  box-shadow: 0 0 0 2px #5f5f5f;
+  margin-right: 50px;
+
 }
-
-
 
 .column-right-column-upper {
   display: flex;
@@ -393,13 +385,11 @@ canvas[class='dominant-emotion'] {
   background-color: #ffffff00;
   color: #ffffff;
   text-shadow: white 0 0 13px, rgba(163, 163, 163, 0.739) 0 0 2px;
-  font-family: 'Chakra Petch';
+  font-family: "Chakra Petch";
   font-size: 1.2em;
   font-weight: 600;
   gap: 60px;
 }
-
-
 
 /* ====\
 /* ===================================
@@ -411,7 +401,7 @@ canvas[class='dominant-emotion'] {
   flex-direction: column;
   align-items: center;
   width: 89%;
-  min-height: 240px;
+  min-height: 10%;
   max-height: 240px;
   align-items: flex-start;
   justify-content: flex-start;
@@ -421,11 +411,11 @@ canvas[class='dominant-emotion'] {
   position: relative;
   flex-wrap: wrap;
   overflow: hidden;
-  border-radius: 24px;
-  background: linear-gradient(180deg, rgba(0, 0, 0, 0.798) 20%, rgba(0, 0, 0, 0.28) 100%);
-  box-shadow: 0 0 16px rgba(255, 255, 255, 0.05), 0 0 8px #ffffff70;
+  border-radius: 15px;
+  background-color: #000000ac;
+  box-shadow: 0 0 0 6px rgba(255, 255, 255, 0.05), 0 0 8px #ffffff;
   border: 1.5px solid rgba(255, 255, 255, 0.08);
-  font-family: 'Chakra Petch'; 
+  font-family: "Chakra Petch";
   font-weight: 100;
   font-size: 1.9rem;
   letter-spacing: 1px;
@@ -453,9 +443,7 @@ canvas[class='dominant-emotion'] {
 
 /* BUTTON STYLING */
 
-
-.btn-go-right-column
-{
+.btn-go-right-column {
   background-color: #111;
   color: #fff;
   border: 1px solid #555;
@@ -464,12 +452,11 @@ canvas[class='dominant-emotion'] {
   padding: 0.5rem 1rem;
   flex-shrink: 0;
   border-radius: 8px;
-  font-family: 'Chakra Petch', sans-serif;
+  font-family: "Chakra Petch", sans-serif;
   font-size: 1rem;
   cursor: pointer;
   transition: box-shadow 0.3s ease, transform 0.2s ease;
   box-shadow: 0 0 10px rgba(255, 255, 255, 0.1);
-
 }
 
 .btn-go-right-column:hover,
@@ -484,8 +471,6 @@ canvas[class='dominant-emotion'] {
   transform: scale(1.1);
   box-shadow: 0 0 6px rgb(255, 255, 255);
 }
-
-
 
 /* Make sure text stays above shine */
 .custom-btn {
@@ -513,26 +498,35 @@ canvas[class='dominant-emotion'] {
 }
 
 .custom-btn.pulse {
-  animation: pulse-glow 3s infinite ease-in-out;
+  animation: grow 3s infinite ease-in-out;
+  width: 100%;
+  border-radius: 23px;
+
 }
-
-
+@keyframes grow {
+  0% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.01);
+  }
+  100% {
+    transform: scale(1);
+  }
+}
 /* =====
     Speed Slider Styles
     ===== */
-
-
 
 .ui-speed-control {
   display: flex;
   flex-direction: column;
   gap: 10px;
-
 }
 
 /* This is where to change the look of sliders if they arent active */
 .speed-slider {
-  font-family: 'Chakra Petch', sans-serif;
+  font-family: "Chakra Petch", sans-serif;
   font-size: 1.1em;
   color: #ffffff;
   text-shadow: white 0 0 13px, rgba(163, 163, 163, 0.739) 0 0 2px;
@@ -555,7 +549,6 @@ canvas[class='dominant-emotion'] {
     rgba(76, 76, 76, 0.276) 60%,
     #000000 100%
   );
-  
 }
 
 .speed-slider-wrapper {
@@ -567,15 +560,13 @@ canvas[class='dominant-emotion'] {
   flex-direction: column;
   width: 97%;
   padding: 10px;
-  box-shadow: inset 0 0 0 6px rgba(3, 3, 3, 0.226), /* Inner edge */
-    inset 0 0 1px rgba(255, 255, 255, 0.06), /* Subtle inner glow */
-    0 0 10px rgba(255, 255, 255, 0.1), /* Outer glow */
-    0 0 20px rgba(255, 255, 255, 0.05), /* Outer glow */
-    0 0 30px #ffffff52;
-    border-radius: 13px; 
+  box-shadow: inset 0 0 0 6px rgba(3, 3, 3, 0.226),
+    /* Inner edge */ inset 0 0 1px rgba(255, 255, 255, 0.06),
+    /* Subtle inner glow */ 0 0 10px rgba(255, 255, 255, 0.1),
+    /* Outer glow */ 0 0 20px rgba(255, 255, 255, 0.05),
+    /* Outer glow */ 0 0 30px #ffffff52;
+  border-radius: 13px;
 }
-
-
 
 .speed-slider:hover {
   scale: 1.01;
@@ -606,21 +597,21 @@ canvas[class='dominant-emotion'] {
   justify-content: center;
   margin-bottom: 20px;
   padding: 35px;
-
 }
 
 .custom-btn {
- background-color: #111;
+  background-color: #111;
   color: #fff;
   border: 1px solid #555;
   padding: 16px;
   width: 100px;
   border-radius: 14px;
-  font-family: 'Chakra Petch', sans-serif;
+  font-family: "Chakra Petch", sans-serif;
   font-size: 1.2rem;
   cursor: pointer;
   transition: box-shadow 0.3s ease, transform 0.2s ease;
-  box-shadow: 0 0 10px rgba(255, 255, 255, 0.1);}
+  box-shadow: 0 0 10px rgba(255, 255, 255, 0.1);
+}
 
 /* New container for input/output below canvas */
 
@@ -630,43 +621,55 @@ canvas[class='dominant-emotion'] {
   align-items: center;
   justify-content: space-between; /* Space out input and button */
   width: 89%; /* Take full width of its parent */
-  max-width: 400px; /* Limit width for aesthetics */
   border-radius: 15px;
-  font-family: 'Chakra Petch', 'Space Grotesk', 'Fira Code', monospace;
-  background:#000000e5;
-  padding : 10px;
+  font-family: "Chakra Petch", "Space Grotesk", "Fira Code", monospace;
+  background: #000000e5;
+  padding: 10px;
+  animation-name: fade, pulse;
+  box-shadow: 0 0 0 6px rgba(255, 255, 255, 0.05), 0 0 8px #ffffff;
+  animation-duration: 2s;
+  animation-timing-function: ease-in-out;
+  animation-iteration-count: infinite;
+  animation-direction: alternate;
   transition: box-shadow 0.4s ease-in-out;
   font-weight: 600;
   margin-bottom: 20px;
   border: solid 1px rgba(255, 255, 255, 0.1);
-  background:rgba(0, 0, 0, 0.792)
-  
 }
 
+
+@keyframes fade
+   {
+  0% {
+    opacity: 0.5;
+    box-shadow: 0 0 0 6px rgba(255, 255, 255, 0.05), 0 0 8px #ffffff;
+
+  }
+  100% {
+    opacity: 1;
+    box-shadow: 0 0 0 6px rgba(255, 255, 255, 0.05), 0 0 8px #ffffff;
+
+  }
+}
 .input-text {
   flex-grow: 1;
   border: none;
   border-radius: 9px;
-  background: transparent;  
-  font-family: 'Chakra Petch', 'Space Grotesk', 'Fira Code', monospace;
+  background: transparent;
+  font-family: "Chakra Petch", "Space Grotesk", "Fira Code", monospace;
   color: #ffffff;
   flex-grow: 1;
   min-width: 0;
   font-size: 1.2em;
   font-weight: 1000;
   outline: none;
-  margin-right: 10px; 
+  margin-right: 10px;
   padding: 14px;
   box-shadow: 0 0 10px rgb(255, 255, 255);
   background-color: rgba(0, 0, 0, 0.47);
-  text-shadow: white 0 0 8px, rgb(255, 255, 255) 0 0 2px;  
+  text-shadow: white 0 0 8px, rgb(255, 255, 255) 0 0 2px;
   border-radius: 15px;
-  background-size: 4px 4px;
 }
-
-
-
-
 
 /*This is the container only*/
 .gpt-output-container {
@@ -674,19 +677,18 @@ canvas[class='dominant-emotion'] {
   justify-content: center;
   align-items: center;
   width: 100%;
-  
 }
 .gpt-answer-text-box {
   width: 89%; /* Take full width of its parent */
   max-width: 400px; /* Limit width for aesthetics */
   padding: 12px 16px;
-  font-size:  1.85em;
+  font-size: 1.85em;
   min-height: 100px;
   max-height: 450px;
   overflow-y: auto; /* Allow scrolling if content exceeds height */
   border-radius: 15px;
-  font-family: 'Chakra Petch', 'Space Grotesk', 'Fira Code', monospace;
-    background: rgba(0, 0, 0, 0.3);
+  font-family: "Chakra Petch", "Space Grotesk", "Fira Code", monospace;
+  background: rgba(0, 0, 0, 0.3);
   color: #ffffff;
   font-weight: 600;
   margin-bottom: 20px;
@@ -694,12 +696,11 @@ canvas[class='dominant-emotion'] {
   box-shadow: 0 0 16px rgba(255, 255, 255, 0.05), 0 0 8px #ffffff70;
 }
 
-
 .btn-mutation {
   position: relative;
   color: #ffffff;
   overflow: hidden;
-  font-family: 'Courier New', monospace;
+  font-family: "Courier New", monospace;
   letter-spacing: 1.5px;
   text-transform: uppercase;
   border-radius: 24px;
@@ -709,14 +710,19 @@ canvas[class='dominant-emotion'] {
 }
 
 .btn-mutation::before {
-  content: '';
+  content: "";
   position: absolute;
 
   top: 0;
   left: -100%;
   width: 100%;
   height: 100%;
-  background: linear-gradient(to right, transparent, rgba(255, 255, 255, 0.5), transparent);
+  background: linear-gradient(
+    to right,
+    transparent,
+    rgba(255, 255, 255, 0.5),
+    transparent
+  );
   transform: skewX(-20deg);
   transition: right 0.5s ease;
   z-index: 1;
@@ -727,7 +733,12 @@ canvas[class='dominant-emotion'] {
 }
 
 .btn-mutation-btn:hover {
-  background: linear-gradient(to right, transparent, rgba(255, 255, 255, 0.5), transparent);
+  background: linear-gradient(
+    to right,
+    transparent,
+    rgba(255, 255, 255, 0.5),
+    transparent
+  );
   transform: skewX(-20deg);
   transition: right 0.5s ease;
   z-index: 1;
@@ -739,16 +750,11 @@ canvas[class='dominant-emotion'] {
 }
 
 .input-text-box:hover {
-  box-shadow: 0 0 3px rgba(111, 111, 111, 0.114), 0 0 7px rgba(255, 255, 255, 0.133),
-    0 0 10px rgba(255, 255, 255, 0.755);
+  box-shadow: 0 0 3px rgba(111, 111, 111, 0.114),
+    0 0 7px rgba(255, 255, 255, 0.133), 0 0 10px rgba(255, 255, 255, 0.755);
 }
 
-
-
-
-
 /* Hidden state (when not toggled) */
-
 
 .hamburger {
   position: fixed;
@@ -764,7 +770,7 @@ canvas[class='dominant-emotion'] {
   font-size: 3em;
   cursor: pointer;
   color: #ffffff;
-  background:#000;
+  background: #000;
   cursor: pointer;
   transition: transform 0.3s ease;
   border: 1px solid rgba(255, 255, 255, 0.211);
@@ -786,14 +792,14 @@ canvas[class='dominant-emotion'] {
     rgba(255, 255, 255, 0.05) 50%,
     rgba(255, 255, 255, 0.1) 100%
   );
-  box-shadow: inset 0 0 0 40px rgba(255, 255, 255, 0.1), 
-              inset 0 0 10px rgba(255, 255, 255, 0.2), 
-              0 0 20px rgba(255, 255, 255, 0.3);
-  transition: transform 0.2s ease, box-shadow 0.6s ease, background-color 0.3s ease;
+  box-shadow: inset 0 0 0 40px rgba(255, 255, 255, 0.1),
+    inset 0 0 10px rgba(255, 255, 255, 0.2), 0 0 20px rgba(255, 255, 255, 0.3);
+  transition: transform 0.2s ease, box-shadow 0.6s ease,
+    background-color 0.3s ease;
 }
 .dropdown {
   position: fixed;
-  top: 160px; 
+  top: 160px;
   left: 80px;
   width: 250px;
   background-color: rgba(0, 0, 0, 0.9);
@@ -821,7 +827,7 @@ canvas[class='dominant-emotion'] {
   padding: 0.25rem 0;
   width: 300px;
   transition: all 0.2s ease-in-out;
-  font-family: 'Chakra Petch', sans-serif;
+  font-family: "Chakra Petch", sans-serif;
   font-weight: 300;
   text-shadow: white 0 0 13px, rgb(255, 255, 255) 0 0 2px;
   letter-spacing: -0.1rem;
@@ -864,7 +870,8 @@ canvas[class='dominant-emotion'] {
   animation-delay: 0.6s;
 }
 @keyframes bounce {
-  0%, 100% {
+  0%,
+  100% {
     transform: translateY(0);
     opacity: 0.4;
   }
@@ -874,7 +881,6 @@ canvas[class='dominant-emotion'] {
   }
 }
 
-
 .thought-log-title {
   font-size: 4rem;
   color: white;
@@ -883,7 +889,7 @@ canvas[class='dominant-emotion'] {
 }
 
 .thought-log-parent {
-  color:white;
+  color: white;
   font-size: 3.5rem;
   width: 100%;
   margin: 100px;
@@ -898,7 +904,6 @@ canvas[class='dominant-emotion'] {
   visibility: hidden;
   transform: translateY(20px);
   transition: opacity 0.3s ease, transform 0.3s ease;
-
 }
 .thought-log-section.visible {
   opacity: 1;
@@ -909,9 +914,14 @@ canvas[class='dominant-emotion'] {
   display: flex;
   flex-direction: column;
   align-items: center;
-  background: linear-gradient(180deg, rgb(0, 0, 0), rgb(0, 0, 0), rgb(0, 0, 0), rgba(0, 15, 130, 0.146));
+  background: linear-gradient(
+    180deg,
+    rgb(0, 0, 0),
+    rgb(0, 0, 0),
+    rgb(0, 0, 0),
+    rgba(0, 15, 130, 0.146)
+  );
   justify-content: center;
-
 }
 
 .thought-log {
@@ -923,12 +933,29 @@ canvas[class='dominant-emotion'] {
   text-align: flex-start;
   width: 90%;
   text-wrap: wrap;
-  
-  
 }
 
-
 @media (max-width: 768px) {
+
+  html, body {
+    overflow-x: hidden;
+  }
+
+  .canvas,
+  .canvas-overlay,
+  .main-canvas,
+  .column-right-column,
+  .column-left-column,
+  .column-right-column-upper,
+  .ui-speed-control,
+  .ui-speed-btns,
+  .input-text-box,
+  .gpt-output-container {
+    
+    border-radius: 5px;
+    
+  }
+
   .hamburger {
     top: 25px;
     left: 25px;
@@ -945,24 +972,25 @@ canvas[class='dominant-emotion'] {
     flex-direction: column;
     width: 100%;
     padding: 0;
+    box-sizing: border-box;
     flex-wrap: wrap;
-    gap: clamp(10px, 3vw, 30px);
   }
 
   .column-left-column,
   .column-right-column {
     width: 100%;
-    max-width: 400px;
-    margin: 20px auto;
-    
+    max-width: 432px;
   }
 
- .speed-slider-wrapper {
-  max-width: 86%;
-  flex-direction: column;
-  align-items: center;
- }
+  .column-right-column-upper {
+    width: 100%;
+  }
 
+  .speed-slider-wrapper {
+    max-width: 100%;
+    flex-direction: column;
+    align-items: center;
+  }
 
   #menu-toggle {
     top: 20px;
@@ -988,7 +1016,7 @@ canvas[class='dominant-emotion'] {
     margin-left: 15px;
     margin-right: 15px;
     overflow: none;
-    text-wrap: wrap;;
+    text-wrap: wrap;
   }
 
   .thought-log-section.visible {
@@ -998,12 +1026,60 @@ canvas[class='dominant-emotion'] {
   }
 
   .thought-log {
- text-align: flex-start;
- max-width: 100%;
- font-size: 0.4em;
- gap: 10px;
+    text-align: flex-start;
+    max-width: 100%;
+    font-size: 0.4em;
+    gap: 10px;
+  }
+  @media (max-width: 768px) {
+  .heading-title {
+    font-size: clamp(3.5rem, 10vw, 5rem);
+    letter-spacing: -0.3rem;
+    text-shadow: 0 0 8px rgba(255, 255, 255, 0.6);
   }
 
   
 
+  .column-left-column,
+  .column-right-column {
+    width: 100%;
+    height: auto;
+    margin: 0 auto;
   }
+
+  .thought-log {
+    font-size: 1.1rem;
+    text-align: left;
+    width: 100%;
+    padding: 0 10px;
+  }
+
+  .thought-log-title {
+    font-size: 2rem;
+    text-align: center;
+  }
+
+  .thought-log-section.visible {
+    margin-top: 60px;
+    padding: 10px;
+  }
+
+  .thought-log-parent {
+    margin: 0 15px;
+    text-align: center;
+  }
+  
+  .input-text-box {
+    box-shadow: 0 0 3px rgba(111, 111, 111, 0.114),
+    0 0 7px rgba(255, 255, 255, 0.133), 0 0 10px rgba(255, 255, 255, 0.755);
+    border-radius: 10px;
+    margin: 15px;
+  }
+
+  .custom-btn-pulse {
+    border-radius: 0;
+  }
+  
+}
+
+}
