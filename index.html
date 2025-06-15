@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -10,27 +11,27 @@
 
   <link href="https://fonts.googleapis.com/css2?family=Chakra+Petch&display=swap" rel="stylesheet">
 </head>
-  <script type="module" src="dorian.js"></script>
+<script type="module" src="dorian.js"></script>
 
-<body>      
-            <div id="menu-toggle" class="hamburger">&#9776</div>
-          
-            <nav id="dropdown" class="dropdown hidden">
-              <a href="#Home">Home</a>
-              <a href="#Features">Features</a>
-              <a href="#About">About</a>
-              <a href="#Socials">Socials</a>
-            </nav>
+<body>
+  <div id="menu-toggle" class="hamburger">&#9776</div>
+
+  <nav id="dropdown" class="dropdown hidden">
+    <a href="#Home">Home</a>
+    <a href="#Features">Features</a>
+    <a href="#About">About</a>
+    <a href="#Socials">Socials</a>
+  </nav>
 
 
-          <div class="header">
-            <video autoplay muted loop playsinline class="header-video">
-              <source src="rpd.webm" type="video/webm"/>
-              Your browser does not support the video tag.     
-              </video>
-              <a href="https://dorianai.replit.app/" class="heading-title">Dorian</a>
-              <p class="heading-subtitle">A project by DorianAI <a href="https://dorianai.replit.app/"></a></p>
-              <div class="header-divider"></div>
+  <div class="header">
+    <video autoplay muted loop playsinline class="header-video">
+      <source src="rpd.webm" type="video/webm" />
+      Your browser does not support the video tag.
+    </video>
+    <a href="https://dorianai.replit.app/" class="heading-title">Dorian</a>
+    <p class="heading-subtitle">A project by DorianAI <a href="https://dorianai.replit.app/"></a></p>
+    <div class="header-divider"></div>
   </div>
 
   <main class="layout">
@@ -45,21 +46,24 @@
           <div class="metric-box"><span id="dominant-metric">Adjust the speed as needed.</span></div>
         </div>
       </div>
-      
 
-        <div class="gpt-output-container">
-          <p id="gpt-output" class="gpt-answer-text-box"></p>
-        </div>
-        <div class="input-text-box">
-          <input type="text" placeholder="Ask anything" class="input-text" id="gpt-input"/>
-          <button type="button" class="btn-go-right-column">Go</button>
-        </div>
+
+      <div class="gpt-output-container">
+        <p id="gpt-output" class="gpt-answer-text-box"></p>
+      </div>
+      <div class="input-text-box">
+        <input type="text" placeholder="Ask anything" class="input-text" id="gpt-input" />
+        <button type="button" class="btn-go-right-column">Go</button>
+      </div>
     </div>
-    
+
     <div class="center-area-wrapper">
       <div class="main-canvas">
         <canvas id="dorian-canvas" width="1000" height="1000"></canvas>
-      </div>        
+        <div class="canvas-overlay">
+          <button id="reveal-thoughts" class="custom-btn pulse">View Dorian's Thoughts</button>
+        </div>
+      </div>
     </div>
 
     <div class="column-right-column">
@@ -67,23 +71,24 @@
         <div class="speed-slider-wrapper">
           <h2 class="ux-manager">SagA</h2>
           <h3 class="ux-manager-subtitle">Structured Assembly for Generative Agency</h3>
-          <div class="sagA-divider"></div> 
+          <div class="sagA-divider"></div>
 
-        <div class="sagA-sliders-labels">
-          <label class="agent-count-label">Agent Count:</label>
-          <input type="range" min="100" max="1000" value="500" step="1" id="agent-count-slider" class="speed-slider">
-        </div>
-        <div class="sagA-sliders-labels">
-          <label class="reproduction-label">Reproduction Rate:</label>
-          <input type="range" min="0.1" max="1.0" value="0.5" step="0.1" id="reproduction-rate-slider" class="speed-slider">
-        </div>
-        <div class="under-reproduction-divider"></div>
-        <div class="sagA-sliders-labels">
-          <label class="speed-label">Speed:</label>
-          
-          <input type="range" min="0.1" max="1.0" value="0.5" step="0.1" id="speed-slider" class="speed-slider">
-          <span id="speed-value">0.5</span>  
-        </div>    
+          <div class="sagA-sliders-labels">
+            <label class="agent-count-label">Agent Count:</label>
+            <input type="range" min="100" max="1000" value="500" step="1" id="agent-count-slider" class="speed-slider">
+          </div>
+          <div class="sagA-sliders-labels">
+            <label class="reproduction-label">Reproduction Rate:</label>
+            <input type="range" min="0.1" max="1.0" value="0.5" step="0.1" id="reproduction-rate-slider"
+              class="speed-slider">
+          </div>
+          <div class="under-reproduction-divider"></div>
+          <div class="sagA-sliders-labels">
+            <label class="speed-label">Speed:</label>
+
+            <input type="range" min="0.1" max="1.0" value="0.5" step="0.1" id="speed-slider" class="speed-slider">
+            <span id="speed-value">0.5</span>
+          </div>
           <div class="ui-speed-box">
             <div class="ui-speed-btns">
               <button id="pause-btn" type="button" class="custom-btn">Pause</button>
@@ -101,8 +106,19 @@
       </div>
     </div>
   </main>
+  <section id="dorian-thought-log" class="thought-log-section visible">
+    <video autoplay muted loop playsinline class="thought-log-video">
+      <source src="cube.webm" type="video/webm" />
+      Your browser does not support the video tag.
+    </video>
+    <h3 class="thought-log-title">Dorian's Recent Thoughts</h3>
+    <div class="thought-log-parent">
+      <pre id="thought-log-section" class="thought-log">Lorem ipsum dolor sit amet consectetur adipisicing elit. Facere quia, perspiciatis repellendus harum doloribus placeat pariatur reprehenderit recusandae! Perspiciatis est rem, quos numquam similique fuga eligendi et eveniet alias assumenda!</pre>
+    </div>
+  </section>
 
-  
+
 
 </body>
+
 </html>

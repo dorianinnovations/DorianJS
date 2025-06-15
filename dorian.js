@@ -27,6 +27,9 @@ const output = document.getElementById("gpt-output");
 const toggle = document.getElementById("menu-toggle");
 const menu = document.getElementById("dropdown");
 const userMsg = document.getElementById("gpt-input");
+const toggleMemorybtn = document.getElementById("toggle-memory");
+const memoryOutput = document.getElementById("dorian-memory");
+
 
   userMsg.addEventListener("keypress", function (event) {
     if (event.key === "Enter") {
@@ -36,10 +39,7 @@ const userMsg = document.getElementById("gpt-input");
     }
   });
 
-toggle.addEventListener("click", () => {
-  toggle.classList.toggle("open");
-  menu.classList.toggle("hidden");
-})
+
 
 async function sendStatsToClaude(stats) {
   const prompt = `
@@ -61,6 +61,13 @@ Please analyze these metrics and return how you feel. Tell me why you think you 
   try {
     const reply = await sendPrompt(prompt);
     console.log("Claude raw reply:", reply);
+
+    // Appends the response to the Dorian thought log (bottom section)
+    const thoughtLog = document.getElementById("thought-log-section");
+    if (reply && reply.trim()) {
+      thoughtLog.innerText += `\n\n[Tick ${stats.tick}] ${reply.trim()}`;
+    }
+
     return reply?.toLowerCase().trim();
   } catch (err) {
     console.error("Claude error:", err);
@@ -149,7 +156,7 @@ window.addEventListener('DOMContentLoaded', () => {
     console.warn("Reset button not found!");
     return;
   }
-resetBtn.addEventListener('click', () => {
+  resetBtn.addEventListener('click', () => {
   initWorker();
   ctx.clearRect(0, 0, canvas.width, canvas.height);
   lastAlive = 0;
@@ -216,7 +223,7 @@ worker.onmessage = ({ data }) => {
     currentStats = data.stats;
 
     // Trigger Claude 
-    if (currentStats && currentStats.tick % 1375 === 0 && currentStats.tick !== lastClaudeTick) {
+    if (currentStats && currentStats.tick % 1000 === 0 && currentStats.tick !== lastClaudeTick) {
       sendStatsToClaude(currentStats).then(emotion => {
         if (!emotion) return;
 
@@ -266,6 +273,18 @@ canvas.addEventListener('mousedown', (e) => {
 window.addEventListener("DOMContentLoaded", function () {
 
 console.log()
+
+
+document.getElementById("reveal-thoughts").addEventListener("click", () => {
+  const logSection = document.querySelector(".thought-log-section");
+  logSection.classList.remove("hidden");
+  logSection.classList.add("visible");
+  logSection.scrollIntoView({ behavior: "smooth" });
+});
+
+
+
+
 document.getElementById("gpt-input").addEventListener("submit", function (e) {
   e.preventDefault(); // Prevent form from refreshing the page
 
@@ -316,6 +335,7 @@ button.addEventListener("click", async () => {
     console.error('Error sending prompt to Claude:', err);
     output.innerText = 'Error contacting Agent 1.';
   }
+
 
   
 });

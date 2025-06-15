@@ -3,7 +3,16 @@
 
 //FRONTEND
 // This file handles the integration with the GPT API for sending prompts and receiving responses.
-console.log("🟢 GPT sendPrompt() running...");
+  console.log("Thoughts sent to reflection AFTER HERE");
+export async function sendUserPrompt(userInput){
+  return await sendPrompt(userInput, false);
+}
+  export async function sendAutoReflection(systemInput) {
+    return await sendPrompt(systemInput, true);
+
+  }
+  console.log("🟢 GPT process() running...");
+
 export async function sendPrompt(userInput) {
   const simulationMetrics = {
     tick: document.getElementById("tick-metric").textContent,

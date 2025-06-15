@@ -18,6 +18,15 @@ const PORT = process.env.PORT || 3000;
 app.use(cors());
 app.use(bodyParser.json());
 app.use('/media', express.static('media'));
+app.get('/memory', (req, res) => {
+  try {
+    const memory = loadMemory();
+    res.json(memory);
+  } catch (error) {
+    console.error('Error loading memory:', error);
+    res.status(500).json({ error: 'Failed to load memory' });
+  }
+});
 
 // Add static file serving for your frontend
 app.use(express.static('.')); // Serve your HTML/CSS/JS files
