@@ -1429,3 +1429,13 @@ input[type="range"]::-ms-tooltip {
 #checkboxInput:checked + .toggleSwitch::after {
   transform: translateX(100%);
 }
+
+#gpt-output::after {
+  content: "_";
+  animation: blink 1s infinite;
+}
+
+@keyframes blink {
+  0%, 100% { opacity: 0; }
+  50% { opacity: 1; }
+}
