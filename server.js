@@ -73,7 +73,6 @@ app.post('/ask', async (req, res) => {
   // Agent 1 has fallback parsing, Agent 2 doesn't
   const reply = parseResponse(response);
 
-  /* console.log("Agent 1 response:", reply); */
 
   const memory = loadMemory();
   memory.emotionLog.push({

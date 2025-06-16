@@ -3,7 +3,6 @@
 
 //FRONTEND
 // This file handles the integration with the GPT API for sending prompts and receiving responses.
-  console.log("Thoughts sent to reflection AFTER HERE");
 export async function sendUserPrompt(userInput){
   return await sendPrompt(userInput, false);
 }
@@ -11,7 +10,7 @@ export async function sendUserPrompt(userInput){
     return await sendPrompt(systemInput, true);
 
   }
-  console.log("🟢 GPT process() running...");
+  console.log("🟢 LLM API ONLINE...");
 
 export async function sendPrompt(userInput) {
   const simulationMetrics = {

@@ -1,23 +1,22 @@
 import { sendPrompt } from "./gptIntegration.js";
 
+//HANDLE UI UPDATES (UI, CHAT, LOGS)
+//MANAGE TYPEWRITER EFFECT
+//HANDLE USER INPUT AND SENDING/RECIEVING API REQUESTS
+//UPDATES THE SIMULATION STATE AND VISUALS (IE. CANVAS)
+//MANAGES TOGGLES (IE. AMBIENCE, MUTATION, ETC.)
 
+let canvas, ctx;
 
-  let canvas, ctx;
-
-  window.addEventListener("DOMContentLoaded", () => {
-
+//DOM CONTENT LOADED ENSURES ALL DOM ELEMENTS HAVE BEEN LOADED
+window.addEventListener("DOMContentLoaded", () => {
   const CELL_SIZE = 5; // px per cell
-
- 
-
 
   let running = true;
   let hasStarted = false;
   let lastAlive = 0;
   let worker;
   let currentStats = null;
-
-
 
   const canvas = document.getElementById("dorian-canvas");
   canvas.width = 1000;
@@ -30,8 +29,6 @@ import { sendPrompt } from "./gptIntegration.js";
   const BIRTH_DELAY = 5; // minimum dead ticks before a cell can grow again
   let UPDATES_PER_FRAME = 5;
 
-
-
   document.getElementById("reveal-thoughts").addEventListener("click", () => {
     const logSection = document.querySelector(".thought-log-section");
     logSection.classList.remove("hidden");
@@ -39,7 +36,6 @@ import { sendPrompt } from "./gptIntegration.js";
     logSection.scrollIntoView({ behavior: "smooth" });
   });
 
- 
   const input = document.getElementById("gpt-input");
   const button = document.querySelector(".btn-go-right-column");
   const output = document.getElementById("gpt-output");
@@ -47,7 +43,24 @@ import { sendPrompt } from "./gptIntegration.js";
   const menu = document.getElementById("dropdown");
   const toggleMemorybtn = document.getElementById("toggle-memory");
   const memoryOutput = document.getElementById("dorian-memory");
+  const ambienceAudio = document.getElementById("ambience-audio");
+  const ambienceCheckbox = document.getElementById("ambience-checkbox");
 
+
+
+
+  //AMBIENCE TOGGLE HANDLER
+  ambienceCheckbox.addEventListener("click", () => {
+    if (ambienceCheckbox.checked) {
+      ambienceAudio.loop = true;
+      ambienceAudio.volume = 0.5;
+      ambienceAudio.play();
+    } else {
+      ambienceAudio.pause();
+    }
+  });
+
+  //GPT INPUT HANDLER
   input.addEventListener("keypress", function (event) {
     if (event.key === "Enter") {
       event.preventDefault();
@@ -75,18 +88,16 @@ import { sendPrompt } from "./gptIntegration.js";
 
     try {
       const reply = await sendPrompt(prompt);
-      console.log("Claude raw reply:", reply);
+      console.log("API FULL PROMPT RESPONSE:", reply);
 
       // Appends the response to the Dorian thought log (bottom section)
       const thoughtLog = document.getElementById("thought-log-section");
       if (reply && reply.trim()) {
-        const fullMessage = `\n\n[Tick ${stats.tick}] ${reply.trim()}`;
-        typeTextToElement(thoughtLog, fullMessage, 25);
-        typeTextToElement(
-          document.getElementById("gpt-output"),
-          reply.trim(),
-          25
-        );
+        // For endless log, append directly:
+        thoughtLog.innerText += `\n\n[Tick ${stats.tick}] ${reply.trim()}`;
+        
+        // For the chat box, keep the typewriter effect:
+        typeTextToElement(document.getElementById("gpt-output"), reply.trim(), 25);
       }
 
       return reply?.toLowerCase().trim();
@@ -96,22 +107,30 @@ import { sendPrompt } from "./gptIntegration.js";
     }
   }
 
+
+
+// HANDLE THE TYPEWRITER EFFECT
   function typeTextToElement(element, text, speed = 25) {
+    // Cancel any previous animation
+    if (element.typewriterTimeout) {
+        clearTimeout(element.typewriterTimeout);
+        element.typewriterTimeout = null;
+    }
     element.innerText = ""; // Clear the old text
     let i = 0;
-
     function type() {
-      if (i < text.length) {
-        element.innerText += text.charAt(i);
-        i++;
-        setTimeout(type, speed + Math.random() * 10); // feel alive
-      }
+        if (i < text.length) {
+            element.innerText += text.charAt(i);
+            i++;
+            element.typewriterTimeout = setTimeout(type, speed + Math.random() * 10);
+        } else {
+            element.typewriterTimeout = null; // Clean up
+        }
     }
-
     type();
   }
 
-  // INITIALIZE WEB WORKER STARTING HERE //
+  // INITIALIZATION OF THE WEB WORKER STARTS HERE //
   function initWorker() {
     if (worker) worker.terminate();
     worker = new Worker("worker.js", { type: "module" });
@@ -129,7 +148,7 @@ import { sendPrompt } from "./gptIntegration.js";
         // Trigger Claude
         if (
           currentStats &&
-          currentStats.tick % 1000 === 0 &&
+          currentStats.tick % 1300 === 0 &&
           currentStats.tick !== lastClaudeTick
         ) {
           sendStatsToClaude(currentStats).then((emotion) => {
@@ -181,12 +200,10 @@ import { sendPrompt } from "./gptIntegration.js";
         reproductionRate: parseFloat(reproductionRateSlider.value),
       },
     });
-  } // INITIALIZE WEB WORKER ENDS HERE //
-
+  } 
+  //DEFINITIONS FOR SLIDERS AND BUTTONS
   const agentCountSlider = document.getElementById("agent-count-slider");
-  const reproductionRateSlider = document.getElementById(
-    "reproduction-rate-slider"
-  );
+  const reproductionRateSlider = document.getElementById("reproduction-rate-slider");
   const speedSlider = document.getElementById("speed-slider");
   const speedValue = document.getElementById("speed-value");
   const pauseBtn = document.getElementById("pause-btn");
@@ -195,6 +212,8 @@ import { sendPrompt } from "./gptIntegration.js";
 
   initWorker();
 
+
+  //MUTATION TOGGLE
   mutationToggle.addEventListener("change", () => {
     const chance = mutationToggle.checked ? MUTATION_CHANCE : 0;
     if (worker) {
@@ -202,6 +221,8 @@ import { sendPrompt } from "./gptIntegration.js";
     }
   });
 
+
+  //AGENT COUNT SLIDER
   agentCountSlider.addEventListener("input", () => {
     if (worker) {
       worker.postMessage({
@@ -211,6 +232,8 @@ import { sendPrompt } from "./gptIntegration.js";
     }
   });
 
+
+  //REPRODUCTION SLIDER
   reproductionRateSlider.addEventListener("input", () => {
     if (worker) {
       worker.postMessage({
@@ -220,6 +243,8 @@ import { sendPrompt } from "./gptIntegration.js";
     }
   });
 
+
+  //SPEED SLIDER
   speedSlider.max = "5";
   speedSlider.addEventListener("input", () => {
     if (parseInt(speedSlider.value) > 5) speedSlider.value = "5";
@@ -236,6 +261,8 @@ import { sendPrompt } from "./gptIntegration.js";
     if (running) animate();
   });
 
+
+  //RESET BUTTON
   if (!resetBtn) {
     console.warn("Reset button not found!");
     return;
@@ -250,6 +277,9 @@ import { sendPrompt } from "./gptIntegration.js";
       "Click the canvas to begin!";
     pauseBtn.textContent = "Resume";
   });
+
+
+  //UPDATES CANVAS BORDER EMOTION
   function updateCanvasBorderEmotion(dominant) {
     const emotion = dominant.toLowerCase();
     const classes = [
@@ -277,6 +307,8 @@ import { sendPrompt } from "./gptIntegration.js";
     }
   }
 
+
+  //UPDATES HUD INSIDE OF THE UI
   function updateHUD(stats) {
     const alive = stats.alive;
     const growth = alive - lastAlive;
@@ -285,7 +317,7 @@ import { sendPrompt } from "./gptIntegration.js";
     document.getElementById("tick-metric").textContent = `Tick: ${stats.tick}`;
     document.getElementById(
       "dominant-metric"
-    ).textContent = `Dominant Emotion: ${stats.dominant}`;
+    ).textContent = `Dominant: ${stats.dominant}`;
     document.getElementById(
       "diversity-metric"
     ).textContent = `Diversity: ${stats.diversity}`;
@@ -326,7 +358,6 @@ import { sendPrompt } from "./gptIntegration.js";
     }
   }); // end canvas click handler
 
-  console.log();
 
   const message = input.value;
 
@@ -362,7 +393,5 @@ import { sendPrompt } from "./gptIntegration.js";
       output.innerText = "Error communicating with Dorian.";
       console.error(err);
     }
-  }); });
-
-
-
+  });
+});

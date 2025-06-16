@@ -10,6 +10,7 @@
   <script src="https://kit.fontawesome.com/c0ffa5e1d4.js" crossorigin="anonymous"></script>
   <link href="https://fonts.googleapis.com/css2?family=Chakra+Petch&display=swap" rel="stylesheet">
   <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400..900&display=swap" rel="stylesheet">
+  
 </head>
 <script type="module" src="dorian.js"></script>
 
@@ -56,7 +57,7 @@
         <p id="gpt-output" class="gpt-answer-text-box"></p>
       </div>
       <div class="input-text-box">
-        <input type="text" placeholder="Ask anything" class="input-text" id="gpt-input" />
+        <input type="text" placeholder="Ask anything" class="input-text" id="gpt-input"/>
         <button type="button" class="btn-go-right-column">Go</button>
       </div>
     </div>
@@ -106,10 +107,16 @@
         </div>
       </div>
       <div class="column-right-column-lower">
-      <label>Mutation:
-        <input type="checkbox" id="checkboxInput" />
-        <div class="toggleSwitch" id="toggle-mutation"></div>
-      </label>
+      <label>Mutation
+  <input type="checkbox" id="checkboxInput" name="mutation" />
+  <div class="toggleSwitch" id="toggle-mutation"></div>
+</label>
+
+<label>Ambience
+<input type="checkbox" id="ambience-checkbox" class="ambience-toggle" />  <div class="toggleSwitch" ></div>
+  <audio id="ambience-audio" src="chatter.wav" type="audio/wav"></audio>
+</label>
+
 
     </div>
     </div>
