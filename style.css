@@ -9,12 +9,22 @@ body {
   background-color: #000000;
   font-family: "Chakra Petch";
   overflow-x: hidden;
-  animation-name: slide;
-  animation-duration: 1s;
+  animation-name: slideFadeIn;
+  animation-duration: 1.2s;
   animation-timing-function: ease-in;
-  animation-fill-mode: forwards;
 }
+@keyframes slideFadeIn {
 
+  0% {
+    transform: translateY(20px);
+    opacity: 0;
+  }
+  100% {
+    transform: translateY(0);
+    opacity: 1;
+  }
+  
+}
 @keyframes slide {
   0% {
     opacity: 0.7;
@@ -56,6 +66,13 @@ body {
   text-align: center;
   margin-top: 20px;
   margin-bottom: 5px;
+  animation-name: livingGlow, slideFadeIn;
+  opacity: 0;
+  animation-duration: 10s, 2s;
+  animation-timing-function: ease-in-out;
+  animation-fill-mode: forwards;
+  animation-iteration-count: infinite, 1;
+  text-shadow: 0 0 20px rgb(255, 255, 255);
   text-decoration: none;
   font-family: "orbitron";
   font-weight: 1000;
@@ -67,8 +84,8 @@ body {
 
 .heading-title:hover {
   scale: 1.08;
-  transition-duration: 0.2s;
-  animation-duration: 0.3s;
+  transition-duration: 2s;
+  animation-duration: 2.3s;
   animation-timing-function: ease-in-out;
 }
 
@@ -84,6 +101,22 @@ body {
   font-family: "Chakra Petch";
   font-weight: 1000;
   letter-spacing: -0.05rem;
+}
+
+.thought-log-subtitle {
+  font-size: 2.2rem;
+  color: white;
+  position: absolute;
+  font-weight: 300;
+  font-family: "chakra petch";
+  text-shadow: 0 0 10px rgb(255, 255, 255);
+  top: 80%;
+  width: 100%;
+  max-width: 700px;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  justify-content: center;
+  text-align: center;
 }
 
 .under-reproduction-divider {
@@ -131,6 +164,8 @@ body {
     background-position: 0% 50%;
   }
 }
+
+
 
 /*==================
    BACKGROUND MUSIC
@@ -990,14 +1025,35 @@ canvas[class="dominant-emotion"] {
     opacity: 1;
   }
 }
+@keyframes livingGlow {
+  0% {
+    text-shadow: 0 0 5px #ffffff33, 0 0 10px #ffffff22;
+    transform: scale(1);
+  }
+  50% {
+    text-shadow: 0 0 15px #ffffffaa, 0 0 30px #ffffff55;
+    transform: scale(1.015);
+  }
+  100% {
+    text-shadow: 0 0 5px #ffffff33, 0 0 10px #ffffff22;
+    transform: scale(1);
+  }
+}
+
+ 
+
 
 .thought-log-title {
   font-size: 7rem;
+  font-family: "Chakra Petch", sans-serif;
+  font-weight: 400;
+  text-shadow: white 0 0 3px, rgb(255, 255, 255) 0 0 2px;
   color: white;
   letter-spacing: -0.09em;
   position: absolute;
   top: 50%;
   left: 50%;
+  
   transform: translate(-50%, -50%);
   justify-content: center;
   text-align: center;
@@ -1179,7 +1235,6 @@ canvas[class="dominant-emotion"] {
   position: relative;
   z-index: 2;
   text-align: center;
-  margin-bottom: 20px;
   text-shadow: 0 0 8px white;
 }
 
