@@ -31,6 +31,8 @@ const toggleMemorybtn = document.getElementById("toggle-memory");
 const memoryOutput = document.getElementById("dorian-memory");
 
 
+
+
   userMsg.addEventListener("keypress", function (event) {
     if (event.key === "Enter") {
       event.preventDefault();
@@ -196,6 +198,9 @@ function updateCanvasBorderEmotion(dominant) {
 }
 
 
+
+
+
 function updateHUD(stats) {
   const alive = stats.alive;
   const growth = alive - lastAlive;
@@ -275,6 +280,8 @@ window.addEventListener("DOMContentLoaded", function () {
 console.log()
 
 
+
+
 document.getElementById("reveal-thoughts").addEventListener("click", () => {
   const logSection = document.querySelector(".thought-log-section");
   logSection.classList.remove("hidden");
@@ -282,6 +289,24 @@ document.getElementById("reveal-thoughts").addEventListener("click", () => {
   logSection.scrollIntoView({ behavior: "smooth" });
 });
 
+
+
+
+
+document.getElementById("toggle-ambience").addEventListener("click", () => {
+  const toggleAmbience = document.getElementById("toggle-ambience");
+  const ambience = document.getElementById("ambience");
+  try {
+      if (toggleAmbience.checked === false) {
+          ambience.pause();
+      } else {
+          toggleAmbience.checked = true;
+          ambience.play();
+      }
+  } catch (error) {
+      console.log(error);
+  }
+  })
 
 
 

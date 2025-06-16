@@ -2,84 +2,11 @@
    GLOBAL STYLES
 =================================== */
 
-input[type="range"]:focus {
-  outline: none;
-}
-input[type="range"]::-webkit-slider-thumb {
-  -webkit-appearance: none;
-  appearance: none;
-  width: 16px;
-  height: 16px;
-  border-radius: 50%;
-  background: #000;
-  border: 1px solid #999;
-  border-radius: 10px;
-  cursor: pointer;
-}
-input[type="range"]::-moz-range-thumb {
-  width: 16px;
-  height: 16px;
-  border-radius: 50%;
-  background: #000;
-  border: 1px solid #999;
-  border-radius: 10px;
-  cursor: pointer;
-}
-input[type="range"]::-webkit-slider-runnable-track {
-  width: 100%;
-  height: 8px;
-  cursor: pointer;
-  background: #000;
-  border: 1px solid #999;
-  border-radius: 10px;
-}
-input[type="range"]::-moz-range-track {
-  width: 100%;
-  height: 8px;
-  cursor: pointer;
-  background: #000;
-  border: 1px solid #999;
-  border-radius: 10px;
-}
-input[type="range"]::-ms-track {
-  width: 100%;
-  height: 8px;
-  cursor: pointer;
-  background: transparent;
-  border-color: transparent;
-  color: transparent;
-}
-input[type="range"]::-ms-fill-lower {
-  background: #000;
-  border: 1px solid #999;
-  border-radius: 10px;
-}
-input[type="range"]::-ms-fill-upper {
-  background: #000;
-  border: 1px solid #999;
-  border-radius: 10px;
-}
-input[type="range"]::-ms-thumb {
-  width: 16px;
-  height: 16px;
-  border-radius: 50%;
-  background: #000;
-  border: 1px solid #999;
-  border-radius: 10px;
-  cursor: pointer;
-}
-input[type="range"]::-ms-tooltip {
-  display: none;
-}
 
-* {
-  box-sizing: border-box;
-}
 
 html,
 body {
   background-color: #000000;
-  min-height: auto;
   font-family: "Chakra Petch";
   overflow-x: hidden;
   animation-name: slide;
@@ -99,19 +26,11 @@ body {
   }
 }
 
-.thought-log-video {
-  position: absolute;
-  object-fit: cover;
-  z-index: 1;
-  opacity: 0.2; /* Soft overlay */
-  pointer-events: none;
-}
-
 .header-video {
   position: absolute;
   object-fit: cover;
   z-index: 1;
-  opacity: 0.2; /* Soft overlay */
+  opacity: 0.1; /* Soft overlay */
   pointer-events: none;
 }
 
@@ -125,20 +44,20 @@ body {
   background: #00000000;
   padding: 10px;
   z-index: 0;
+  margin: 50px;
   border-radius: 15px;
   overflow: hidden;
 }
 
 .heading-title {
-  font-size: clamp(6rem, 9vw, 9.2rem);
   color: #ffffff;
+  font-size: 12em;
   position: relative;
   text-align: center;
   margin-top: 20px;
   margin-bottom: 5px;
   text-decoration: none;
-  text-shadow: 0 0 clamp(4px, 1vw, 10px), rgb(255, 255, 255);
-  font-family: "Chakra Petch";
+  font-family: "orbitron";
   font-weight: 1000;
   letter-spacing: clamp(-0.2rem, -1vw, -0.9rem);
   transition: scale 0.2s ease-in-out;
@@ -160,7 +79,8 @@ body {
   text-align: center;
   margin-top: 1px;
   z-index: 1;
-  margin-bottom: 10px;
+
+  margin-bottom: 30px;
   font-family: "Chakra Petch";
   font-weight: 1000;
   letter-spacing: -0.05rem;
@@ -194,25 +114,10 @@ body {
   max-width: 100%;
   height: 1.5px;
   display: block;
-  border: none;
-  background: linear-gradient(
-    90deg,
-    rgba(255, 0, 0, 0.25),
-    rgba(255, 123, 0, 0.24),
-    rgba(255, 247, 0, 0.25),
-    rgba(9, 255, 0, 0.26),
-    rgba(0, 255, 242, 0.25),
-    rgba(0, 13, 255, 0.27),
-    rgba(111, 0, 255, 0.23),
-    rgba(238, 0, 255, 0.25)
-  );
-  background-size: 300% 100%;
-  animation: glowFlow 5s cubic-bezier(0.4, 0, 0.2, 1) infinite;
-  border-radius: 9999px;
-  opacity: 0.9;
+  border: 1px solid #ffffff;
+  opacity: 0.2;
   position: relative;
   z-index: 1;
-  transition: background-position 0.4s ease, opacity 0.4s ease;
 }
 
 @keyframes glowFlow {
@@ -227,12 +132,111 @@ body {
   }
 }
 
-@media (prefers-reduced-motion: reduce) {
-  .header-divider,
-  .sagA-divider,
-  .under-reproduction-divider {
-    animation: none;
+/*==================
+   BACKGROUND MUSIC
+   PLAYER STYLE SECTION
+==================*/
+
+.navigation-bar {
+  display: flex;
+  position: sticky;
+  top: 3px;
+  margin-bottom: 50px;
+  z-index: 10;
+  height: 25px;
+  justify-content: center;
+  align-items: center;
+  flex-direction: row;
+  background: #000000;
+  margin: 0 auto;
+  padding: 1.6em;
+  border-radius: 10px;
+  width: 100%;
+}
+
+.navigation-bar-mask {
+  background: black;
+  border-radius: 0.9em;
+}
+
+.navigation-bar::after,
+.navigation-bar::before {
+  content: "";
+  position: absolute;
+  height: 100%;
+  width: 100%;
+  max-width: 987px;
+  background: conic-gradient(
+    rgba(217, 217, 217, 0.267),
+    rgba(255, 255, 255, 0.221),
+    rgba(255, 255, 255, 0.196),
+    rgba(243, 243, 243, 0.215),
+    rgba(255, 255, 255, 0.204)
+  );
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  z-index: -1;
+  padding: 0.15em;
+  border-radius: 0.9em;
+}
+
+.navigation-bar::before {
+  filter: blur(1.5rem);
+  opacity: 0.4;
+}
+
+@keyframes pulseGlow {
+  0% {
+    box-shadow: 0 0 10px rgb(0, 0, 0), 0 1px 10px rgb(164, 0, 0), black 0 0 20px;
   }
+  25% {
+    box-shadow: 0 0 10px rgb(0, 0, 0), 0 1px 10px rgb(255, 0, 0), black 0 0 20px;
+  }
+  50% {
+    box-shadow: 0 0 10px rgb(0, 0, 0), 0 1px 10px rgb(255, 255, 0),
+      black 0 0 20px;
+  }
+  75% {
+    box-shadow: 0 0 10px rgb(0, 0, 0), 0 1px 10px rgb(0, 255, 0), black 0 0 20px;
+  }
+  100% {
+    box-shadow: 0 0 10px rgb(0, 0, 0), 0 1px 10px rgb(0, 0, 255), black 0 0 20px;
+  }
+}
+
+.navigation-button {
+  color: rgb(255, 255, 255);
+  background-color: rgba(255, 255, 255, 0);
+  border: none;
+  padding: 10px 100px;
+  z-index: 10;
+  font-family: "chakra petch";
+  font-size: 1.2rem;
+  padding: 10px 100px;
+  margin: 0px;
+  opacity: 0.7;
+  cursor: pointer;
+  transition: background-color 0.7s ease;
+  transition: color 0.9s ease;
+
+}
+
+.navigation-button:hover {
+  background-color: rgb(255, 255, 255);
+  color: black;
+  z-index: -1;
+  box-shadow: conic-gradient(
+      rgba(255, 0, 0, 0.2),
+      rgba(255, 255, 0, 0.2),
+      rgba(0, 255, 0, 0.2),
+      rgba(0, 0, 255, 0.2),
+      rgba(255, 0, 255, 0.2),
+      rgba(255, 0, 0, 0.2)
+    )
+    0 0 10px;
+  animation: pulseGlow 1.2s ease-in-out infinite;
+  border-radius: 10px;
 }
 
 /* ===================================
@@ -245,9 +249,8 @@ body {
   justify-content: center;
   align-items: flex-start;
   padding: 110px 100px 100px 100px;
-  width: 100vw;
+  width: 100%;
   gap: 30px;
-  min-height: 1000px;
   z-index: 1;
   overflow-x: hidden;
   box-shadow: inset 0 0 0 12px rgba(255, 255, 255, 0.03),
@@ -268,8 +271,6 @@ body {
     rgba(255, 255, 255, 0.05) 1px,
     transparent 1px
   );
-  background-size: 100% 4px;
-
   background: radial-gradient(
       circle at top center,
       rgba(0, 0, 0, 0.2) 0%,
@@ -283,8 +284,6 @@ body {
       transparent 2px,
       transparent 4px
     );
-
-  background-size: cover;
   z-index: -1;
   pointer-events: none;
 }
@@ -419,6 +418,8 @@ canvas[class="dominant-emotion"] {
   font-size: 1.2em;
   flex-direction: column;
   height: 860px;
+  align-items: center;
+  justify-content: center;
   gap: 10px;
   width: 400px;
   border-radius: 16px;
@@ -458,10 +459,27 @@ canvas[class="dominant-emotion"] {
   background-color: #ffffff00;
   color: #ffffff;
   text-shadow: white 0 0 13px, rgba(163, 163, 163, 0.739) 0 0 2px;
-  font-family: "Chakra Petch";
+  font-family: "orbitron";
   font-size: 1.2em;
   font-weight: 600;
   gap: 60px;
+}
+
+.column-right-column-lower {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  max-width: 50px;
+  margin: 15px;
+  border-radius: 15px;
+  background-color: #ffffff00;
+  color: #ffffff;
+  text-shadow: white 0 0 13px, rgba(163, 163, 163, 0.739) 0 0 2px;
+  font-family: "Chakra Petch";
+  font-size: 1.2em;
+  font-weight: 600;
 }
 
 /* ====\
@@ -496,6 +514,11 @@ canvas[class="dominant-emotion"] {
   color: #cfcfcf;
   z-index: 10;
 }
+
+
+
+
+
 
 .ui-speed-section {
   font-size: 1.1rem;
@@ -681,9 +704,10 @@ canvas[class="dominant-emotion"] {
 /* === Buttons === */
 .ui-speed-btns {
   display: flex;
-  gap: 40px;
+  gap: 10px;
   justify-content: center;
-  margin-bottom: 20px;
+  max-width: 800px;
+  width: 100%;
   padding: 35px;
 }
 
@@ -780,11 +804,17 @@ canvas[class="dominant-emotion"] {
 
 .btn-mutation {
   position: relative;
+  display: flex;
+  justify-content: center;
+  gap: 15px;
+  align-items: center;
+  flex-direction: row;
+  font-size: 1.2rem;
+  font-weight: 600;
   color: #ffffff;
   overflow: hidden;
   font-family: "Courier New", monospace;
-  letter-spacing: 1.5px;
-  text-transform: uppercase;
+  letter-spacing: -0.05rem;
   border-radius: 24px;
   border: 1px solid #ffffff33;
   background-color: transparent;
@@ -962,56 +992,70 @@ canvas[class="dominant-emotion"] {
 }
 
 .thought-log-title {
-  font-size: 4rem;
+  font-size: 7rem;
   color: white;
-  text-shadow: white 0 0 13px;
-  letter-spacing: -0.3rem;
+  letter-spacing: -0.09em;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  justify-content: center;
+  text-align: center;
+  padding: 10px;
+  width: 100%;
+  border-radius: 10px;
+  font-weight: 1000;
+  width: 100%;
+  max-width: 1000px;
 }
 
 .thought-log-parent {
-  color: white;
-  font-size: 3.5rem;
-  width: 100%;
-  margin: 100px;
-  align-self: start;
-  justify-content: center;
-  text-align: flex-start;
+  position: relative;
+  z-index: 1;
+  /* your existing styles */
+  border-radius: 25px;
+  overflow: hidden;
 }
 
 .thought-log-section {
   opacity: 0;
-  pointer-events: none;
   visibility: hidden;
+  pointer-events: none;
   transform: translateY(20px);
+  text-shadow:hsl(0 -3 3px rgb(0, 0, 0));
+  padding: 100px;
   transition: opacity 0.3s ease, transform 0.3s ease;
-}
-.thought-log-section.visible {
-  opacity: 1;
-  transform: translateY(0);
-  pointer-events: auto;
-  visibility: visible;
-  margin-top: 150px;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
   background: linear-gradient(
-    180deg,
-    rgb(0, 0, 0),
-    rgb(0, 0, 0),
-    rgb(0, 0, 0),
-    rgba(0, 15, 130, 0.146)
+    to bottom,
+    rgba(0, 0, 0, 0.4),
+    rgba(0, 0, 0, 0.4),
+    rgba(0, 0, 0, 0.4),
+    rgba(0, 0, 0, 0.4),
+    rgba(0, 0, 0, 0.4),
+    rgba(0, 0, 0, 0.729),
+    rgba(14, 14, 14, 0.702)
   );
-  justify-content: center;
+  border: 1px solid rgba(255, 255, 255, 0.05);
 }
 
+.thought-log-section.visible {
+  opacity: 1;
+  position: relative;
+  z-index: 1;
+  visibility: visible;
+  transform: translateY(0);
+  pointer-events: auto;
+}
+ /*all pre text will be formatted like this*/
 .thought-log {
-  font-size: 3.2rem;
+  font-size: 2.2rem;
   font-family: "Chakra Petch", sans-serif;
   font-weight: 400;
   color: white;
   letter-spacing: -0.1rem;
   text-align: flex-start;
-  width: 90%;
+  width: 100%;
+  max-width: 90vw;
   text-wrap: wrap;
 }
 
@@ -1043,6 +1087,7 @@ canvas[class="dominant-emotion"] {
     left: 25px;
     font-size: 1em;
   }
+
   .dropdown {
     top: 100px;
     left: 25px;
@@ -1063,10 +1108,17 @@ canvas[class="dominant-emotion"] {
   .column-right-column {
     width: 100%;
     max-width: 432px;
+    height: auto;
+    margin: 0 auto;
   }
 
   .column-right-column-upper {
     width: 100%;
+    height: 100%;
+  }
+  .column-right-column-lower {
+    width: 100%;
+    height: 100%;
   }
 
   .speed-slider-wrapper {
@@ -1088,93 +1140,91 @@ canvas[class="dominant-emotion"] {
     font-size: 1em;
   }
 
-  .thought-log-title {
-    font-size: 2.5em;
-    letter-spacing: -0.1em;
-    align-items: center;
-    justify-content: center;
+ .thought-log-section.visible {
+  position: relative;
+  padding: 100px;
+  min-height: 500px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  overflow: hidden;
+  z-index: 1;
+}
+
+.thought-log-parent {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  z-index: 1;
+}
+
+.thought-log-video {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  opacity: 0.1;
+  z-index: 0;
+  pointer-events: none;
+}
+
+.thought-log-title {
+  font-size: 2.5rem;
+  color: white;
+  
+  position: relative;
+  z-index: 2;
+  text-align: center;
+  margin-bottom: 20px;
+  text-shadow: 0 0 8px white;
+}
+
+.thought-log {
+  font-size: 1.2rem;
+  color: white;
+  position: relative;
+  z-index: 2;
+  text-align: center;
+  width: 80%;
+  padding: 10px;
+  line-height: 1.6;
+}
+
+
+  .heading-title {
+    font-size: clamp(5rem, 10vw, 5rem);
+    letter-spacing: 1.2rem;
+    text-shadow: 0 0 3px rgb(255, 255, 255);
   }
 
-  .thought-log-parent {
-    margin-left: 15px;
-    margin-right: 15px;
-    overflow: none;
-    text-wrap: wrap;
+  .input-text-box {
+    border-radius: 10px;
+    color: white;
+    margin: 15px;
   }
 
-  .thought-log-section.visible {
-    justify-content: center;
-    align-items: center;
-    margin-top: 50px;
+  .custom-btn.pulse {
+    animation: shrinkey 2s infinite ease-in-out;
+    padding: 8px;
+    font-family: "Orbitron", sans-serif;
+    font-size: 0.5rem;
+    color: rgb(186, 186, 186);
+    background: rgba(0, 0, 0, 0.1);
+    border: 1px solid rgba(255, 255, 255, 0.3);
+    text-align: center;
+    cursor: pointer;
+    position: absolute;
+    border-radius: 10px;
+    left: 15px;
+    z-index: 10;
+    overflow: hidden;
+    transition: background 0.3s ease-in-out;
   }
 
-  .thought-log {
-    text-align: flex-start;
-    max-width: 100%;
-    font-size: 0.4em;
-    gap: 10px;
-  }
-
-  @media (max-width: 768px) {
-    .heading-title {
-      font-size: clamp(5rem, 10vw, 5rem);
-      letter-spacing: -0.3rem;
-      text-shadow: 0 0 3px rgb(255, 255, 255);
-    }
-
-    .column-left-column,
-    .column-right-column {
-      width: 100%;
-      height: auto;
-      margin: 0 auto;
-    }
-
-    .thought-log {
-      font-size: 1.1rem;
-      text-align: left;
-      width: 100%;
-      padding: 0 10px;
-    }
-
-    .thought-log-title {
-      font-size: 2rem;
-      text-align: center;
-    }
-
-    .thought-log-section.visible {
-      margin-top: 60px;
-      padding: 10px;
-    }
-
-    .thought-log-parent {
-      margin: 0 15px;
-      text-align: center;
-    }
-
-    .input-text-box {
-      border-radius: 10px;
-      color: white;
-      margin: 15px;
-    }
-
-    .custom-btn.pulse {
-      animation: shrinkey 2s infinite ease-in-out;
-      padding: 8px;
-      font-family: "Orbitron", sans-serif;
-      font-size: 0.5rem;
-      color: rgb(186, 186, 186);
-      background: rgba(0, 0, 0, 0.1);
-      border: 1px solid rgba(255, 255, 255, 0.3);
-      text-align: center;
-      cursor: pointer;
-      position: absolute;
-      border-radius: 10px;
-      left: 15px;
-      z-index: 10;
-      overflow: hidden;
-      transition: background 0.3s ease-in-out;
-    }
-  }
   .ux-manager {
     font-family: "Chakra Petch", sans-serif;
     display: flex;
@@ -1199,4 +1249,128 @@ canvas[class="dominant-emotion"] {
   .ui-card {
     font-size: 1.2em;
   }
+}
+
+
+input[type="range"]:focus {
+  outline: none;
+}
+input[type="range"]::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 16px;
+  height: 16px;
+  border-radius: 50%;
+  background: #000;
+  border: 1px solid #999;
+  border-radius: 10px;
+  cursor: pointer;
+}
+input[type="range"]::-moz-range-thumb {
+  width: 16px;
+  height: 16px;
+  border-radius: 50%;
+  background: #000;
+  border: 1px solid #999;
+  border-radius: 10px;
+  cursor: pointer;
+}
+input[type="range"]::-webkit-slider-runnable-track {
+  width: 100%;
+  height: 8px;
+  cursor: pointer;
+  background: #000;
+  border: 1px solid #999;
+  border-radius: 10px;
+}
+input[type="range"]::-moz-range-track {
+  width: 100%;
+  height: 8px;
+  cursor: pointer;
+  background: #000;
+  border: 1px solid #999;
+  border-radius: 10px;
+}
+input[type="range"]::-ms-track {
+  width: 100%;
+  height: 8px;
+  cursor: pointer;
+  background: transparent;
+  border-color: transparent;
+  color: transparent;
+}
+input[type="range"]::-ms-fill-lower {
+  background: #000;
+  border: 1px solid #999;
+  border-radius: 10px;
+}
+input[type="range"]::-ms-fill-upper {
+  background: #000;
+  border: 1px solid #999;
+  border-radius: 10px;
+}
+input[type="range"]::-ms-thumb {
+  width: 16px;
+  height: 16px;
+  border-radius: 50%;
+  background: #000;
+  border: 1px solid #999;
+  border-radius: 10px;
+  cursor: pointer;
+}
+input[type="range"]::-ms-tooltip {
+  display: none;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+
+
+/* ========== Toggle Switch from Uiverse.io ========== */
+#checkboxInput {
+  display: none;
+}
+
+.toggleSwitch {
+  display: flex;
+  margin: 1rem;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  width: 90px;
+  height: 30px;
+  background-color: rgba(206, 206, 206, 0.582);
+  border-radius: 10px;
+  cursor: pointer;
+  transition: background-color 0.3s ease-in-out;
+  box-shadow: 0 0 8px rgba(255, 255, 255, 0.1), inset 0 0 5px rgba(0, 0, 0, 0.2);
+}
+
+.toggleSwitch::after {
+  content: "";
+  position: absolute;
+  height: 30px;
+  width: 50%;
+  left: 0;
+  background: conic-gradient(
+    rgba(26, 26, 26, 0.555),
+    rgb(193, 193, 193),
+    rgba(6, 6, 6, 0.555),
+    rgb(214, 214, 214),
+    rgba(26, 26, 26, 0.555)
+  );
+  border-radius: 10px;
+  transition: transform 0.3s ease-in-out;
+  box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.281);
+}
+
+/* Toggle ON styles */
+#checkboxInput:checked + .toggleSwitch {
+  background-color: rgb(55, 55, 55);
+}
+
+#checkboxInput:checked + .toggleSwitch::after {
+  transform: translateX(100%);
 }

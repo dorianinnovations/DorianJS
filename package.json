@@ -1,9 +1,15 @@
-{ "type": "module",
+{
+  "type": "module",
   "dependencies": {
     "axios": "^1.9.0",
     "body-parser": "^2.2.0",
     "cors": "^2.8.5",
     "dotenv": "^16.5.0",
-    "express": "^5.1.0"
+    "express": "^5.1.0",
+    "jest": "^30.0.0",
+    "supertest": "^7.1.1"
+  },
+  "scripts": {
+    "test": "jest"
   }
 }

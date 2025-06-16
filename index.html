@@ -9,18 +9,23 @@
   <link rel="icon" href="favicon.png">
   <script src="https://kit.fontawesome.com/c0ffa5e1d4.js" crossorigin="anonymous"></script>
   <link href="https://fonts.googleapis.com/css2?family=Chakra+Petch&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400..900&display=swap" rel="stylesheet">
 </head>
 <script type="module" src="dorian.js"></script>
 
 <body>
-  <div id="menu-toggle" class="hamburger">&#9776</div>
 
-  <nav id="dropdown" class="dropdown hidden">
-    <a href="#Home">Home</a>
-    <a href="#Features">Features</a>
-    <a href="#About">About</a>
-    <a href="#Socials">Socials</a>
-  </nav>
+  <div class="navigation-bar">
+    <div class="navigation-bar-mask">
+      <button class="navigation-button" id="home-button">Home</button>
+      <button class="navigation-button" id="features-button">Features</button>
+      <button class="navigation-button" id="about-button">About</button>
+      <button class="navigation-button" id="socials-button">Socials</button>
+    </div>
+  </div>
+
+
+
 
 
   <div class="header">
@@ -95,25 +100,43 @@
             </div>
           </div>
 
-          <div class="ui-mutation-box">
-            <div class="btn-mutation">
-              <input type="checkbox" id="toggle-mutation" checked>
-              <label for="toggle-mutation">Mutation</label>
-            </div>
-          </div>
+
+
+
         </div>
       </div>
+      <div class="column-right-column-lower">
+      <label>Mutation:
+        <input type="checkbox" id="checkboxInput" />
+        <div class="toggleSwitch" id="toggle-mutation"></div>
+      </label>
+
+    </div>
+    </div>
+    </div>
+    
+
     </div>
   </main>
-  <section id="dorian-thought-log" class="thought-log-section visible">
-    <video autoplay muted loop playsinline class="thought-log-video">
-      <source src="cube.webm" type="video/webm" />
-      Your browser does not support the video tag.
-    </video>
-    <h3 class="thought-log-title">Dorian's Recent Thoughts</h3>
+
+
+  <section class="thought-log-section visible">
     <div class="thought-log-parent">
+      <video autoplay muted loop playsinline class="thought-log-video">
+        <source src="cube.webm" type="video/webm" />
+      </video>
+      <h3 class="thought-log-title">Dorian's Recent Thoughts</h3>
+
+    </div>
+  </section>
+
+
+
+  <section id="dorian-thought-log" class="thought-log-section visible">
+    <div class="thought-log-parent">
+
       <pre id="thought-log-section"
-        class="thought-log">Lorem ipsum dolor sit amet consectetur adipisicing elit. Facere quia, perspiciatis repellendus harum doloribus placeat pariatur reprehenderit recusandae! Perspiciatis est rem, quos numquam similique fuga eligendi et eveniet alias assumenda!</pre>
+        class="thought-log">Lorem ipsum dolor sit amet consectetur, adipisicing elit. Dicta nemo quas, optio eos incidunt libero voluptas quo fugiat, explicabo perspiciatis rem ex neque laudantium accusantium veritatis! Dignissimos perspiciatis accusantium incidunt?</pre>
     </div>
   </section>
 
