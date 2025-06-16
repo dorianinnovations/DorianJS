@@ -177,7 +177,7 @@ body {
   position: sticky;
   top: 3px;
   margin-bottom: 50px;
-  z-index: 10;
+  z-index: 1000;
   height: 25px;
   justify-content: center;
   align-items: center;
@@ -425,6 +425,9 @@ canvas[class="dominant-emotion"] {
   font-family: "Chakra Petch", sans-serif;
   display: flex;
   flex-direction: column;
+  animation: fade;
+  animation-duration: 3s;
+  animation-iteration-count: infinite;
   align-items: center;
   margin: 0;
   justify-content: center;
@@ -502,17 +505,23 @@ canvas[class="dominant-emotion"] {
 
 .column-right-column-lower {
   display: flex;
-  flex-direction: column;
+  gap: 24px; /* Space between switches */
   align-items: center;
-  justify-content: center;
-  width: 100%;
-  max-width: 50px;
-  margin: 15px;
+}
+
+.column-right-column-lower {
+  display: flex;
+  width: 25rem;
+  height: 13rem;
   border-radius: 15px;
+  justify-content: space-evenly;
   background-color: #ffffff00;
   color: #ffffff;
-  text-shadow: white 0 0 13px, rgba(163, 163, 163, 0.739) 0 0 2px;
+  box-shadow: 0 0 0 6px rgba(255, 255, 255, 0.05), 0 0 8px #ffffff;
+  text-shadow: rgb(255, 255, 255) 0 0 13px, rgba(163, 163, 163, 0.739) 0 0 2px;
   font-family: "Chakra Petch";
+  border: 1px solid rgb(179, 179, 179);
+  border-style: inset;
   font-size: 1.2em;
   font-weight: 600;
 }
@@ -673,7 +682,6 @@ canvas[class="dominant-emotion"] {
 .speed-slider {
   font-family: "Chakra Petch", sans-serif;
   font-size: 1.1em;
-  color: #ffffff;
   text-shadow: white 0 0 13px, rgba(163, 163, 163, 0.739) 0 0 2px;
   display: flex;
   flex-direction: column;
@@ -681,19 +689,10 @@ canvas[class="dominant-emotion"] {
   border: none;
   border-radius: 10px;
   margin-top: 10px;
-  height: 12px;
-  width: 275px;
+  height: 1rem;
+  width: 20rem;
   justify-content: flex-start;
-  background: radial-gradient(
-    circle at bottom left,
-    rgba(118, 118, 118, 0.267) 0%,
-    rgba(255, 255, 255, 0.249) 20%,
-    rgba(105, 105, 105, 0.25) 30%,
-    rgba(31, 31, 31, 0.431) 40%,
-    rgba(44, 44, 44, 0.413) 50%,
-    rgba(76, 76, 76, 0.276) 60%,
-    #000000 100%
-  );
+  
 }
 
 .speed-slider-wrapper {
@@ -715,7 +714,7 @@ canvas[class="dominant-emotion"] {
 
 .speed-slider:hover {
   scale: 1.01;
-  transition-duration: 0.2s;
+  transition-duration: 0.8s;
 }
 
 .speed-slider::-webkit-slider-thumb,
@@ -761,10 +760,12 @@ canvas[class="dominant-emotion"] {
 
 .input-text-box {
   display: flex;
+  position: absolute;
   flex-direction: row; /* Keep input and button side-by-side */
   align-items: center;
   justify-content: space-between; /* Space out input and button */
-  width: 89%; /* Take full width of its parent */
+  width: 33rem;
+  top: 940px;
   border-radius: 10px;
   font-family: "Chakra Petch";
   background: #000000;
@@ -1172,8 +1173,8 @@ canvas[class="dominant-emotion"] {
     height: 100%;
   }
   .column-right-column-lower {
-    width: 100%;
-    height: 100%;
+  position: absolute;
+  flex-direction: center;
   }
 
   .speed-slider-wrapper {
@@ -1281,16 +1282,18 @@ canvas[class="dominant-emotion"] {
 
   .ux-manager {
     font-family: "Chakra Petch", sans-serif;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    font-weight: 800;
-    text-align: center;
-    padding: 2rem;
-    font-size: 3.5rem;
-    color: #ffffff;
-    text-shadow: white 0 0 4px, rgba(255, 255, 255, 0.739) 0 0 2px;
+  display: flex;
+  flex-direction: column;
+  animation: fade;
+  animation-duration: 3s;
+  animation-iteration-count: infinite;
+  align-items: center;
+  margin: 0;
+  justify-content: center;
+  text-align: center;
+  font-size: 3.2em;
+  color: #ffffff;
+  text-shadow: white 0 0 1px, rgba(255, 255, 255, 0.739) 0 0 3px;
   }
 
   .ux-manager-subtitle {
@@ -1387,38 +1390,7 @@ input.toggle-checkbox {
   display: none;
 }
 
-.toggleSwitch {
-  display: flex;
-  margin: 1rem;
-  align-items: center;
-  justify-content: center;
-  position: relative;
-  width: 90px;
-  height: 30px;
-  background-color: rgba(206, 206, 206, 0.582);
-  border-radius: 10px;
-  cursor: pointer;
-  transition: background-color 0.3s ease-in-out;
-  box-shadow: 0 0 8px rgba(255, 255, 255, 0.1), inset 0 0 5px rgba(0, 0, 0, 0.2);
-}
 
-.toggleSwitch::after {
-  content: "";
-  position: absolute;
-  height: 30px;
-  width: 50%;
-  left: 0;
-  background: conic-gradient(
-    rgba(26, 26, 26, 0.555),
-    rgb(193, 193, 193),
-    rgba(6, 6, 6, 0.555),
-    rgb(214, 214, 214),
-    rgba(26, 26, 26, 0.555)
-  );
-  border-radius: 10px;
-  transition: transform 0.3s ease-in-out;
-  box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.281);
-}
 
 /* Toggle ON styles */
 
@@ -1426,11 +1398,11 @@ input[type="checkbox"] {
   display: none;
 }
 
-input[type="checkbox"]:checked + .toggleSwitch {
+input[type="checkbox"]:checked{
   background-color: rgb(55, 55, 55);
 }
 
-input[type="checkbox"]:checked + .toggleSwitch::after {
+input[type="checkbox"]:checked{
   transform: translateX(100%);
 }
 
@@ -1444,3 +1416,85 @@ input[type="checkbox"]:checked + .toggleSwitch::after {
   0%, 100% { opacity: 0; }
   50% { opacity: 1; }
 }
+.switch {
+  width: 100px;
+  height: 45px;
+}
+
+.switch input {
+  display: none;
+}
+
+.slider {
+  cursor: pointer;
+  position: relative;
+  width: 100%;
+  height: 100%;
+  background-color: rgb(8, 8, 8);
+  transition: all 0.4s cubic-bezier(0.99, 0.1, 0.1, 0.99);
+  border-radius: 10px;
+  box-shadow:
+    inset 0px 0px 1px 0px rgba(0, 0, 0, 1),
+    inset 90px 0px 50px -50px rgba(126, 4, 4, 0.56);
+  border: 2px solid black;
+}
+
+.slider-btn {
+  position: absolute;
+  content: "";
+  aspect-ratio: 6/4;
+  border-radius: 10px;
+  left: 2px;
+  top: 2px;
+  bottom: 2px;
+  right: auto;
+  background: linear-gradient(to bottom, #333333, #242323);
+  border: 1px solid #2b2b2b;
+  background-color: #333333;
+  box-shadow:
+    0px 10px 5px 1px rgba(0, 0, 0, 0.15),
+    inset 10px 0px 10px -5px rgba(126, 4, 4, 0.1);
+  transition: all 0.4s cubic-bezier(0.99, 0.1, 0.1, 0.99);
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+}
+
+.texture {
+  width: 2px;
+  height: 70%;
+  background-color: #202020ea;
+  box-shadow:
+    -0.7px -1.5px 1px 0px rgba(192, 192, 192, 0.3),
+    0px 2px 3px rgb(0, 0, 0, 0.3);
+  transition: 0.25s;
+}
+
+.light {
+  width: 4px;
+  height: 4px;
+  border: 1px solid #222121;
+  border-radius: 50%;
+  transition: all 0.4s cubic-bezier(0.99, 0.1, 0.1, 0.99);
+  background-color: rgb(230, 14, 14);
+  box-shadow: 0px 0px 10px 1px rgb(241, 28, 28);
+}
+
+.switch input:checked + .slider {
+  box-shadow:
+    inset 0px 0px 1px 0px rgba(0, 0, 0, 1),
+    inset -85px 0px 50px -50px rgba(1, 78, 4, 0.6);
+}
+
+.switch input:checked + .slider .slider-btn {
+  transform: translateX(66%);
+  box-shadow:
+    0px 10px 5px 1px rgba(0, 0, 0, 0.15),
+    inset -10px 0px 10px -5px rgba(1, 112, 4, 0.1);
+}
+
+.switch input:checked + .slider .slider-btn .light {
+  background-color: rgb(35, 158, 4);
+  box-shadow: 0px 0px 10px 0px rgb(57, 230, 14);
+}
+

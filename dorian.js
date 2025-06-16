@@ -207,19 +207,22 @@ window.addEventListener("DOMContentLoaded", () => {
   const speedSlider = document.getElementById("speed-slider");
   const speedValue = document.getElementById("speed-value");
   const pauseBtn = document.getElementById("pause-btn");
-  const mutationToggle = document.getElementById("toggle-mutation");
+  const mutationToggle = document.getElementById("mutation-checkbox");
   const resetBtn = document.getElementById("reset-btn");
 
   initWorker();
 
 
-  //MUTATION TOGGLE
+   //MUTATION TOGGLE
   mutationToggle.addEventListener("change", () => {
     const chance = mutationToggle.checked ? MUTATION_CHANCE : 0;
+    const mutationCheckbox = document.getElementById("mutation-checkbox")
     if (worker) {
       worker.postMessage({ type: "setMutation", mutationChance: chance });
     }
   });
+
+ 
 
 
   //AGENT COUNT SLIDER

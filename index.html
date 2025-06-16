@@ -10,7 +10,7 @@
   <script src="https://kit.fontawesome.com/c0ffa5e1d4.js" crossorigin="anonymous"></script>
   <link href="https://fonts.googleapis.com/css2?family=Chakra+Petch&display=swap" rel="stylesheet">
   <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400..900&display=swap" rel="stylesheet">
-  
+
 </head>
 <script type="module" src="dorian.js"></script>
 
@@ -57,7 +57,7 @@
         <p id="gpt-output" class="gpt-answer-text-box"></p>
       </div>
       <div class="input-text-box">
-        <input type="text" placeholder="Ask anything" class="input-text" id="gpt-input"/>
+        <input type="text" placeholder="Ask anything" class="input-text" id="gpt-input" />
         <button type="button" class="btn-go-right-column">Go</button>
       </div>
     </div>
@@ -74,8 +74,8 @@
     <div class="column-right-column">
       <div class="column-right-column-upper">
         <div class="speed-slider-wrapper">
-          <h2 class="ux-manager">SagA</h2>
-          <h3 class="ux-manager-subtitle">Structured Assembly for Generative Agency</h3>
+          <h2 class="ux-manager">Sage</h2>
+          <h3 class="ux-manager-subtitle">Structured Assembly for Generative Emergence</h3>
           <div class="sagA-divider"></div>
 
           <div class="sagA-sliders-labels">
@@ -107,21 +107,43 @@
         </div>
       </div>
       <div class="column-right-column-lower">
-      <label>Mutation
-  <input type="checkbox" id="checkboxInput" name="mutation" />
-  <div class="toggleSwitch" id="toggle-mutation"></div>
-</label>
-
-<label>Ambience
-<input type="checkbox" id="ambience-checkbox" class="ambience-toggle" />  <div class="toggleSwitch" ></div>
-  <audio id="ambience-audio" src="chatter.wav" type="audio/wav"></audio>
-</label>
 
 
+
+
+        <label class="switch">Mutation
+          <input type="checkbox" id="mutation-checkbox" name="mutation" />
+          <div class="slider">
+            <div class="slider-btn">
+              <div class="light"></div>
+              <div class="texture"></div>
+              <div class="texture"></div>
+              <div class="texture"></div>
+              <div class="light"></div>
+            </div>
+          </div>
+        </label>
+
+
+
+        <label class="switch">Ambience
+          <input type="checkbox" id="ambience-checkbox" />
+          <div class="slider">
+            <div class="slider-btn">
+              <div class="light"></div>
+              <div class="texture"></div>
+              <div class="texture"></div>
+              <div class="texture"></div>
+              <div class="light"></div>
+            </div>
+          </div>
+        </label>
+        <audio id="ambience-audio" src="chatter.wav" type="audio/wav"></audio>
+
+      </div>
     </div>
     </div>
-    </div>
-    
+
 
     </div>
   </main>
@@ -133,8 +155,9 @@
         <source src="cube.webm" type="video/webm" />
       </video>
       <h2 class="thought-log-title">Dorian's Recent Thoughts</h3>
-      <h3 class="thought-log-subtitle">Each tick, Dorian reflects on its state. These are its most recent thoughts.</h3>
-"     
+        <h3 class="thought-log-subtitle">Each tick, Dorian reflects on its state. These are its most recent thoughts.
+        </h3>
+        "
 
     </div>
   </section>
@@ -144,8 +167,7 @@
   <section id="dorian-thought-log" class="thought-log-section visible">
     <div class="thought-log-parent">
 
-      <pre id="thought-log-section"
-        class="thought-log"></pre>
+      <pre id="thought-log-section" class="thought-log"></pre>
     </div>
   </section>
 
