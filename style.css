@@ -148,15 +148,14 @@ main.layout {
   max-width: 85%;
   margin: 0 auto;
   padding: 4rem 1rem;
-  border-radius: 2rem;
+  border-radius: 3rem;
   box-sizing: border-box;
   z-index: 10;
   /* Glassmorphism effect */
   background: rgba(20, 20, 20, 0.161);
-  box-shadow: 0 8px 12px 0 rgba(0, 17, 255, 0.43);
+  box-shadow: 0 20px 22px 10px rgba(0, 4, 59, 0.864);
   backdrop-filter: blur(12px);
   -webkit-backdrop-filter: blur(12px);
-  border-radius: 1.2rem;
 }
 
 
@@ -439,37 +438,42 @@ canvas#dorian-canvas {
 }
 
 /* Mobile Responsive */
-@media (max-width: 1024px) {
+@media (max-width: 1224px) {
   body{
     overflow-x: hidden;
     overflow-y: scroll;
+    width: 100%;
+    margin: 0;
+    padding: 0;
   }
-  
   main.layout {
     grid-template-columns: 1fr;
     gap: 5.5rem;
-    margin: 2rem auto;
+    margin: 0 auto;
+    max-width: 97%;
     
   }
   .heading-title{
     font-size: 6rem;
+    letter-spacing: -0.4rem;
   }
   .thought-log-title{
     font-size: 5rem;
     padding: 1rem;
   }
   .navigation-bar{
-    margin: 0; /* remove margin */
-  padding: rem; /* or adjust if needed */
+    margin: 1rem; /* remove margin */
+  padding: 0.2rem; /* or adjust if needed */
   font-size: 0.2rem; /* scale down slightly */
   display: flex;
   justify-content: space-between; /* or center depending on layout */
   align-items: center;
+  max-width: 100%;
   }
   .navigation-button{
     font-size: 1rem;
     margin: 1rem;
-    padding: 0.5rem 1rem;
+    padding: 0.4rem 1rem;
   }
   .column-left-column,
   .column-right-column,
@@ -488,9 +492,7 @@ canvas#dorian-canvas {
   .gpt-answer-text-box {
     width: 100%;
   }
-  .custom-btn{
-  }
- 
+  
 
   canvas#dorian-canvas {
     width: 100%;
