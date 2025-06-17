@@ -59,7 +59,6 @@ canvas.addEventListener("mousedown", (e) => {
   const x = Math.floor((clientX - rect.left) * scaleX);
   const y = Math.floor((clientY - rect.top) * scaleY);
   
-  // Your existing click logic here
 });
 
 // Add touch support
@@ -73,7 +72,6 @@ canvas.addEventListener("touchstart", (e) => {
   const x = Math.floor((touch.clientX - rect.left) * scaleX);
   const y = Math.floor((touch.clientY - rect.top) * scaleY);
   
-  // Your existing click logic here
 });
 
   //AMBIENCE TOGGLE HANDLER
