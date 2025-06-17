@@ -147,9 +147,11 @@ main.layout {
   grid-template-columns: 1fr 2fr 1fr;
   max-width: 85%;
   margin: 0 auto;
+  overflow: none;
   padding: 4rem 1rem;
   border-radius: 3rem;
   box-sizing: border-box;
+  border-bottom: 0.2rem solid rgb(52, 52, 52);
   z-index: 10;
   /* Glassmorphism effect */
   background: rgba(20, 20, 20, 0.161);
@@ -170,52 +172,52 @@ canvas:hover {
 }
 
 canvas.dominant-emotion-joy {
-  box-shadow: 0 0 100px 0 rgba(255, 251, 0, 0.4) !important;
+  box-shadow: 0 0 25px 0 rgba(255, 251, 0, 0.4) !important;
 }
 canvas.dominant-emotion-trust {
-  box-shadow: 0 0 100px 0 rgba(0, 255, 120, 0.4) !important;
+  box-shadow: 0 0 25px 0 rgba(0, 255, 120, 0.4) !important;
 }
 canvas.dominant-emotion-fear {
-  box-shadow: 0 0 100px 0 rgba(0, 153, 153, 0.4) !important;
+  box-shadow: 0 0 25px 0 rgba(0, 153, 153, 0.4) !important;
 }
 canvas.dominant-emotion-surprise {
-  box-shadow: 0 0 100px 0 rgba(102, 0, 204, 0.4) !important;
+  box-shadow: 0 0 25px 0 rgba(102, 0, 204, 0.4) !important;
 }
 canvas.dominant-emotion-sadness {
-  box-shadow: 0 0 100px 0 rgba(51, 102, 204, 0.4) !important;
+  box-shadow: 0 0 25px 0 rgba(51, 102, 204, 0.4) !important;
 }
 canvas.dominant-emotion-disgust {
-  box-shadow: 0 0 100px 0 rgba(230, 0, 120, 0.4) !important;
+  box-shadow: 0 0 25px 0 rgba(230, 0, 120, 0.4) !important;
 }
 canvas.dominant-emotion-angry {
-  box-shadow: 0 0 100px 0 rgba(255, 0, 0, 0.4) !important;
+  box-shadow: 0 0 25px 0 rgba(255, 0, 0, 0.4) !important;
 }
 canvas.dominant-emotion-anticipation {
-  box-shadow: 0 0 100px 0 rgba(255, 128, 0, 0.4) !important;
+  box-shadow: 0 0 25px 0 rgba(255, 128, 0, 0.4) !important;
 }
 canvas.dominant-emotion-affectionate {
-  box-shadow: 0 0 100px 0 rgba(255, 200, 100, 0.4) !important;
+  box-shadow: 0 0 25px 0 rgba(255, 200, 100, 0.4) !important;
 }
 canvas.dominant-emotion-shocked {
-  box-shadow: 0 0 100px 0 rgba(150, 50, 200, 0.4) !important;
+  box-shadow: 0 0 25px 0 rgba(150, 50, 200, 0.4) !important;
 }
 canvas.dominant-emotion-contempt {
-  box-shadow: 0 0 100px 0 rgba(200, 0, 100, 0.4) !important;
+  box-shadow: 0 0 25px 0 rgba(200, 0, 100, 0.4) !important;
 }
 canvas.dominant-emotion-hopeful {
-  box-shadow: 0 0 100px 0 rgba(100, 255, 180, 0.4) !important;
+  box-shadow: 0 0 25px 0 rgba(100, 255, 180, 0.4) !important;
 }
 canvas.dominant-emotion-depressed {
-  box-shadow: 0 0 100px 0 rgba(100, 100, 180, 0.4) !important;
+  box-shadow: 0 0 25px 0 rgba(100, 100, 180, 0.4) !important;
 }
 canvas.dominant-emotion-delight {
-  box-shadow: 0 0 100px 0 rgba(255, 220, 50, 0.4) !important;
+  box-shadow: 0 0 25px 0 rgba(255, 220, 50, 0.4) !important;
 }
 canvas.dominant-emotion-anxiety {
-  box-shadow: 0 0 100px 0 rgba(50, 100, 200, 0.4) !important;
+  box-shadow: 0 0 25px 0 rgba(50, 100, 200, 0.4) !important;
 }
 canvas.dominant-emotion-aggression {
-  box-shadow: 0 0 100px 0 rgba(255, 50, 50, 0.4) !important;
+  box-shadow: 0 0 25px 0 rgba(255, 50, 50, 0.4) !important;
 }
 
 canvas[class="dominant-emotion"] {
@@ -233,10 +235,8 @@ canvas[class="dominant-emotion"] {
   padding: 3rem;
   align-items: center;
   border-radius: 1rem;
-  box-shadow: inset 0 0 0 12px rgba(255, 255, 255, 0.03),
-    0 0 24px rgba(255, 255, 255, 0.07); 
-    z-index: 10;
-  gap: 10rem;
+  z-index: 10;
+  gap: 1rem;
   border-radius: 16px;
   background: #00000095;
   box-shadow: 0 0 0 2px #5f5f5f;
@@ -245,8 +245,8 @@ canvas[class="dominant-emotion"] {
 .column-right-column-upper {
   display: flex;
   flex-direction: column;
-  align-items: flex-start;
-  justify-content: flex-start;
+  align-items: center;
+  justify-content: center;
   padding: 12px 16px;
   border-radius: 15px;
   background-color: #ffffff00;
@@ -285,26 +285,26 @@ canvas[class="dominant-emotion"] {
   color: #fff;
   border: 1px solid #555;
   flex-shrink: 1;
-  padding: 1rem;
+  padding: 0.5rem 1rem;
+  margin: 1rem;
   border-radius: 8px;
   font-size: 1rem;
   cursor: pointer;
-  transition: box-shadow 0.3s ease, transform 0.2s ease;
+  transition: box-shadow 0.9s ease, transform 0.6s ease;
   box-shadow: 0 0 10px rgba(255, 255, 255, 0.1);
 }
 .btn-go-right-column:hover,
 .custom-btn:hover {
-  box-shadow: 0 0 12px rgb(255, 255, 255);
+  box-shadow: 0 0 5px rgb(255, 255, 255);
   transform: scale(1.0.2);
   color: black;
   background-color: white;
-  border-color: #000000;
-  border: 2px solid black;
+  outline: none;
 }
 
 .btn-go-right-column:active,
 .custom-btn:active {
-  transform: scale(1.04);
+  transform: scale(0.94);
 }
 
 .custom-btn {
@@ -352,7 +352,6 @@ canvas[class="dominant-emotion"] {
   align-items: center;
   align-items: centerr;
   justify-content: center;
-  max-width: 1;
   position: relative;
   flex-wrap: wrap;
   padding: 1rem;
@@ -372,12 +371,14 @@ canvas[class="dominant-emotion"] {
   justify-content: center;
   align-items: center;
   width: 100%;
+  
 }
 .gpt-answer-text-box {
-  width: 89%; /* Take full width of its parent */
-  overflow-y: auto; /* Allow scrolling if content exceeds height */
+  overflow-y: auto;
   border-radius: 15px;
-  padding: 3rem;
+  padding: 1rem;
+  min-width: 100%;
+  min-height: 30%;
   margin-bottom: 20px;
   border: solid 1px rgba(255, 255, 255, 0.1);
   box-shadow: 0 0 16px rgba(255, 255, 255, 0.05), 0 0 8px #ffffff70;
@@ -389,6 +390,10 @@ canvas[class="dominant-emotion"] {
   outline:none;
   color: white;
   padding: 1rem;
+  max-width: 95%;
+  font-size: 2rem;
+  letter-spacing: -0.1rem;
+  font-weight: 300;
 }
 .ux-manager {
   display: flex;
@@ -428,6 +433,13 @@ canvas#dorian-canvas {
   text-align: center;
   padding: 2rem;
 }
+.thought-log-section.visible {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border: 2px solid rgb(0, 0, 0);
+  z-index: 10;
+}
 
 .thought-log-title {
   font-size: 7rem;
@@ -437,8 +449,12 @@ canvas#dorian-canvas {
   letter-spacing: -0.04em;
 }
 
+.footer-text{
+  font-size: 0.5rem;
+}
+
 /* Mobile Responsive */
-@media (max-width: 1224px) {
+@media (max-width: 1024px) {
   body{
     overflow-x: hidden;
     overflow-y: scroll;
@@ -457,9 +473,31 @@ canvas#dorian-canvas {
     font-size: 6rem;
     letter-spacing: -0.4rem;
   }
+  .thought-log-video{
+    opacity: 0.4;
+    height: 12rem;
+    width: 12rem;
+    margin: 0 auto;
+  }
   .thought-log-title{
-    font-size: 5rem;
-    padding: 1rem;
+    font-size: 3rem;
+    padding: 0.8rem;
+    letter-spacing: 0rem;
+    border-bottom: 0.2rem dotted rgb(51, 51, 51);
+    font-weight: 300;
+    border-radius: 5rem;
+  }
+  .thought-log-subtitle{
+    padding: 0.5rem;
+    font-weight: 100;
+    font-size: 1rem;
+  }
+  
+  .thought-log-parent,
+  .thought-log-section.visible{
+  margin: 1rem;   
+  max-width: 100%;
+  font-size: 1.5rem;
   }
   .navigation-bar{
     margin: 1rem; /* remove margin */
@@ -475,12 +513,11 @@ canvas#dorian-canvas {
     margin: 1rem;
     padding: 0.4rem 1rem;
   }
-  .column-left-column,
-  .column-right-column,
   .center-area-wrapper {
     padding: 0.3rem;
     margin: 0 auto;
   }
+  .columun-right-colum,
   .column-left-column{
     width: 100%;
     padding: 1rem;
@@ -500,13 +537,7 @@ canvas#dorian-canvas {
   }
 }
 
-.thought-log-section.visible {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  border: 2px solid rgb(0, 0, 0);
-  z-index: 10;
-}
+
 input.toggle-checkbox {
   display: none;
 }
@@ -517,20 +548,20 @@ input[type="range"]:focus {
 input[type="range"]::-webkit-slider-thumb {
   -webkit-appearance: none;
   appearance: none;
-  width: 16px;
-  height: 16px;
+  width: 1rem;
+  height: 1rem;
   border-radius: 50%;
   background: #000;
-  border: 1px solid #999;
+  border: 0.3rem solid #999;
   border-radius: 10px;
   cursor: pointer;
 }
 input[type="range"]::-moz-range-thumb {
-  width: 16px;
-  height: 16px;
+  width: 1rem;
+  height: 1rem;
   border-radius: 50%;
   background: #000;
-  border: 1px solid #999;
+  border: 0.3rem solid #999;
   border-radius: 10px;
   cursor: pointer;
 }
@@ -539,7 +570,7 @@ input[type="range"]::-webkit-slider-runnable-track {
   height: 8px;
   cursor: pointer;
   background: #000;
-  border: 1px solid #999;
+  border: 0.3rem solid #999;
   border-radius: 10px;
 }
 input[type="range"]::-moz-range-track {
@@ -547,7 +578,7 @@ input[type="range"]::-moz-range-track {
   height: 8px;
   cursor: pointer;
   background: #000;
-  border: 1px solid #999;
+  border: 0.3rem solid #999;
   border-radius: 10px;
 }
 input[type="range"]::-ms-track {
@@ -560,20 +591,20 @@ input[type="range"]::-ms-track {
 }
 input[type="range"]::-ms-fill-lower {
   background: #000;
-  border: 1px solid #999;
+  border: 0.3rem solid #999;
   border-radius: 10px;
 }
 input[type="range"]::-ms-fill-upper {
   background: #000;
-  border: 1px solid #999;
+  border: 0.3rem solid #999;
   border-radius: 10px;
 }
 input[type="range"]::-ms-thumb {
-  width: 16px;
-  height: 16px;
+  width: 1rem;
+  height: 1rem;
   border-radius: 50%;
   background: #000;
-  border: 1px solid #999;
+  border: 0.3rem solid #999;
   border-radius: 10px;
   cursor: pointer;
 }
@@ -635,8 +666,8 @@ input[type="checkbox"]:checked{
   50% { opacity: 1; }
 }
 .switch {
-  width: 100px;
-  height: 45px;
+  width: 80px;
+  height: 40px;
 }
 
 .switch input {
@@ -653,7 +684,7 @@ input[type="checkbox"]:checked{
   border-radius: 10px;
   box-shadow:
     inset 0px 0px 1px 0px rgba(0, 0, 0, 1),
-    inset 90px 0px 50px -50px rgba(126, 4, 4, 0.56);
+    inset 90px 0px 50px -50px rgb(0, 0, 0);
   border: 2px solid black;
 }
 
@@ -680,7 +711,7 @@ input[type="checkbox"]:checked{
 
 .texture {
   width: 2px;
-  height: 70%;
+  height: 50%;
   background-color: #202020ea;
   box-shadow:
     -0.7px -1.5px 1px 0px rgba(192, 192, 192, 0.3),
@@ -694,8 +725,8 @@ input[type="checkbox"]:checked{
   border: 1px solid #222121;
   border-radius: 50%;
   transition: all 0.4s cubic-bezier(0.99, 0.1, 0.1, 0.99);
-  background-color: rgb(230, 14, 14);
-  box-shadow: 0px 0px 10px 1px rgb(241, 28, 28);
+  background-color: rgb(255, 255, 255);
+  box-shadow: 0px 0px 10px 1px rgb(255, 255, 255);
 }
 
 .switch input:checked + .slider {
@@ -712,8 +743,8 @@ input[type="checkbox"]:checked{
 }
 
 .switch input:checked + .slider .slider-btn .light {
-  background-color: rgb(35, 158, 4);
-  box-shadow: 0px 0px 10px 0px rgb(57, 230, 14);
+  background-color: rgb(255, 255, 255);
+  box-shadow: 0px 0px 10px 0px rgb(249, 249, 249);
 }
 
 
