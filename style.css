@@ -458,19 +458,24 @@ canvas#dorian-canvas {
   body{
     overflow-x: hidden;
     overflow-y: scroll;
-    width: 100%;
+    width: 100vw;
     margin: 0;
     padding: 0;
   }
   main.layout {
     grid-template-columns: 1fr;
-    gap: 5.5rem;
-    margin: 0 auto;
-    max-width: 97%;
+    gap: 2rem;
+    margin: 0;
+    max-width: 100vw;
+    padding: 1rem 0.5rem;
+    box-sizing: border-box;
     
   }
+  .header {
+    margin: 1rem 0.5rem 2rem 0.5rem;
+  }
   .heading-title{
-    font-size: 6rem;
+    font-size: 7rem;
     letter-spacing: -0.4rem;
   }
   .thought-log-video{
@@ -492,6 +497,14 @@ canvas#dorian-canvas {
     font-weight: 100;
     font-size: 1rem;
   }
+  .input-text-box{
+    width: 100%;
+    box-sizing: border-box;
+    margin: 0;
+  }
+.input-text{ max-width: 70%;
+  font-size: 1.2rem;}
+
   
   .thought-log-parent,
   .thought-log-section.visible{
@@ -500,12 +513,14 @@ canvas#dorian-canvas {
   font-size: 1.5rem;
   }
   .navigation-bar{
-    margin: 1rem; /* remove margin */
+    margin: 0.5rem;
   padding: 0.2rem; /* or adjust if needed */
   font-size: 0.2rem; /* scale down slightly */
   display: flex;
-  justify-content: space-between; /* or center depending on layout */
+  justify-content: center; /* or center depending on layout */
   align-items: center;
+  flex-wrap: wrap;
+  box-sizing: border-box;
   max-width: 100%;
   }
   .navigation-button{
@@ -514,13 +529,18 @@ canvas#dorian-canvas {
     padding: 0.4rem 1rem;
   }
   .center-area-wrapper {
-    padding: 0.3rem;
-    margin: 0 auto;
+    padding: 0.5rem;
+    margin: 0;
+    width:100%;
+    box-sizing: border-box;
   }
   .columun-right-colum,
-  .column-left-column{
+  .column-left-column,
+  .center-area-wrapper{
     width: 100%;
     padding: 1rem;
+    margin:0;
+    box-sizing: border-box;
   }
   .column-right-column-upper{
     gap: 2rem;
@@ -528,12 +548,15 @@ canvas#dorian-canvas {
   .ui-card,
   .gpt-answer-text-box {
     width: 100%;
+    box-sizing: border-box;
+    margin: 0;
   }
   
 
   canvas#dorian-canvas {
     width: 100%;
     height: auto;
+    max-width: 100%;
   }
 }
 
