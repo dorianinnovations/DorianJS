@@ -147,7 +147,6 @@ main.layout {
   grid-template-columns: 1fr 2fr 1fr;
   max-width: 85%;
   margin: 0 auto;
-  overflow: none;
   padding: 4rem 1rem;
   border-radius: 3rem;
   box-sizing: border-box;
@@ -231,6 +230,7 @@ canvas[class="dominant-emotion"] {
 .center-area-wrapper {
   background: #000000;
   display: flex;
+  justify-content: center;
   flex-direction: column;
   padding: 3rem;
   align-items: center;
@@ -561,6 +561,54 @@ canvas#dorian-canvas {
 }
 
 
+/* Optimize sliders for mobile */
+input[type="range"] {
+  -webkit-appearance: none;
+  appearance: none;
+  background: transparent;
+  cursor: pointer;
+  /* Enable hardware acceleration */
+  transform: translateZ(0);
+  will-change: transform;
+}
+
+/* Improve touch targets */
+input[type="range"]::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 2rem; /* Larger for mobile */
+  height: 2rem;
+  border-radius: 50%;
+  background: #000;
+  border: 0.3rem solid #999;
+  cursor: pointer;
+  /* Hardware acceleration */
+  transform: translateZ(0);
+  transition: transform 0.1s ease;
+}
+
+input[type="range"]::-webkit-slider-thumb:active {
+  transform: scale(1.2) translateZ(0);
+}
+
+/* Mobile-specific slider improvements */
+@media (max-width: 1024px) {
+  input[type="range"] {
+    height: 3rem; /* Larger touch target */
+    margin: 1rem 0;
+  }
+  
+  input[type="range"]::-webkit-slider-thumb {
+    width: 2.5rem;
+    height: 2.5rem;
+  }
+  
+  /* Reduce motion for better performance */
+  .switch, .slider, .slider-btn {
+    transition-duration: 0.2s;
+  }
+}
+
 input.toggle-checkbox {
   display: none;
 }
@@ -793,4 +841,17 @@ input[type="checkbox"]:checked{
     opacity: 1;
     transform: translateY(0);
   }
+}
+
+/* Prevent zoom on input focus */
+input, select, textarea {
+  font-size: 16px; /* Prevents iOS zoom */
+}
+
+/* Improve touch responsiveness */
+.switch, .slider, input[type="range"] {
+  touch-action: manipulation;
+  -webkit-touch-callout: none;
+  -webkit-user-select: none;
+  user-select: none;
 }

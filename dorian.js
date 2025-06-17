@@ -47,7 +47,34 @@ window.addEventListener("DOMContentLoaded", () => {
   const ambienceCheckbox = document.getElementById("ambience-checkbox");
 
 
+canvas.addEventListener("mousedown", (e) => {
+  const rect = canvas.getBoundingClientRect();
+  const scaleX = canvas.width / rect.width;
+  const scaleY = canvas.height / rect.height;
+  
+  // Get correct coordinates for both mouse and touch
+  const clientX = e.clientX || (e.touches && e.touches[0].clientX);
+  const clientY = e.clientY || (e.touches && e.touches[0].clientY);
+  
+  const x = Math.floor((clientX - rect.left) * scaleX);
+  const y = Math.floor((clientY - rect.top) * scaleY);
+  
+  // Your existing click logic here
+});
 
+// Add touch support
+canvas.addEventListener("touchstart", (e) => {
+  e.preventDefault(); // Prevent scrolling
+  const rect = canvas.getBoundingClientRect();
+  const scaleX = canvas.width / rect.width;
+  const scaleY = canvas.height / rect.height;
+  
+  const touch = e.touches[0];
+  const x = Math.floor((touch.clientX - rect.left) * scaleX);
+  const y = Math.floor((touch.clientY - rect.top) * scaleY);
+  
+  // Your existing click logic here
+});
 
   //AMBIENCE TOGGLE HANDLER
   ambienceCheckbox.addEventListener("click", () => {
