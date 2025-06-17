@@ -2,45 +2,56 @@
 <html lang="en">
 
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Dorian</title>
-  <link rel="stylesheet" href="style.css">
-  <link rel="icon" href="favicon.png">
-  <script src="https://kit.fontawesome.com/c0ffa5e1d4.js" crossorigin="anonymous"></script>
-  <link href="https://fonts.googleapis.com/css2?family=Chakra+Petch&display=swap" rel="stylesheet">
-  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400..900&display=swap" rel="stylesheet">
 
+  <!-- Stylesheets -->
+  <link rel="stylesheet" href="style.css" />
+
+  <!-- Fonts & Icons -->
+  <link rel="icon" href="favicon.png" />
+  <script src="https://kit.fontawesome.com/c0ffa5e1d4.js" crossorigin="anonymous"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Chakra+Petch&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400..900&display=swap" rel="stylesheet" />
+
+  <script type="module" src="dorian.js"></script>
 </head>
-<script type="module" src="dorian.js"></script>
 
 <body>
 
-  <div class="navigation-bar">
-    <div class="navigation-bar-mask">
-      <button class="navigation-button" id="home-button">Home</button>
-      <button class="navigation-button" id="features-button">Features</button>
-      <button class="navigation-button" id="about-button">About</button>
-      <button class="navigation-button" id="socials-button">Socials</button>
+  <!-- Navigation Header -->
+  <header class="nav-header">
+    <div class="nav-left">
+      <div class="hamburger" id="hamburger">
+        <span></span><span></span><span></span>
+      </div>
     </div>
-  </div>
+    <nav class="navigation-bar" id="navigation-bar">
+        <button class="navigation-button">Home</button>
+        <button class="navigation-button">Features</button>
+        <button class="navigation-button">About</button>
+        <button class="navigation-button">Socials</button>
+    </nav>
+  </header>
 
-
-
-
-
+  <!-- Header / Hero Section -->
   <div class="header">
     <video autoplay muted loop playsinline class="header-video">
-      <source src="rpd.webm" type="video/webm" />
-      Your browser does not support the video tag.
+      <source src="cubesky.webm" type="video/webm" />
     </video>
     <a href="https://dorianai.replit.app/" class="heading-title">Dorian</a>
-    <p class="heading-subtitle">A project by DorianAI <a href="https://dorianai.replit.app/"></a></p>
+    <p class="heading-subtitle">A project by DorianAI</p>
     <div class="header-divider"></div>
   </div>
 
+  <!-- Core Layout -->
   <main class="layout">
+
+    <!-- Left Column -->
     <div class="column-left-column">
+
+      <!-- Metrics Panel -->
       <div class="ui-card">
         <div class="metrics-panel">
           <div class="metric-box"><span id="tick-metric">Seed the canvas to Start!</span></div>
@@ -52,16 +63,19 @@
         </div>
       </div>
 
-
+      <!-- GPT Output -->
       <div class="gpt-output-container">
         <p id="gpt-output" class="gpt-answer-text-box"></p>
       </div>
+
+      <!-- GPT Input -->
       <div class="input-text-box">
-        <input type="text" placeholder="Ask anything" class="input-text" id="gpt-input" />
+        <input type="text" id="gpt-input" class="input-text" placeholder="Ask anything" />
         <button type="button" class="btn-go-right-column">Go</button>
       </div>
     </div>
 
+    <!-- Canvas Area -->
     <div class="center-area-wrapper">
       <div class="main-canvas">
         <canvas id="dorian-canvas" width="1000" height="1000"></canvas>
@@ -71,108 +85,85 @@
       </div>
     </div>
 
+    <!-- Right Column -->
     <div class="column-right-column">
       <div class="column-right-column-upper">
-        <div class="speed-slider-wrapper">
-          <h2 class="ux-manager">Sage</h2>
-          <h3 class="ux-manager-subtitle">Structured Assembly for Generative Emergence</h3>
-          <div class="sagA-divider"></div>
 
-          <div class="sagA-sliders-labels">
-            <label class="agent-count-label">Agent Count:</label>
-            <input type="range" min="100" max="1000" value="500" step="1" id="agent-count-slider" class="speed-slider">
-          </div>
-          <div class="sagA-sliders-labels">
-            <label class="reproduction-label">Reproduction Rate:</label>
-            <input type="range" min="0.1" max="1.0" value="0.5" step="0.1" id="reproduction-rate-slider"
-              class="speed-slider">
-          </div>
-          <div class="under-reproduction-divider"></div>
-          <div class="sagA-sliders-labels">
-            <label class="speed-label">Speed:</label>
+        <h2 class="ux-manager">Sage</h2>
+        <h3 class="ux-manager-subtitle">Structured Assembly for Generative Emergence</h3>
+        <div class="sagA-divider"></div>
 
-            <input type="range" min="0.1" max="1.0" value="0.5" step="0.1" id="speed-slider" class="speed-slider">
-            <span id="speed-value">0.5</span>
-          </div>
-          <div class="ui-speed-box">
-            <div class="ui-speed-btns">
-              <button id="pause-btn" type="button" class="custom-btn">Pause</button>
-              <button id="reset-btn" type="button" class="custom-btn">Reset</button>
-            </div>
-          </div>
-
-
-
-
+        <!-- Sliders -->
+        <div class="sagA-sliders-labels">
+          <label class="agent-count-label">Agent Count:</label>
+          <input type="range" id="agent-count-slider" class="speed-slider" min="100" max="1000" value="500" step="1" />
         </div>
+
+        <div class="sagA-sliders-labels">
+          <label class="reproduction-label">Reproduction Rate:</label>
+          <input type="range" id="reproduction-rate-slider" class="speed-slider" min="0.1" max="1.0" value="0.5" step="0.1" />
+        </div>
+
+        <div class="under-reproduction-divider"></div>
+
+        <div class="sagA-sliders-labels">
+          <label class="speed-label">Speed:</label>
+          <input type="range" id="speed-slider" class="speed-slider" min="0.1" max="1.0" value="0.5" step="0.1" />
+          <span id="speed-value">0.5</span>
+        </div>
+
+        <!-- Speed Buttons -->
+        <div class="ui-speed-box">
+          <div class="ui-speed-btns">
+            <button id="pause-btn" class="custom-btn" type="button">Pause</button>
+            <button id="reset-btn" class="custom-btn" type="button">Reset</button>
+          </div>
+        </div>
+
       </div>
+
+      <!-- Toggles -->
       <div class="column-right-column-lower">
-
-
-
-
         <label class="switch">Mutation
-          <input type="checkbox" id="mutation-checkbox" name="mutation" />
+          <input type="checkbox" id="mutation-checkbox" />
           <div class="slider">
             <div class="slider-btn">
-              <div class="light"></div>
-              <div class="texture"></div>
-              <div class="texture"></div>
-              <div class="texture"></div>
-              <div class="light"></div>
+              <div class="light"></div><div class="texture"></div><div class="texture"></div><div class="texture"></div><div class="light"></div>
             </div>
           </div>
         </label>
-
-
 
         <label class="switch">Ambience
           <input type="checkbox" id="ambience-checkbox" />
           <div class="slider">
             <div class="slider-btn">
-              <div class="light"></div>
-              <div class="texture"></div>
-              <div class="texture"></div>
-              <div class="texture"></div>
-              <div class="light"></div>
+              <div class="light"></div><div class="texture"></div><div class="texture"></div><div class="texture"></div><div class="light"></div>
             </div>
           </div>
         </label>
+
         <audio id="ambience-audio" src="chatter.wav" type="audio/wav"></audio>
-
       </div>
-    </div>
-    </div>
-
-
     </div>
   </main>
 
-
+  <!-- Thought Log Display -->
   <section class="thought-log-section visible">
     <div class="thought-log-parent">
       <video autoplay muted loop playsinline class="thought-log-video">
         <source src="cube.webm" type="video/webm" />
       </video>
-      <h2 class="thought-log-title">Dorian's Recent Thoughts</h3>
-        <h3 class="thought-log-subtitle">Each tick, Dorian reflects on its state. These are its most recent thoughts.
-        </h3>
-        "
-
+      <h2 class="thought-log-title">Dorian's Recent Thoughts</h2>
+      <h3 class="thought-log-subtitle">Each tick, Dorian reflects on its state. These are its most recent thoughts.</h3>
     </div>
   </section>
 
-
-
+  <!-- Live Thoughts Log -->
   <section id="dorian-thought-log" class="thought-log-section visible">
     <div class="thought-log-parent">
-
       <pre id="thought-log-section" class="thought-log"></pre>
     </div>
   </section>
 
-
-
 </body>
-
 </html>
