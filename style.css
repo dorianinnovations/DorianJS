@@ -12,6 +12,13 @@ body {
   background: #000;
     
 
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+
+}
+
+body::-webkit-scrollbar {
+  display:none;
 }
 
 .navigation-bar {
@@ -156,6 +163,7 @@ main.layout {
   background: rgba(20, 20, 20, 0.161);
   box-shadow: 0 5px 10px 0px rgba(0, 4, 59, 0.864);
   backdrop-filter: blur(12px);
+  overflow: auto;
   -webkit-backdrop-filter: blur(12px);
 }
 
