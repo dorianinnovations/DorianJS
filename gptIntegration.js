@@ -39,7 +39,8 @@ ${userInput}`;
   console.log("🟢 Full Prompt:", fullPrompt);
 
   try {
-    const res = await fetch('http://localhost:3000/ask', {
+    const res = await fetch('https://dorianjs.onrender.com/ask', {
+
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ 
