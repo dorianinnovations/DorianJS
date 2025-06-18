@@ -1,8 +1,12 @@
 /* layout.css */
-
+html,
 body {
   margin: 0;
   padding: 0;
+  width:100%;
+  max-width: 100vw;
+  overflow-x: hidden;
+  overflow-y: auto;
   background: #000;
   color: rgb(255, 255, 255);
   font-family: 'Orbitron', sans-serif;
@@ -35,7 +39,7 @@ body::-webkit-scrollbar {
   background-color: rgba(255, 255, 255, 0);
   border: none;
   z-index: 10;
-  font-family: "chakra petch";
+  font-family: "rajdani";
   border-radius: 0.5rem;
   padding: 0.3rem 6rem;
   margin: 5px;
@@ -196,7 +200,7 @@ canvas:hover {
   z-index: 10;
   gap: 5rem;
   border-radius: 16px;
-  background: #00000095;
+  background: rgba(0, 0, 0, 0);
   z-index: 4;
 }
 .center-area-wrapper{
@@ -388,12 +392,20 @@ canvas:hover {
 
 /* Responsive canvas */
 canvas#dorian-canvas {
-  max-width: 100%;
-  height: 100%;
-  max-width: 1000px;
-  max-height: 1000px;
-  border-radius: 1rem;
+  width: 100%;
+  max-width: 600px;          /* Optional: keeps canvas from being too wide on desktop */
+  height: auto;              /* Maintain aspect ratio */
+  aspect-ratio: 1 / 1;       /* Square canvas (or use 16 / 9 etc) */
+  
+  display: block;            /* Removes extra spacing under canvas */
+  margin: 1rem auto;         /* Center it and add spacing */
+
+  border: 2px solid rgba(199, 199, 199, 0.135);   /* Classic border box */
+  border-radius: 1rem;       /* Rounded corners */
+  box-shadow: 0 0 16px rgba(255, 255, 255, 0.15);  /* Optional glow/shadow */
+  box-sizing: border-box;    /* Makes padding/border fit inside width */
 }
+
 
 /* Thought log spacing */
 .thought-log-section {
@@ -424,13 +436,17 @@ canvas#dorian-canvas {
 
 /* Mobile Responsive */
 @media (max-width: 1024px) {
-  body{
-    overflow-x: hidden;
-    overflow-y: scroll;
-    width: 100vw;
-    margin: 0;
-    padding: 0;
-  }
+  
+
+  
+  body {
+  overflow-x: hidden;
+  margin: 0;
+  padding: 0;
+  width: 100%;
+  max-width: 100vw;
+  box-sizing: border-box;
+}
   main.layout {
     grid-template-columns: 1fr;
     gap: 2rem;
@@ -440,23 +456,26 @@ canvas#dorian-canvas {
     box-sizing: border-box;
     z-index: 10;
     transition: 1.5s all ease;
-    background: rgba(20, 20, 20, 0.161);
+    background: rgba(20, 20, 20, 0);
     backdrop-filter: blur(12px);
     animation-name: rgbBoxShadow;
     animation-duration: 10s;
     animation-iteration-count: infinite;
-    border-radius: 2rem;
+    border-radius: 0.6rem;
   }
 
   canvas#dorian-canvas {
-  max-width: 40%;
-  height: 100%;
-  max-width: 1000px;
-  max-height: 1000px;
-  border-radius: 1rem;
+ width: 100%;
+ max-width: 100%;
+ height: auto;
+ display: block;
 }
 canvas:hover {
   box-shadow: none;
+}
+.ui-card{
+font-family: "orbitron";
+text-align: center;
 }
 
   .ui-speed-btns {
@@ -581,10 +600,11 @@ canvas:hover {
     width: 100%;
     box-sizing: border-box;
     margin: 0;
-    padding-bottom: 35px;
+    background: #0000004d;
+    padding-bottom: 45px;
   }
   .input-text{ max-width: 70%;
-  font-size: 2rem;
+  font-size: 2.3rem;
   font-family: "rajdhani"
 }
 
@@ -607,7 +627,8 @@ canvas:hover {
   max-width: 100%;
   }
   .navigation-button{
-    font-size: 1rem;
+    font-size: 1.3rem;
+    font-family: "rajdhani";
     margin: 1rem;
     padding: 0.4rem 0.5rem;
   }
