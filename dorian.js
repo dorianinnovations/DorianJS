@@ -47,6 +47,22 @@ window.addEventListener("DOMContentLoaded", () => {
   const ambienceCheckbox = document.getElementById("ambience-checkbox");
 
 
+function resizeCanvasToDisplaySize(canvas) {
+  const dpr = window.devicePixelRatio || 1;
+
+  const displayWidth = canvas.clientWidth;
+  const displayHeight = canvas.clientHeight;
+
+  canvas.width = displayWidth * dpr;
+  canvas.height = displayHeight * dpr;
+
+  const ctx = canvas.getContext("2d");
+  ctx.scale(dpr, dpr);
+}
+window.addEventListener("resize", () => resizeCanvasToDisplaySize(canvas));
+resizeCanvasToDisplaySize(canvas);
+
+  
 canvas.addEventListener("mousedown", (e) => {
   const rect = canvas.getBoundingClientRect();
   const scaleX = canvas.width / rect.width;
@@ -63,7 +79,6 @@ canvas.addEventListener("mousedown", (e) => {
 
 // Add touch support
 canvas.addEventListener("touchstart", (e) => {
-  e.preventDefault(); // Prevent scrolling
   const rect = canvas.getBoundingClientRect();
   const scaleX = canvas.width / rect.width;
   const scaleY = canvas.height / rect.height;
@@ -78,7 +93,7 @@ canvas.addEventListener("touchstart", (e) => {
   ambienceCheckbox.addEventListener("click", () => {
     if (ambienceCheckbox.checked) {
       ambienceAudio.loop = true;
-      ambienceAudio.volume = 0.5;
+      ambienceAudio.volume = 0.2;
       ambienceAudio.play();
     } else {
       ambienceAudio.pause();

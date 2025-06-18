@@ -6,6 +6,10 @@ let cellSize = 5; // rendered pixel size
 let speed = 1; // default speed (user adjustable)
 let animationLoopRunning = false;
 
+
+let CANVAS_WIDTH = 1000;
+let CANVAS_HEIGHT = 1000;
+
 function startAnimationLoop() {
   if (animationLoopRunning) return;
   animationLoopRunning = true;
@@ -15,7 +19,7 @@ function startAnimationLoop() {
   function loop() {
     if (!universe) return;
 
-    partialTick += speed * 0.1;
+    partialTick += speed * 1;
 
     while (partialTick >= 1) {
       universe.update();
@@ -36,6 +40,8 @@ self.onmessage = (e) => {
   const { type, opts, x, y, updates, mutationChance, count, rate } = e.data;
   switch (type) {
     case 'init':
+       if (width) CANVAS_WIDTH = width;
+       if (height) CANVAS_HEIGHT  = height;
       universe = new DorianUniverseOptimized(opts);
       cellSize = opts.cellSize || cellSize;
       if (typeof opts.agentCount === 'number') {

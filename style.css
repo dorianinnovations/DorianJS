@@ -168,7 +168,7 @@ main.layout {
   -webkit-backdrop-filter: blur(12px);
 }
 
-canvas#dorian-canvas {
+#dorian-canvas {
   max-width: 1000px;
   height: 1000px;
   border-radius: 1rem;
