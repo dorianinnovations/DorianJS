@@ -22,9 +22,9 @@ export async function sendPrompt(userInput) {
     growth: document.getElementById("growth-metric").textContent
   };
 
-  const fullPrompt = `Dear Dorian, you are reflecting on your emotional world.
+  const fullPrompt = `Use the given metrics to create a narrative of what is occuring in an environment with  emotional metrics. Keep your response concise, informative, and observatory. Allow your thoughts to compound.
 
-Here are the current stats of your emotional world:
+Here are the current stats of your environment:
 
 Tick: ${simulationMetrics.tick}
 Dominant Emotion: ${simulationMetrics.dominant}

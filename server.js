@@ -13,7 +13,15 @@ const apiKey = process.env.OPENROUTER_API_KEY;
 console.log("API KEY loaded:", !!apiKey);
 
 const app = express();
-const PORT = process.env.PORT || 3000;
+const PORT = process.env.PORT || 8080;
+const allowedOrigins = ['https://https://dorianjs.onrender.com, https://6852b5646d9a0d0008e02214--leafy-centaur-370c2f.netlify.app/']
+
+app.use(cors({
+  origin: allowedOrigins,
+  methods: ['GET', 'POST'],
+  credentials: true
+
+}));
 
 app.use(cors());
 app.use(bodyParser.json());
@@ -81,6 +89,11 @@ app.post('/ask', async (req, res) => {
      
 });
 
+app.get('/healthz', (req, res) => {
+  res.send('OK');
+});
+
+
 memory.meta.currentTick += 1;
 saveMemory(memory);
 
@@ -136,5 +149,5 @@ console.log("Agent 2 response:", response.data);
 
 // Start server
 app.listen(PORT, () => {
-  console.log(`✅ Claude server running at http://localhost:${PORT}`);
+  console.log(`✅ server running at http://localhost:${PORT}`);
 });
