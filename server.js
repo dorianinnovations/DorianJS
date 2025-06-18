@@ -15,17 +15,22 @@ console.log("API KEY loaded:", !!apiKey);
 const app = express();
 const PORT = process.env.PORT || 8080;
 const allowedOrigins = [
-  'https://dorianjs.onrender.com',
-  'https://leafy-centaur-370c2f.netlify.app',
-  'https://www.aidorian.com'
+  'https://yourdomain.com',                    //  custom domain
+  'https://leafy-centaur-370c2f.netlify.app',  //  Netlify deploy preview
+  'http://localhost:3000'                      //  local dev (optional)
 ];
 
 app.use(cors({
-  origin: allowedOrigins,
-  methods: ['GET', 'POST'],
+  origin: function (origin, callback) {
+    if (!origin || allowedOrigins.includes(origin)) {
+      callback(null, true);
+    } else {
+      callback(new Error('Not allowed by CORS'));
+    }
+  },
   credentials: true
-
 }));
+
 
 app.use(cors());
 app.use(bodyParser.json());
