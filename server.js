@@ -13,7 +13,7 @@ const apiKey = process.env.OPENROUTER_API_KEY;
 console.log("API KEY loaded:", !!apiKey);
 
 const app = express();
-const PORT = process.env.PORT || 10000;
+const PORT = process.env.PORT || 8080;
 const allowedOrigins = [
   'https://www.aidorian.com',                    //  custom domain
   'https://leafy-centaur-370c2f.netlify.app',  //  Netlify deploy preview
@@ -22,9 +22,12 @@ const allowedOrigins = [
 
 app.use(cors({
   origin: function (origin, callback) {
+    // Allow requests with no origin (like same-origin requests or direct file access)
+    // or if the origin is in the allowed list
     if (!origin || allowedOrigins.includes(origin)) {
       callback(null, true);
     } else {
+      console.error('CORS blocked: Not allowed by CORS for origin:', origin);
       callback(new Error('Not allowed by CORS'));
     }
   },
@@ -32,7 +35,6 @@ app.use(cors({
 }));
 
 
-app.use(cors());
 app.use(bodyParser.json());
 app.use('/media', express.static('media'));
 app.get('/memory', (req, res) => {
@@ -110,49 +112,6 @@ saveMemory(memory);
   } catch (error) {
     console.error('Agent 1 API Error:', error?.response?.data || error.message);
     res.status(500).json({ error: 'Failed to get response from Agent 1' });
-  }
-});
-
-
-
-
-
-// 🤖 Agent 2 Route
-app.post('/ask-second', async (req, res) => {
-  const { prompt } = req.body;
-
-  if (!prompt) {
-    return res.status(400).json({ error: 'No prompt provided' });
-  }
-
-  try {
-    const response = await axios.post(
-      'https://openrouter.ai/api/v1/chat/completions',
-      {
-        model: 'anthropic/claude-3-sonnet:beta',
-        messages: [
-          {
-            role: 'system',
-            content:
-              "You are Agent 2. The only things you know are your impressions of Agent 1's expressions, and what these impressions evoke in you.",
-          },
-          { role: 'user', content: prompt }
-        ],
-      },
-      {
-        headers: {
-          Authorization: `Bearer ${apiKey}`,
-          'HTTP-Referer': 'http://localhost:3000',
-          'Content-Type': 'application/json',
-        },
-      }
-    );
-console.log("Agent 2 response:", response.data);
-    const reply = parseResponse(response);
-    res.json({ reply });
-  } catch (error) {
-    console.error('Agent 2 API Error:', error?.response?.data || error.message);
-    res.status(500).json({ error: 'Failed to get response from Agent 2' });
   }
 });
 
