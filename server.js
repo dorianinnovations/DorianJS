@@ -20,20 +20,7 @@ const allowedOrigins = [
   'http://localhost:3000'                      //  local dev (optional)
 ];
 
-app.use(cors({
-  origin: function (origin, callback) {
-    // Allow requests with no origin (like same-origin requests or direct file access)
-    // or if the origin is in the allowed list
-    if (!origin || allowedOrigins.includes(origin)) {
-      callback(null, true);
-    } else {
-      console.error('CORS blocked: Not allowed by CORS for origin:', origin);
-      callback(new Error('Not allowed by CORS'));
-    }
-  },
-  credentials: true
-}));
-
+app.use(cors());
 
 app.use(bodyParser.json());
 app.use('/media', express.static('media'));
