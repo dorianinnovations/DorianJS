@@ -702,6 +702,8 @@ canvas#dorian-canvas {
 }
 
 
+
+
 /* Optimize sliders for mobile */
 input[type="range"] {
   -webkit-appearance: none;

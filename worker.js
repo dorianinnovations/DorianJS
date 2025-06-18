@@ -25,8 +25,8 @@ function startAnimationLoop() {
       universe.update();
       partialTick--;
     }
-
-    const imageData = universe.getImageData(cellSize);
+        //PASS CANVAS DIMENSIONS TO getImageData
+    const imageData = universe.getImageData(cellSize, CANVAS_WIDTH, CANVAS_HEIGHT);
     const stats = universe.getStats();
     self.postMessage({ type: 'frame', imageData, stats }, [imageData.data.buffer]);
 
@@ -37,12 +37,14 @@ function startAnimationLoop() {
 }
 
 self.onmessage = (e) => {
-  const { type, opts, x, y, updates, mutationChance, count, rate } = e.data;
+  const { type, opts, x, y, updates, mutationChance, count, rate, width, height } = e.data;
   switch (type) {
     case 'init':
        if (width) CANVAS_WIDTH = width;
        if (height) CANVAS_HEIGHT  = height;
-      universe = new DorianUniverseOptimized(opts);
+      universe = new DorianUniverseOptimized  ({opts,
+      width: CANVAS_WIDTH,
+      height: CANVAS_HEIGHT});
       cellSize = opts.cellSize || cellSize;
       if (typeof opts.agentCount === 'number') {
         universe.setAgentCount(opts.agentCount);
@@ -60,7 +62,7 @@ self.onmessage = (e) => {
         for (let i = 0; i < updates; i++) {
           universe.update();
         }
-        const imageData = universe.getImageData(cellSize);
+        const imageData = universe.getImageData(cellSize, CANVAS_WIDTH, CANVAS_HEIGHT);
         const stats = universe.getStats();
         self.postMessage({ type: 'frame', imageData, stats }, [imageData.data.buffer]);
       }
