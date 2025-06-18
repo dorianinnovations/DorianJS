@@ -433,7 +433,19 @@ canvas.addEventListener("touchstart", (e) => {
         const log = document.getElementById("thought-log-section");
         log.innerText += `\n\n[User ➝] ${userInput}\n[Dorian ➝] ${reply.trim()}`;
       } else {
-        output.innerText = "No response... Try again.";
+        const messages = [
+          "Signal transmission received. Please wait.",
+          "Message delivered. Awaiting response.",
+          "Your words are echoing in the digital ether.",
+          "Awaiting Dorian's reply...",
+          "Transmission sent. Listening for a response.",
+          "Your message is being processed.",
+          "Dorian is contemplating your input.",
+          "Stand by for a response.",
+          "Message relayed. Awaiting digital thoughts.",
+          "Your prompt is under consideration."
+        ];
+        output.innerText = messages[Math.floor(Math.random() * messages.length)];
       }
     } catch (err) {
       output.innerText = "Error communicating with Dorian.";
