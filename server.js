@@ -15,7 +15,7 @@ console.log("API KEY loaded:", !!apiKey);
 const app = express();
 const PORT = process.env.PORT || 8080;
 const allowedOrigins = [
-  'https://yourdomain.com',                    //  custom domain
+  'https://www.aidorian.com',                    //  custom domain
   'https://leafy-centaur-370c2f.netlify.app',  //  Netlify deploy preview
   'http://localhost:3000'                      //  local dev (optional)
 ];
