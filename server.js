@@ -13,7 +13,7 @@ const apiKey = process.env.OPENROUTER_API_KEY;
 console.log("API KEY loaded:", !!apiKey);
 
 const app = express();
-const PORT = process.env.PORT || 8080;
+const PORT = process.env.PORT || 10000;
 const allowedOrigins = [
   'https://www.aidorian.com',                    //  custom domain
   'https://leafy-centaur-370c2f.netlify.app',  //  Netlify deploy preview
