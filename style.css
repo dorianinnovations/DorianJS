@@ -87,11 +87,7 @@ body::-webkit-scrollbar {
   animation-fill-mode: forwards;
   animation-iteration-count: infinite, 1;
 }
-@media (max-width: 768px) {
-  .header {
-    margin-bottom: 2rem;
-  }
-}
+
 
 .heading-title {
   font-size: 10rem;
@@ -157,9 +153,9 @@ body::-webkit-scrollbar {
 main.layout {
   display: grid;
   grid-template-columns: 1fr 2fr 1fr;
-  max-width: 85%;
+  width: 100%;
+  max-width: 100%;
   margin: 0 auto;
-  padding: 4rem 1rem;
   border-radius: 3rem;
   box-sizing: border-box;
   border-bottom: 0.2rem solid rgb(52, 52, 52);
@@ -194,7 +190,6 @@ canvas:hover {
   display: flex;
   justify-content: center;
   flex-direction: column;
-  padding: 3rem;
   align-items: center;
   border-radius: 1rem;
   z-index: 10;
@@ -451,7 +446,7 @@ canvas#dorian-canvas {
     grid-template-columns: 1fr;
     gap: 2rem;
     margin: 0 auto;
-    max-width: 100vw;
+    max-width: 100%;
     padding: 1rem 0.7rem;
     box-sizing: border-box;
     z-index: 10;
@@ -479,7 +474,7 @@ text-align: center;
 }
 
   .ui-speed-btns {
-    gap: 5rem;
+    gap: 1rem;
     margin: 0 auto;
   }
   
@@ -565,7 +560,6 @@ text-align: center;
       left: 70%;
       width: 300px;          /* Adjust as needed */
       height: auto;
-      transform: translate(-50%, -50%);
       z-index: 0;
       opacity: 0.2;          /* Dim it so text stands out */
       pointer-events: none;
@@ -577,8 +571,8 @@ text-align: center;
   }
   .thought-log-video{
     opacity: 0.4;
-    height: 12rem;
-    width: 12rem;
+    height: 8rem;
+    width: 8rem;
     margin: 0 auto;
   }
   .thought-log-title{
@@ -603,7 +597,7 @@ text-align: center;
     background: #0000004d;
     padding-bottom: 45px;
   }
-  .input-text{ max-width: 70%;
+  .input-text{ max-width: 100%;
   font-size: 2.3rem;
   font-family: "rajdhani"
 }
@@ -642,8 +636,9 @@ text-align: center;
   .column-left-column,
   .center-area-wrapper{
     width: 100%;
-    padding: 1rem;
-    margin:0;
+    max-width: 100%;
+    margin: 0.3rem;
+    padding: 0.5rem;
     box-sizing: border-box;
   }
   .column-right-column-upper{
@@ -730,12 +725,12 @@ input[type="range"]::-webkit-slider-thumb:active {
 /* Mobile-specific slider improvements */
 @media (max-width: 1024px) {
   input[type="range"] {
-    height: 3rem; /* Larger touch target */
-    margin: 1rem 0;
+    height: 2rem; /* Larger touch target */
+    margin: 0.5rem 0;
   }
   
   input[type="range"]::-webkit-slider-thumb {
-    width: 2.5rem;
+    width: 0.5.5rem;
     height: 2.5rem;
   }
   
@@ -991,4 +986,43 @@ input, select, textarea {
   -webkit-touch-callout: none;
   -webkit-user-select: none;
   user-select: none;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+main.layout,
+.column-left-column,
+.column-right-column,
+.center-area-wrapper,
+.main-canvas {
+  width: 100%;
+  max-width: 100%;
+  overflow-x: hidden;
+  box-sizing: border-box;
+  
+}
+
+* {
+  box-sizing: border-box;
+}
+
+.center-area-wrapper,
+.column-left-column,
+.column-right-column {
+  min-width: 0;
+  flex-shrink: 1;
 }
