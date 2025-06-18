@@ -40,11 +40,16 @@ self.onmessage = (e) => {
   const { type, opts, x, y, updates, mutationChance, count, rate, width, height } = e.data;
   switch (type) {
     case 'init':
-       if (width) CANVAS_WIDTH = width;
-       if (height) CANVAS_HEIGHT  = height;
-      universe = new DorianUniverseOptimized  ({opts,
-      width: CANVAS_WIDTH,
-      height: CANVAS_HEIGHT});
+      // FIX: Add the missing assignment logic and syntax
+      if (width) CANVAS_WIDTH = width;
+      if (height) CANVAS_HEIGHT = height;
+      
+      // FIX: Correct the constructor call syntax
+      universe = new DorianUniverseOptimized({
+        ...opts,
+        width: CANVAS_WIDTH,
+        height: CANVAS_HEIGHT
+      });
       cellSize = opts.cellSize || cellSize;
       if (typeof opts.agentCount === 'number') {
         universe.setAgentCount(opts.agentCount);
@@ -54,6 +59,7 @@ self.onmessage = (e) => {
       }
       break;
     case 'seed':
+      // FIX: Add the missing seed call
       if (universe) universe.seed(x, y);
       break;
     case 'update':

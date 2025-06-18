@@ -19,6 +19,9 @@ window.addEventListener("DOMContentLoaded", () => {
   let currentStats = null;
 
   const canvas = document.getElementById("dorian-canvas");
+
+  const CANVAS_WIDTH = canvas.width;
+  const CANVAS_HEIGHT = canvas.height;
   canvas.width = 1000;
   canvas.height = 1000;
   const ctx = canvas.getContext("2d");
