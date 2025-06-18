@@ -53,7 +53,6 @@ body::-webkit-scrollbar {
 .navigation-button:hover {
   background-color: rgb(255, 255, 255);
   text-shadow: 0 0 10px white;
-  animation: pulseGlow 1.2s ease-in-out infinite;
   border-radius: 0.5rem;
   color: black;
 
@@ -85,7 +84,7 @@ body::-webkit-scrollbar {
   animation-duration: 5s, 2s;
   animation-timing-function: ease-in-out;
   animation-fill-mode: forwards;
-  animation-iteration-count: infinite, 1;
+  animation-iteration-count: 1, 1;
 }
 
 
@@ -166,21 +165,6 @@ main.layout {
   overflow: auto;
   -webkit-backdrop-filter: blur(12px);
 }
-
-
-
-
-
-canvas:hover {
-  box-shadow: 0 0 5px rgba(255, 255, 255, 0.15),
-    0 0 10px rgba(255, 255, 255, 0.25), 0 6px 10px rgba(255, 255, 255, 0.3);
-  cursor: pointer;
-  transition: box-shadow 1.2s ease-in-out, box-glow 1.2s ease-in-out;
-
-  z-index: 10;
-}
-
-
 
 /* Panels */
 .column-left-column,
@@ -466,7 +450,7 @@ canvas#dorian-canvas {
     backdrop-filter: blur(12px);
     border-bottom: 0.3rem solid rgba(255, 255, 255, 0.333);
     animation-name: rgbBoxShadow;
-    animation-duration: 30s;
+    animation-duration: 5s;
     animation-iteration-count: infinite;
     border-radius: 0.6rem;
   }
@@ -541,7 +525,7 @@ text-align: center;
     animation-name: livingGlow;
     animation-iteration-count: infinite;
     transition: 2s ease-in-out;
-    animation-duration: 8s;
+    animation-duration: 3s;
     text-shadow: rgba(230, 230, 230, 0.885) 0 -8px 3px, rgba(255, 255, 255, 0.921) 0 0 3px;
   }
 
