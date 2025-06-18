@@ -14,7 +14,11 @@ console.log("API KEY loaded:", !!apiKey);
 
 const app = express();
 const PORT = process.env.PORT || 8080;
-const allowedOrigins = ['https://https://dorianjs.onrender.com, https://6852b5646d9a0d0008e02214--leafy-centaur-370c2f.netlify.app/']
+const allowedOrigins = [
+  'https://dorianjs.onrender.com',
+  'https://leafy-centaur-370c2f.netlify.app',
+  'https://www.aidorian.com'
+];
 
 app.use(cors({
   origin: allowedOrigins,
