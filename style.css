@@ -167,13 +167,6 @@ main.layout {
   -webkit-backdrop-filter: blur(12px);
 }
 
-#dorian-canvas {
-  max-width: 1000px;
-  height: 1000px;
-  border-radius: 1rem;
-  display: block;
-  margin: 0 auto;
-}
 
 
 
@@ -397,6 +390,8 @@ canvas:hover {
 canvas#dorian-canvas {
   max-width: 100%;
   height: 100%;
+  max-width: 1000px;
+  max-height: 1000px;
   border-radius: 1rem;
 }
 
@@ -451,8 +446,19 @@ canvas#dorian-canvas {
     animation-duration: 10s;
     animation-iteration-count: infinite;
     border-radius: 2rem;
-    
   }
+
+  canvas#dorian-canvas {
+  max-width: 40%;
+  height: 100%;
+  max-width: 1000px;
+  max-height: 1000px;
+  border-radius: 1rem;
+}
+canvas:hover {
+  box-shadow: none;
+}
+
   .ui-speed-btns {
     gap: 5rem;
     margin: 0 auto;
@@ -634,12 +640,7 @@ canvas#dorian-canvas {
   }
   
 
-  canvas#dorian-canvas {
-    max-height: auto;
-    display: block;
-    max-width: 432px;
-  }
-
+ 
   
 
   .ux-manager {
