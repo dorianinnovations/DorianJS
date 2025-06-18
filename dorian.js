@@ -50,6 +50,10 @@ window.addEventListener("DOMContentLoaded", () => {
   const ambienceCheckbox = document.getElementById("ambience-checkbox");
 
 
+
+
+  
+
 function resizeCanvasToDisplaySize(canvas) {
   const dpr = window.devicePixelRatio || 1;
 
