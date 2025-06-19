@@ -389,7 +389,8 @@ canvas#dorian-canvas {
 /* Thought log spacing */
 .thought-log-section-visible {
   max-width: 100%;
-  padding: 2rem;
+  padding: 0.5rem;
+
 }
 .thought-log-video {
   opacity: 0.4;
@@ -460,7 +461,8 @@ canvas#dorian-canvas {
     gap: 2rem;
     margin: 0 auto;
     max-width: 100%;
-    padding: 1rem 0.7rem;
+    max-height: none;
+    padding: 1rem 0.5rem;
     box-sizing: border-box;
     z-index: 10;
     transition: 1.5s all ease;
@@ -470,7 +472,7 @@ canvas#dorian-canvas {
     animation-name: rgbBoxShadow;
     animation-duration: 7s;
     animation-iteration-count: infinite;
-    border-radius: 0.6rem;
+    border-radius: 1.2rem;
   }
 
   canvas#dorian-canvas {
@@ -479,7 +481,7 @@ canvas#dorian-canvas {
     height: auto;
     display: block;
     border-radius: 1rem;
-    box-shadow: 0 15px 35px rgba(255, 255, 255, 0.234);
+    box-shadow: 0 15px 35px rgba(255, 255, 255, 0.577);
     border: 0.3rem solid rgba(34, 34, 34, 0.249);
    
   }
@@ -548,6 +550,8 @@ canvas#dorian-canvas {
 
   .column-right-column {
     order: 2;
+    box-shadow: 0 0 16px rgba(255, 255, 255, 0.05), 0 -12px 18px #ffffff1d;
+    border: 1px solid rgba(255, 255, 255, 0.37);
   }
 
   .heading-subtitle {
@@ -604,7 +608,17 @@ canvas#dorian-canvas {
     translate: -50%;
     /* Prevent interaction */
   }
+.thought-log-video{
+  opacity: 1;
+  height: 450px;
+  width: 400px;
+  z-index: 0;
+  pointer-events: none;
+  position: relative;
+  left: 50%;
+  transform: translateX(-50%);
 
+}
 
 .input-text-box {
   gap: 0.5rem;
@@ -626,6 +640,7 @@ canvas#dorian-canvas {
     /* Outer glow */ 0 0 30px #ffffff81;
 
 }
+
 .input-text {
   font-size: 1.5rem;
   font-family: "rajdhani";
@@ -708,6 +723,15 @@ canvas#dorian-canvas {
   padding: 0.5rem;
   box-sizing: border-box;
 }
+.ux-manager {
+  font-size: 1.5rem;
+  text-align: center;
+  font-family: "Bruno Ace SC", sans-serif;
+  text-transform: uppercase;
+  font-weight: 600;
+  letter-spacing: -0.1rem;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+}
 .column-right-column-upper {
   gap: 0.1rem;
   margin-top: 80px;
@@ -765,9 +789,9 @@ canvas#dorian-canvas {
     font-size: 2.5rem;
     padding: 1rem;
     letter-spacing: 0rem;
-    border-bottom: 0.2rem dotted rgb(51, 51, 51);
+    border-bottom: 0.2rem solid rgba(51, 51, 51, 0.243);
     font-weight: 300;
-    border-radius: 5rem;
+    border-radius: 2rem;
     border-width: 0.2rem;
     text-shadow: white 0 3px 3px, rgba(163, 163, 163, 0.739) 0 0 2px;
     color: white;
@@ -777,7 +801,7 @@ canvas#dorian-canvas {
   .thought-log-subtitle {
     padding: 0.1rem;
     font-weight: 200;
-    font-size: 1.6rem;
+    font-size: 1.2rem;
     font-family: "rajdhani";
     text-align: center;
     color: white;
@@ -826,22 +850,26 @@ canvas#dorian-canvas {
   font-weight: 400;
   font-family: "Orbitron";
   color: #ffffff;
-  border-bottom: 0.2rem dotted white;
+  border-bottom: 1rem dotted white;
   border-radius: 1rem;
   border-width: 0.1rem;
   text-shadow: rgb(67, 67, 67) 0 -5px 3px, rgba(27, 27, 27, 0.739) 0 0 3px;
 }
 
 .ux-manager-subtitle {
-  font-size: 0.8em;
+  font-size: 1.8em;
   color: #ffffff;
-  font-weight: 100;
-  text-shadow: white 0 0 4px, rgba(163, 163, 163, 0.739) 0 0 2px;
-  text-align: center;
-}
-
-.speed-slider {
+  border-bottom: 0.2rem dotted white;
+  font-weight: 400;
+  margin-bottom: 4rem;
+  text-shadow: rgb(67, 67, 67) 0 -5px 3px, rgba(27, 27, 27, 0.739) 0 0 3px;
+  font-family: "Orbitron", sans-serif;
+  letter-spacing: -0.02rem;
+  line-height: 1.4;
+  background: rgba(0, 0, 0, 0.5);
+  border-radius: 1rem;
   width: 100%;
+  font-size: 1.5rem;
 }
 
 
