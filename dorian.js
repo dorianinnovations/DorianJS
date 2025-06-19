@@ -42,32 +42,25 @@ window.addEventListener("DOMContentLoaded", () => {
   const input = document.getElementById("gpt-input");
   const button = document.querySelector(".btn-go-right-column");
   const output = document.getElementById("gpt-output");
-  const toggle = document.getElementById("menu-toggle");
-  const menu = document.getElementById("dropdown");
   const toggleMemorybtn = document.getElementById("toggle-memory");
   const memoryOutput = document.getElementById("dorian-memory");
   const ambienceAudio = document.getElementById("ambience-audio");
   const ambienceCheckbox = document.getElementById("ambience-checkbox");
-
-
-
+  //const inputPopout = document.getElementById("input-text-popout");
 
   
 
-function resizeCanvasToDisplaySize(canvas) {
-  const dpr = window.devicePixelRatio || 1;
+  //document.getElementById("input-text-popout").addEventListener("click", () => {
+   // if (popoutMenu.classList.contains("hidden")) {
+    //  popoutMenu.classList.remove("hidden");
+    //  popoutMenu.classList.add("visible");
+  //  } else {
+   //   popoutMenu.classList.remove("visible");
+  //    popoutMenu.classList.add("hidden");
+  //  }
+ // });
 
-  const displayWidth = canvas.clientWidth;
-  const displayHeight = canvas.clientHeight;
 
-  canvas.width = displayWidth * dpr;
-  canvas.height = displayHeight * dpr;
-
-  const ctx = canvas.getContext("2d");
-  ctx.scale(dpr, dpr);
-}
-window.addEventListener("resize", () => resizeCanvasToDisplaySize(canvas));
-resizeCanvasToDisplaySize(canvas);
 
   
 canvas.addEventListener("mousedown", (e) => {
@@ -195,7 +188,7 @@ canvas.addEventListener("touchstart", (e) => {
         // Trigger Claude
         if (
           currentStats &&
-          currentStats.tick % 1300 === 0 &&
+          currentStats.tick % 2000 === 0 &&
           currentStats.tick !== lastClaudeTick
         ) {
           sendStatsToClaude(currentStats).then((emotion) => {
@@ -420,11 +413,8 @@ canvas.addEventListener("touchstart", (e) => {
   button.addEventListener("click", async () => {
     const userInput = input.value.trim();
     if (!userInput) return;
-
-    // Clear the input box
     input.value = "";
 
-    // Show a typing indicator
 
     try {
       const reply = await sendPrompt(userInput);
