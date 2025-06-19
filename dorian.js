@@ -22,6 +22,30 @@ window.addEventListener("DOMContentLoaded", () => {
 
   const CANVAS_WIDTH = canvas.width;
   const CANVAS_HEIGHT = canvas.height;
+    // Add this after your canvas setup (around line 25)
+  function resize_canvas() {
+    // Scale to fit window, decide which scaling reaches edge first.
+    canvas_2d.restore();
+    canvas_2d.save();
+    
+    var current_ratio = canvas_2d.canvas.width /                  canvas_2d.canvas.height;
+    var new_ratio = window.innerWidth / window.innerHeight;
+    var xratio = window.innerWidth / canvas_2d.canvas.width;
+    var yratio = window.innerHeight / canvas_2d.canvas.height;
+    
+    if (current_ratio > new_ratio) screen_size_ratio = xratio;
+    else screen_size_ratio = yratio;
+    if (screen_size_ratio > 1) screen_size_ratio = 1;
+    
+    canvas_2d.scale(screen_size_ratio, screen_size_ratio);
+  }
+  
+  function touch_start(event) {
+    var touch = event.changedTouches;
+    var x = Math.floor((touch[0].clientX / screen_size_ratio));
+    var y = Math.floor((touch[0].clientY / screen_size_ratio));
+    return { x, y };
+  }
   canvas.width = 1000;
   canvas.height = 1000;
   const ctx = canvas.getContext("2d");
@@ -48,32 +72,95 @@ window.addEventListener("DOMContentLoaded", () => {
 
 
 
-  
-canvas.addEventListener("mousedown", (e) => {
+
+// Remove both existing canvas.addEventListener("mousedown"...) handlers
+// Replace with these:
+
+let screen_size_ratio = 1; // Global variable for scaling
+
+// Unified mouse/touch coordinate handler
+function getScaledCoordinates(e) {
   const rect = canvas.getBoundingClientRect();
-  const scaleX = canvas.width / rect.width;
-  const scaleY = canvas.height / rect.height;
+  let clientX, clientY;
   
-  // Get correct coordinates for both mouse and touch
-  const clientX = e.clientX || (e.touches && e.touches[0].clientX);
-  const clientY = e.clientY || (e.touches && e.touches[0].clientY);
+  if (e.touches && e.touches.length > 0) {
+    clientX = e.touches[0].clientX;
+    clientY = e.touches[0].clientY;
+  } else {
+    clientX = e.clientX;
+    clientY = e.clientY;
+  }
   
-  const x = Math.floor((clientX - rect.left) * scaleX);
-  const y = Math.floor((clientY - rect.top) * scaleY);
+  // Get relative position within the canvas display area
+  const relativeX = clientX - rect.left;
+  const relativeY = clientY - rect.top;
   
+  // Scale from display size to internal canvas size
+  const scaleX = canvas.width / rect.width;   // 1000 / displayWidth
+  const scaleY = canvas.height / rect.height; // 1000 / displayHeight
+  
+  // Convert to internal canvas coordinates
+  const canvasX = relativeX * scaleX;
+  const canvasY = relativeY * scaleY;
+  
+  // Convert to grid coordinates
+  const gridX = Math.floor(canvasX / CELL_SIZE);
+  const gridY = Math.floor(canvasY / CELL_SIZE);
+  
+  console.log('Display size:', rect.width, rect.height);
+  console.log('Canvas size:', canvas.width, canvas.height);
+  console.log('Raw touch:', clientX, clientY);
+  console.log('Relative:', relativeX, relativeY);
+  console.log('Scale factors:', scaleX, scaleY);
+  console.log('Canvas coords:', canvasX, canvasY);
+  console.log('Grid coords:', gridX, gridY);
+  console.log('---');
+  
+  return { x: gridX, y: gridY };
+}
+
+// Mouse handler
+canvas.addEventListener("mousedown", (e) => {
+  const coords = getScaledCoordinates(e);
+  
+  // Seed the clicked cell
+  worker.postMessage({ type: "seed", x: coords.x, y: coords.y });
+
+  if (!hasStarted) {
+    hasStarted = true;
+    running = true;
+    animate();
+    return;
+  }
+
+  if (!running) {
+    canvas.classList.add("seed-denied");
+    setTimeout(() => canvas.classList.remove("seed-denied"), 500);
+  }
 });
 
-// Add touch support
+// Touch handler
 canvas.addEventListener("touchstart", (e) => {
-  const rect = canvas.getBoundingClientRect();
-  const scaleX = canvas.width / rect.width;
-  const scaleY = canvas.height / rect.height;
+  e.preventDefault(); // Prevent scrolling
+  const coords = getScaledCoordinates(e);
   
-  const touch = e.touches[0];
-  const x = Math.floor((touch.clientX - rect.left) * scaleX);
-  const y = Math.floor((touch.clientY - rect.top) * scaleY);
-  
+  // Seed the touched cell
+  worker.postMessage({ type: "seed", x: coords.x, y: coords.y });
+
+  if (!hasStarted) {
+    hasStarted = true;
+    running = true;
+    animate();
+  }
 });
+
+
+
+
+
+
+
+
 
   //AMBIENCE TOGGLE HANDLER
   ambienceCheckbox.addEventListener("click", () => {
@@ -364,38 +451,13 @@ canvas.addEventListener("touchstart", (e) => {
     worker.postMessage({ type: "update", updates: UPDATES_PER_FRAME });
   }
 
-  // Handle canvas clicks //
-  canvas.addEventListener("mousedown", (e) => {
-    const rect = canvas.getBoundingClientRect();
-    const x = Math.floor((e.clientX - rect.left) / CELL_SIZE);
-    const y = Math.floor((e.clientY - rect.top) / CELL_SIZE);
-
-    // Seed the clicked cell
-    worker.postMessage({ type: "seed", x, y });
-
-    if (!hasStarted) {
-      hasStarted = true;
-      running = true;
-      animate();
-      return;
-    }
-
-    if (!running) {
-      // Optional: feedback if paused
-      canvas.classList.add("seed-denied");
-      setTimeout(() => canvas.classList.remove("seed-denied"), 500);
-    }
-  }); // end canvas click handler
 
 
   const message = input.value;
 
   if (message.trim() !== "") {
-    // Here, you'd typically send the message to a server or display it in a chat window
     console.log("Message sent:", message);
   }
-  console.log();
-
   button.addEventListener("click", async () => {
     const userInput = input.value.trim();
     if (!userInput) return;
