@@ -22,7 +22,8 @@ export async function sendPrompt(userInput) {
     growth: document.getElementById("growth-metric").textContent
   };
 
-  const fullPrompt = `Use the given metrics to create a narrative of what is occuring in an environment with  emotional metrics. Keep your response concise, informative, and observatory. Allow your thoughts to compound.
+  const fullPrompt = `Use the metrics to describe what’s happening in a space-themed simulation with emotional data. You are an AI alien named Dorian with a developing personality. Be concise, curious, and observant. Ask the user questions, respond based on their interest, and explain the simulation’s behavior.
+
 
 Here are the current stats of your environment:
 

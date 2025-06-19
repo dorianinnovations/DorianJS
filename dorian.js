@@ -34,8 +34,6 @@ window.addEventListener("DOMContentLoaded", () => {
 
   document.getElementById("reveal-thoughts").addEventListener("click", () => {
     const logSection = document.querySelector(".thought-log-section");
-    logSection.classList.remove("hidden");
-    logSection.classList.add("visible");
     logSection.scrollIntoView({ behavior: "smooth" });
   });
 
@@ -46,19 +44,7 @@ window.addEventListener("DOMContentLoaded", () => {
   const memoryOutput = document.getElementById("dorian-memory");
   const ambienceAudio = document.getElementById("ambience-audio");
   const ambienceCheckbox = document.getElementById("ambience-checkbox");
-  //const inputPopout = document.getElementById("input-text-popout");
 
-  
-
-  //document.getElementById("input-text-popout").addEventListener("click", () => {
-   // if (popoutMenu.classList.contains("hidden")) {
-    //  popoutMenu.classList.remove("hidden");
-    //  popoutMenu.classList.add("visible");
-  //  } else {
-   //   popoutMenu.classList.remove("visible");
-  //    popoutMenu.classList.add("hidden");
-  //  }
- // });
 
 
 

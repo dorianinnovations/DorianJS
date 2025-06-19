@@ -23,7 +23,7 @@
 </head>
 
 <body>
- 
+
   <!-- Navigation Header -->
   <header class="nav-header">
     <div class="nav-left">
@@ -49,26 +49,7 @@
     <div class="header-divider"></div>
   </div>
 
-  <!-- Core Layout -->
-  <main class="layout">
-
-    <!-- Left Column -->
-    <div class="column-left-column">
-
-      <!-- Metrics Panel -->
-      <div class="ui-card">
-        <div class="metrics-panel">
-          <div class="metric-box"><span id="tick-metric">Seed the canvas to Start!</span></div>
-          <div class="metric-box"><span id="diversity-metric"></span></div>
-          <div class="metric-box"><span id="entropy-metric"></span></div>
-          <div class="metric-box"><span id="alive-metric"></span></div>
-          <div class="metric-box"><span id="growth-metric"></span></div>
-          <div class="metric-box"><span id="dominant-metric">Adjust the speed as needed.</span></div>
-        </div>
-      </div>
-
-      <!-- GPT Output -->
-      <div class="gpt-output-container">
+  <!-- Core Layout --><div class="gpt-output-container">
         <p id="gpt-output" class="gpt-answer-text-box"></p>
       </div>
 
@@ -79,12 +60,85 @@
             aria-hidden="true"></i>
         </button>
       </div>
+  <main class="layout">
+
+    <!-- Left Column -->
+    <div class="column-left-column">
+
+      <!-- Metrics Panel -->
+      <div class="ui-card">
+        <div class="metrics-panel">
+          <div class="metric-box"><span id="tick-metric">Interlink Success</span></div>
+          <div class="metric-box"><span id="diversity-metric"></span></div>
+          <div class="metric-box"><span id="entropy-metric"></span></div>
+          <div class="metric-box"><span id="alive-metric"></span></div>
+          <div class="metric-box"><span id="growth-metric"></span></div>
+          <div class="metric-box"><span id="dominant-metric">Access Cognition...</span></div>
+        </div>
+      </div>
+
+      <!-- GPT Output -->
+      
     </div>
 
     <!-- Canvas Area -->
     <div class="center-area-wrapper">
+
       <canvas id="dorian-canvas"></canvas>
-      <button id="reveal-thoughts" class="custom-btn-dorian">View Dorian's Thoughts</button>
+      <div class="canvas-controls">
+        <button id="reveal-thoughts" class="custom-btn-dorian">View Dorian's Thoughts</button>
+        <br>
+        <label class="switch">Music
+          <input type="checkbox" id="mutation-checkbox" />
+          <div class="slider">
+            <div class="slider-btn">
+              <div class="light"></div>
+              <div class="texture"></div>
+              <div class="texture"></div>
+              <div class="texture"></div>
+              <div class="light"></div>
+            </div>
+          </div>
+        </label>
+              
+        <label class="switch">Chat
+          <input type="checkbox" id="ambience-checkbox" />
+          <div class="slider">
+            <div class="slider-btn">
+              <div class="light"></div>
+              <div class="texture"></div>
+              <div class="texture"></div>
+              <div class="texture"></div>
+              <div class="light"></div>
+            </div>
+          </div>
+        </label>
+        <label class="switch">Mutation
+          <input type="checkbox" id="mutation-checkbox" />
+          <div class="slider">
+            <div class="slider-btn">
+              <div class="light"></div>
+              <div class="texture"></div>
+              <div class="texture"></div>
+              <div class="texture"></div>
+              <div class="light"></div>
+            </div>
+          </div>
+        </label>
+
+        <label class="switch">Ambience
+          <input type="checkbox" id="ambience-checkbox" />
+          <div class="slider">
+            <div class="slider-btn">
+              <div class="light"></div>
+              <div class="texture"></div>
+              <div class="texture"></div>
+              <div class="texture"></div>
+              <div class="light"></div>
+            </div>
+          </div>
+        </label>
+      </div>
     </div>
     </div>
     </div>
@@ -129,31 +183,7 @@
 
       <!-- Toggles -->
       <div class="column-right-column-lower">
-        <label class="switch">Mutation
-          <input type="checkbox" id="mutation-checkbox" />
-          <div class="slider">
-            <div class="slider-btn">
-              <div class="light"></div>
-              <div class="texture"></div>
-              <div class="texture"></div>
-              <div class="texture"></div>
-              <div class="light"></div>
-            </div>
-          </div>
-        </label>
 
-        <label class="switch">Ambience
-          <input type="checkbox" id="ambience-checkbox" />
-          <div class="slider">
-            <div class="slider-btn">
-              <div class="light"></div>
-              <div class="texture"></div>
-              <div class="texture"></div>
-              <div class="texture"></div>
-              <div class="light"></div>
-            </div>
-          </div>
-        </label>
 
         <audio id="ambience-audio" src="vibes.wav" type="audio/wav"></audio>
       </div>
@@ -162,11 +192,12 @@
 
   <!-- Thought Log Display -->
   <section class="thought-log-section-visible">
-      <video autoplay muted loop playsinline class="thought-log-video">
-        <source src="cube.webm" type="video/webm" />
-      </video>
-      <h2 class="thought-log-title">Dorian's Recent Thoughts</h2>
-      <h3 class="thought-log-subtitle">Each tick, Dorian reflects on its state. These are the most recent thoughts.</h3>
+    <video autoplay muted loop playsinline class="thought-log-video">
+      <source src="cube.webm" type="video/webm" />
+    </video>
+    <h2 class="thought-log-title">Dorian's Recent Thoughts</h2>
+    <h3 class="thought-log-subtitle">Each tick interval, Dorian reflects on its state. These are the most recent
+      thoughts.</h3>
   </section>
 
   <!-- Live Thoughts Log -->
@@ -178,8 +209,9 @@
 
 </body>
 <footer class="footer">
-  <a href="https://dorianai.replit.app/" class="heading-subtitle">Visit DorianAI</a>
+  <a href="https://dorianai.replit.app/" class="heading-subtitle">Dorian</a>
   <p class="footer-text">All rights reserved</p>
+  <p class="footer-text">© 2025 DorianAI</p>
 </footer>
 
 </html>
