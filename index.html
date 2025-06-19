@@ -15,10 +15,13 @@
   <link rel="icon" href="favicon.png" />
   <script src="https://kit.fontawesome.com/c0ffa5e1d4.js" crossorigin="anonymous"></script>
   <link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Audiowide&family=Chakra+Petch:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400;1,500;1,600;1,700&family=Orbitron:wght@400..900&family=Rajdhani:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-<link href="https://fonts.googleapis.com/css2?family=Bruno+Ace+SC&display=swap" rel="stylesheet">
-<link href="https://fonts.googleapis.com/css2?family=Bruno+Ace+SC&family=Goldman:wght@400;700&display=swap" rel="stylesheet">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link
+    href="https://fonts.googleapis.com/css2?family=Audiowide&family=Chakra+Petch:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400;1,500;1,600;1,700&family=Orbitron:wght@400..900&family=Rajdhani:wght@300;400;500;600;700&display=swap"
+    rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Bruno+Ace+SC&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Bruno+Ace+SC&family=Goldman:wght@400;700&display=swap"
+    rel="stylesheet">
 
   <script type="module" src="dorian.js"></script>
 </head>
@@ -50,17 +53,17 @@
     <div class="header-divider"></div>
   </div>
 
-  <!-- Core Layout --><div class="gpt-output-container">
-        <p id="gpt-output" class="gpt-answer-text-box"></p>
-      </div>
+  <!-- Core Layout -->
+  <div class="gpt-output-container">
+    <p id="gpt-output" class="gpt-answer-text-box"></p>
+  </div>
 
-      <!-- GPT Input -->
-      <div class="input-text-box">
-        <input type="text" id="gpt-input" class="input-text" placeholder="Ask a question" />
-        <button type="button" class="btn-go-right-column" title="Run Command"><i class="fa fa-arrow-right"
-            aria-hidden="true"></i>
-        </button>
-      </div>
+  <!-- GPT Input -->
+  <div class="input-text-box">
+    <input type="text" id="gpt-input" class="input-text" placeholder="Ask a question" />
+    <button type="button" class="btn-go-right-column" title="Run Command"><i class="fa-solid fa-arrow-up"></i>
+    </button>
+  </div>
   <main class="layout">
 
     <!-- Left Column -->
@@ -74,12 +77,11 @@
           <div class="metric-box"><span id="entropy-metric"></span></div>
           <div class="metric-box"><span id="alive-metric"></span></div>
           <div class="metric-box"><span id="growth-metric"></span></div>
-          <div class="metric-box"><span id="dominant-metric">Access Cognition...</span></div>
         </div>
       </div>
 
       <!-- GPT Output -->
-      
+
     </div>
 
     <!-- Canvas Area -->
@@ -87,61 +89,62 @@
 
       <canvas id="dorian-canvas"></canvas>
       <div class="canvas-controls">
-        <button id="reveal-thoughts" class="custom-btn-dorian">View Dorian's Thoughts</button>
-        <br>
-        <label class="switch">Music
-          <input type="checkbox" id="mutation-checkbox" />
-          <div class="slider">
-            <div class="slider-btn">
-              <div class="light"></div>
-              <div class="texture"></div>
-              <div class="texture"></div>
-              <div class="texture"></div>
-              <div class="light"></div>
-            </div>
-          </div>
-        </label>
-              
-        <label class="switch">Chat
-          <input type="checkbox" id="ambience-checkbox" />
-          <div class="slider">
-            <div class="slider-btn">
-              <div class="light"></div>
-              <div class="texture"></div>
-              <div class="texture"></div>
-              <div class="texture"></div>
-              <div class="light"></div>
-            </div>
-          </div>
-        </label>
-        <label class="switch">Mutation
-          <input type="checkbox" id="mutation-checkbox" />
-          <div class="slider">
-            <div class="slider-btn">
-              <div class="light"></div>
-              <div class="texture"></div>
-              <div class="texture"></div>
-              <div class="texture"></div>
-              <div class="light"></div>
-            </div>
-          </div>
-        </label>
+        <div class="metric-box-dominant"><span id="dominant-metric">Access Cognition...</span></div>
 
-        <label class="switch">Ambience
-          <input type="checkbox" id="ambience-checkbox" />
-          <div class="slider">
-            <div class="slider-btn">
-              <div class="light"></div>
-              <div class="texture"></div>
-              <div class="texture"></div>
-              <div class="texture"></div>
-              <div class="light"></div>
+        <br>
+        <div class="canvas-controls-labels-sliders">
+          <label class="switch">Music
+            <input type="checkbox" id="music-checkbox" />
+            <div class="slider">
+              <div class="slider-btn">
+                <div class="light"></div>
+                <div class="texture"></div>
+                <div class="texture"></div>
+                <div class="texture"></div>
+                <div class="light"></div>
+              </div>
             </div>
-          </div>
-        </label>
+          </label>
+
+          <label class="switch">Chat
+            <input type="checkbox" id="chat-checkbox" />
+            <div class="slider">
+              <div class="slider-btn">
+                <div class="light"></div>
+                <div class="texture"></div>
+                <div class="texture"></div>
+                <div class="texture"></div>
+                <div class="light"></div>
+              </div>
+            </div>
+          </label>
+          <label class="switch">Mutation
+            <input type="checkbox" id="mutation-checkbox" />
+            <div class="slider">
+              <div class="slider-btn">
+                <div class="light"></div>
+                <div class="texture"></div>
+                <div class="texture"></div>
+                <div class="texture"></div>
+                <div class="light"></div>
+              </div>
+            </div>
+          </label>
+
+          <label class="switch">Ambience
+            <input type="checkbox" id="ambience-checkbox" />
+            <div class="slider">
+              <div class="slider-btn">
+                <div class="light"></div>
+                <div class="texture"></div>
+                <div class="texture"></div>
+                <div class="texture"></div>
+                <div class="light"></div>
+              </div>
+            </div>
+          </label>
+        </div>
       </div>
-    </div>
-    </div>
     </div>
 
     <!-- Right Column -->
@@ -174,22 +177,23 @@
 
         <!-- Speed Buttons -->
         <div class="ui-speed-box">
-          
+
         </div>
 
       </div>
 
       <!-- Toggles -->
       <div class="column-right-column-lower">
-        
+
 
 
         <audio id="ambience-audio" src="vibes.wav" type="audio/wav"></audio>
       </div>
       <div class="ui-speed-btns">
-            <button id="pause-btn" class="custom-btn" type="button">Pause</button>
-            <button id="reset-btn" class="custom-btn" type="button">Reset</button>
-          </div>
+        <button id="pause-btn" class="custom-btn" type="button">Pause</button>
+        <button id="reset-btn" class="custom-btn" type="button">Reset</button>
+      </div>
+      <button id="reveal-thoughts" class="custom-btn-dorian"><span>&#8595;</span> View Dorian's Thoughts <span>&#8595;</span></button>
     </div>
   </main>
 
@@ -199,7 +203,8 @@
       <source src="footer.webm" type="video/webm" />
     </video>
     <h2 class="thought-log-title">Dorian's Recent Thoughts</h2>
-    <h3 class="thought-log-subtitle">Each set tick interval, Dorian reflects on its state. Here, a log can be found of status reports alongside all user interactions with Dorian.</h3>
+    <h3 class="thought-log-subtitle">Each set tick interval, Dorian reflects on its state. Here, a log can be found of
+      status reports alongside all user interactions with Dorian.</h3>
   </section>
 
   <!-- Live Thoughts Log -->
@@ -211,9 +216,11 @@
 
 </body>
 <footer class="footer">
-  <a href="https://dorianai.replit.app/" class="heading-subtitle">Dorian</a>
-  <p class="footer-text">All rights reserved</p>
-  <p class="footer-text">© 2025 DorianAI</p>
-</footer>
+  <footer class="footer">
+    <a href="https://dorianai.replit.app/" class="heading-subtitle">Dorian</a>
+    <p class="footer-text">All rights reserved</p>
+    <p class="footer-text">© 2025 DorianAI</p>
+  </footer>
+  </body>
 
 </html>

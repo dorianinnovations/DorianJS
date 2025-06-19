@@ -22,28 +22,28 @@ window.addEventListener("DOMContentLoaded", () => {
 
   const CANVAS_WIDTH = canvas.width;
   const CANVAS_HEIGHT = canvas.height;
-    // Add this after your canvas setup (around line 25)
+  // Add this after your canvas setup (around line 25)
   function resize_canvas() {
     // Scale to fit window, decide which scaling reaches edge first.
     canvas_2d.restore();
     canvas_2d.save();
-    
-    var current_ratio = canvas_2d.canvas.width /                  canvas_2d.canvas.height;
+
+    var current_ratio = canvas_2d.canvas.width / canvas_2d.canvas.height;
     var new_ratio = window.innerWidth / window.innerHeight;
     var xratio = window.innerWidth / canvas_2d.canvas.width;
     var yratio = window.innerHeight / canvas_2d.canvas.height;
-    
+
     if (current_ratio > new_ratio) screen_size_ratio = xratio;
     else screen_size_ratio = yratio;
     if (screen_size_ratio > 1) screen_size_ratio = 1;
-    
+
     canvas_2d.scale(screen_size_ratio, screen_size_ratio);
   }
-  
+
   function touch_start(event) {
     var touch = event.changedTouches;
-    var x = Math.floor((touch[0].clientX / screen_size_ratio));
-    var y = Math.floor((touch[0].clientY / screen_size_ratio));
+    var x = Math.floor(touch[0].clientX / screen_size_ratio);
+    var y = Math.floor(touch[0].clientY / screen_size_ratio);
     return { x, y };
   }
   canvas.width = 1000;
@@ -54,7 +54,7 @@ window.addEventListener("DOMContentLoaded", () => {
   const MAX_AGE = 800;
   const MUTATION_CHANCE = 0.002;
   const BIRTH_DELAY = 5; // minimum dead ticks before a cell can grow again
-  let UPDATES_PER_FRAME = 5;
+  let UPDATES_PER_FRAME = 25;
 
   document.getElementById("reveal-thoughts").addEventListener("click", () => {
     const logSection = document.querySelector(".thought-log-section");
@@ -69,98 +69,77 @@ window.addEventListener("DOMContentLoaded", () => {
   const ambienceAudio = document.getElementById("ambience-audio");
   const ambienceCheckbox = document.getElementById("ambience-checkbox");
 
+  // Remove both existing canvas.addEventListener("mousedown"...) handlers
+  // Replace with these:
 
+  let screen_size_ratio = 1; // Global variable for scaling
 
+  // Unified mouse/touch coordinate handler
+  function getScaledCoordinates(e) {
+    const rect = canvas.getBoundingClientRect();
+    let clientX, clientY;
 
+    if (e.touches && e.touches.length > 0) {
+      clientX = e.touches[0].clientX;
+      clientY = e.touches[0].clientY;
+    } else {
+      clientX = e.clientX;
+      clientY = e.clientY;
+    }
 
-// Remove both existing canvas.addEventListener("mousedown"...) handlers
-// Replace with these:
+    // Get relative position within the canvas display area
+    const relativeX = clientX - rect.left;
+    const relativeY = clientY - rect.top;
 
-let screen_size_ratio = 1; // Global variable for scaling
+    // Scale from display size to internal canvas size
+    const scaleX = canvas.width / rect.width; // 1000 / displayWidth
+    const scaleY = canvas.height / rect.height; // 1000 / displayHeight
 
-// Unified mouse/touch coordinate handler
-function getScaledCoordinates(e) {
-  const rect = canvas.getBoundingClientRect();
-  let clientX, clientY;
-  
-  if (e.touches && e.touches.length > 0) {
-    clientX = e.touches[0].clientX;
-    clientY = e.touches[0].clientY;
-  } else {
-    clientX = e.clientX;
-    clientY = e.clientY;
-  }
-  
-  // Get relative position within the canvas display area
-  const relativeX = clientX - rect.left;
-  const relativeY = clientY - rect.top;
-  
-  // Scale from display size to internal canvas size
-  const scaleX = canvas.width / rect.width;   // 1000 / displayWidth
-  const scaleY = canvas.height / rect.height; // 1000 / displayHeight
-  
-  // Convert to internal canvas coordinates
-  const canvasX = relativeX * scaleX;
-  const canvasY = relativeY * scaleY;
-  
-  // Convert to grid coordinates
-  const gridX = Math.floor(canvasX / CELL_SIZE);
-  const gridY = Math.floor(canvasY / CELL_SIZE);
-  
-  console.log('Display size:', rect.width, rect.height);
-  console.log('Canvas size:', canvas.width, canvas.height);
-  console.log('Raw touch:', clientX, clientY);
-  console.log('Relative:', relativeX, relativeY);
-  console.log('Scale factors:', scaleX, scaleY);
-  console.log('Canvas coords:', canvasX, canvasY);
-  console.log('Grid coords:', gridX, gridY);
-  console.log('---');
-  
-  return { x: gridX, y: gridY };
-}
+    // Convert to internal canvas coordinates
+    const canvasX = relativeX * scaleX;
+    const canvasY = relativeY * scaleY;
 
-// Mouse handler
-canvas.addEventListener("mousedown", (e) => {
-  const coords = getScaledCoordinates(e);
-  
-  // Seed the clicked cell
-  worker.postMessage({ type: "seed", x: coords.x, y: coords.y });
+    // Convert to grid coordinates
+    const gridX = Math.floor(canvasX / CELL_SIZE);
+    const gridY = Math.floor(canvasY / CELL_SIZE);
 
-  if (!hasStarted) {
-    hasStarted = true;
-    running = true;
-    animate();
-    return;
+    return { x: gridX, y: gridY };
   }
 
-  if (!running) {
-    canvas.classList.add("seed-denied");
-    setTimeout(() => canvas.classList.remove("seed-denied"), 500);
-  }
-});
+  // Mouse handler
+  canvas.addEventListener("mousedown", (e) => {
+    const coords = getScaledCoordinates(e);
 
-// Touch handler
-canvas.addEventListener("touchstart", (e) => {
-  e.preventDefault(); // Prevent scrolling
-  const coords = getScaledCoordinates(e);
-  
-  // Seed the touched cell
-  worker.postMessage({ type: "seed", x: coords.x, y: coords.y });
+    // Seed the clicked cell
+    worker.postMessage({ type: "seed", x: coords.x, y: coords.y });
 
-  if (!hasStarted) {
-    hasStarted = true;
-    running = true;
-    animate();
-  }
-});
+    if (!hasStarted) {
+      hasStarted = true;
+      running = true;
+      animate();
+      return;
+    }
 
+    if (!running) {
+      canvas.classList.add("seed-denied");
+      setTimeout(() => canvas.classList.remove("seed-denied"), 500);
+    }
+  });
 
+  // Touch handler
+  canvas.addEventListener("touchstart", (e) => {
+    e.preventDefault(); // Prevent scrolling
+    const coords = getScaledCoordinates(e);
 
+    // Seed the touched cell
+    worker.postMessage({ type: "seed", x: coords.x, y: coords.y });
 
-
-
-
-
+    if (!hasStarted) {
+      hasStarted = true;
+      running = true;
+      animate();
+    }
+  });
 
   //AMBIENCE TOGGLE HANDLER
   ambienceCheckbox.addEventListener("click", () => {
@@ -208,9 +187,13 @@ canvas.addEventListener("touchstart", (e) => {
       if (reply && reply.trim()) {
         // For endless log, append directly:
         thoughtLog.innerText += `\n\n[Tick ${stats.tick}] ${reply.trim()}`;
-        
+
         // For the chat box, keep the typewriter effect:
-        typeTextToElement(document.getElementById("gpt-output"), reply.trim(), 25);
+        typeTextToElement(
+          document.getElementById("gpt-output"),
+          reply.trim(),
+          25
+        );
       }
 
       return reply?.toLowerCase().trim();
@@ -220,25 +203,26 @@ canvas.addEventListener("touchstart", (e) => {
     }
   }
 
-
-
-// HANDLE THE TYPEWRITER EFFECT
+  // HANDLE THE TYPEWRITER EFFECT
   function typeTextToElement(element, text, speed = 25) {
     // Cancel any previous animation
     if (element.typewriterTimeout) {
-        clearTimeout(element.typewriterTimeout);
-        element.typewriterTimeout = null;
+      clearTimeout(element.typewriterTimeout);
+      element.typewriterTimeout = null;
     }
     element.innerText = ""; // Clear the old text
     let i = 0;
     function type() {
-        if (i < text.length) {
-            element.innerText += text.charAt(i);
-            i++;
-            element.typewriterTimeout = setTimeout(type, speed + Math.random() * 10);
-        } else {
-            element.typewriterTimeout = null; // Clean up
-        }
+      if (i < text.length) {
+        element.innerText += text.charAt(i);
+        i++;
+        element.typewriterTimeout = setTimeout(
+          type,
+          speed + Math.random() * 10
+        );
+      } else {
+        element.typewriterTimeout = null; // Clean up
+      }
     }
     type();
   }
@@ -313,10 +297,12 @@ canvas.addEventListener("touchstart", (e) => {
         reproductionRate: parseFloat(reproductionRateSlider.value),
       },
     });
-  } 
+  }
   //DEFINITIONS FOR SLIDERS AND BUTTONS
   const agentCountSlider = document.getElementById("agent-count-slider");
-  const reproductionRateSlider = document.getElementById("reproduction-rate-slider");
+  const reproductionRateSlider = document.getElementById(
+    "reproduction-rate-slider"
+  );
   const speedSlider = document.getElementById("speed-slider");
   const speedValue = document.getElementById("speed-value");
   const pauseBtn = document.getElementById("pause-btn");
@@ -325,18 +311,14 @@ canvas.addEventListener("touchstart", (e) => {
 
   initWorker();
 
-
-   //MUTATION TOGGLE
+  //MUTATION TOGGLE
   mutationToggle.addEventListener("change", () => {
     const chance = mutationToggle.checked ? MUTATION_CHANCE : 0;
-    const mutationCheckbox = document.getElementById("mutation-checkbox")
+    const mutationCheckbox = document.getElementById("mutation-checkbox");
     if (worker) {
       worker.postMessage({ type: "setMutation", mutationChance: chance });
     }
   });
-
- 
-
 
   //AGENT COUNT SLIDER
   agentCountSlider.addEventListener("input", () => {
@@ -348,7 +330,6 @@ canvas.addEventListener("touchstart", (e) => {
     }
   });
 
-
   //REPRODUCTION SLIDER
   reproductionRateSlider.addEventListener("input", () => {
     if (worker) {
@@ -358,7 +339,6 @@ canvas.addEventListener("touchstart", (e) => {
       });
     }
   });
-
 
   //SPEED SLIDER
   speedSlider.max = "5";
@@ -377,7 +357,6 @@ canvas.addEventListener("touchstart", (e) => {
     if (running) animate();
   });
 
-
   //RESET BUTTON
   if (!resetBtn) {
     console.warn("Reset button not found!");
@@ -393,7 +372,6 @@ canvas.addEventListener("touchstart", (e) => {
       "Click the canvas to begin!";
     pauseBtn.textContent = "Resume";
   });
-
 
   //UPDATES CANVAS BORDER EMOTION
   function updateCanvasBorderEmotion(dominant) {
@@ -423,7 +401,6 @@ canvas.addEventListener("touchstart", (e) => {
     }
   }
 
-
   //UPDATES HUD INSIDE OF THE UI
   function updateHUD(stats) {
     const alive = stats.alive;
@@ -433,7 +410,7 @@ canvas.addEventListener("touchstart", (e) => {
     document.getElementById("tick-metric").textContent = `Tick: ${stats.tick}`;
     document.getElementById(
       "dominant-metric"
-    ).textContent = `Dominant: ${stats.dominant}`;
+    ).textContent = `Live Dominant Emotion: ${stats.dominant}`;
     document.getElementById(
       "diversity-metric"
     ).textContent = `Diversity: ${stats.diversity}`;
@@ -451,8 +428,6 @@ canvas.addEventListener("touchstart", (e) => {
     worker.postMessage({ type: "update", updates: UPDATES_PER_FRAME });
   }
 
-
-
   const message = input.value;
 
   if (message.trim() !== "") {
@@ -462,7 +437,6 @@ canvas.addEventListener("touchstart", (e) => {
     const userInput = input.value.trim();
     if (!userInput) return;
     input.value = "";
-
 
     try {
       const reply = await sendPrompt(userInput);
@@ -485,9 +459,10 @@ canvas.addEventListener("touchstart", (e) => {
           "Dorian is contemplating your input.",
           "Stand by for a response.",
           "Message relayed. Awaiting digital thoughts.",
-          "Your prompt is under consideration."
+          "Your prompt is under consideration.",
         ];
-        output.innerText = messages[Math.floor(Math.random() * messages.length)];
+        output.innerText =
+          messages[Math.floor(Math.random() * messages.length)];
       }
     } catch (err) {
       output.innerText = "Error communicating with Dorian.";
