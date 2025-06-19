@@ -94,8 +94,8 @@ body::-webkit-scrollbar {
 .heading-title {
   letter-spacing: -0.4rem;
   font-size: 6rem;
-  font-weight: 400;
-  font-family: "orbitron";
+  font-weight: 600;
+  font-family: "Goldman", sans-serif;
   animation-name: livingGlow, slideFadeIn;
   font-weight: 1000;
   text-decoration: none;
@@ -516,12 +516,12 @@ canvas#dorian-canvas {
 }
 
   .header {
-    margin: 4rem 0.5rem 8rem 0.5rem;
+    margin: 4rem 0.5rem 2rem 0.5rem;
   }
   .heading-title {
-    font-size: 5rem;
+    font-size: 4rem;
     font-weight: 400;
-    letter-spacing: -0.4rem;
+    letter-spacing: -0.3rem;
     animation-name: livingGlow;
     animation-iteration-count: infinite;
     transition: 2s ease-in-out;
@@ -551,7 +551,12 @@ canvas#dorian-canvas {
   }
 
   .heading-subtitle {
-    margin-bottom: 120px;
+    margin-bottom: 90px;
+    font-size: 0.8rem;
+    font-family: "Bruno Ace SC", sans-serif;
+    text-shadow: rgba(255, 255, 255, 0.319) 0 -8px 3px,
+      rgba(255, 255, 255, 0.457) 0 0 3px;
+      border-bottom: none;
   }
 
   .heading-title:hover {
@@ -608,6 +613,7 @@ canvas#dorian-canvas {
   flex-wrap: nowrap;
   justify-content: space-between;
   box-sizing: border-box;
+  border-radius: 15px;
   background: #00000024;
   padding-bottom: 45px;
   margin-bottom: 1.8rem;
@@ -629,11 +635,11 @@ canvas#dorian-canvas {
 }
 .btn-go-right-column {
   font-size: 1.3rem;
-  padding: 0.8rem 1.9rem;
+  padding: 0.8rem 1.67rem;
   border: none;
-  border-radius: 10px;
+  border-radius: 13px;
   background:
-    linear-gradient(135deg, rgb(187, 187, 187) 0%, rgb(159, 181, 255) 100%),
+    linear-gradient(135deg, rgb(187, 187, 187) 0%, rgb(179, 197, 255) 100%),
     repeating-linear-gradient(135deg,
       rgb(0, 17, 116) 0px,
       rgba(168, 206, 255, 0.476) 8px,
@@ -680,9 +686,12 @@ canvas#dorian-canvas {
   max-width: 100%;
 }
 .navigation-button {
-  font-size: 1.3rem;
+  font-size: 1rem;
   font-family: "rajdhani";
   margin: 1rem;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
   padding: 0.4rem 0.5rem;
 }
 .center-area-wrapper {
