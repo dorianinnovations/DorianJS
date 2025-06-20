@@ -1,4 +1,5 @@
 import { sendPrompt } from "./gptIntegration.js";
+import { EMOTIONS } from "./emotions.js";
 
 //HANDLE UI UPDATES (UI, CHAT, LOGS)
 //MANAGE TYPEWRITER EFFECT
@@ -20,6 +21,8 @@ window.addEventListener("DOMContentLoaded", () => {
   let lastPromptTime = 0;
   const cooldownDuration = 5000; // 5 seconds
 
+  let selectedEmotion = 0; // Default to Joy (emotion ID 0)
+  let paintingMode = false; // You have this hardcoded as true on line 100
 
   const canvas = document.getElementById("dorian-canvas");
 
@@ -58,8 +61,6 @@ window.addEventListener("DOMContentLoaded", () => {
   const MUTATION_CHANCE = 0.002;
   const BIRTH_DELAY = 5; // minimum dead ticks before a cell can grow again
   let UPDATES_PER_FRAME = 25;
-
-
 
   const input = document.getElementById("gpt-input");
   const button = document.querySelector(".btn-go-right-column");
@@ -106,12 +107,158 @@ window.addEventListener("DOMContentLoaded", () => {
     return { x: gridX, y: gridY };
   }
 
-  // Mouse handler
+  // Create emotion palette (add this after your canvas setup)
+  function createEmotionPalette() {
+    const leftColumn = document.querySelector(".column-left-column");
+
+    const paletteHTML = `
+      <div class="ui-card emotion-palette-card">
+        <h3 class="emotion-palette-title">Emotional Painter</h3>
+        <div class="emotion-palette">
+          <div class="emotion-buttons" id="emotion-buttons">
+            ${Object.entries(EMOTIONS)
+              .slice(0, 8)
+              .map(
+                ([id, emotion]) => `
+              <button class="emotion-btn ${id == 0 ? "selected" : ""}" 
+                      data-emotion="${id}" 
+                      style="background-color: rgb(${emotion.color.join(",")})">
+                ${emotion.name}
+              </button>
+            `
+              )
+              .join("")}
+          </div>
+          <div class="painting-controls">
+            <button id="toggle-paint-mode" class="paint-mode-btn">
+              <span class="material-symbols-outlined">palette</span>
+              Enable Painting
+            </button>
+          </div>
+        </div>
+      </div>
+    `;
+
+    leftColumn.insertAdjacentHTML("beforeend", paletteHTML);
+  }
+
+  // Initialize emotion palette
+  createEmotionPalette();
+// Add paint mode toggle after your emotion selection listener (around line 170)
+document.addEventListener('click', (e) => {
+  if (e.target.id === 'toggle-paint-mode' || e.target.closest('#toggle-paint-mode')) {
+    paintingMode = !paintingMode;
+    const btn = document.getElementById('toggle-paint-mode');
+    
+    if (paintingMode) {
+      btn.innerHTML = '<span class="material-symbols-outlined">brush</span> Painting Mode ON';
+      btn.classList.add('active');
+      canvas.style.cursor = 'crosshair';
+      console.log('🎨 Painting mode ENABLED');
+    } else {
+      btn.innerHTML = '<span class="material-symbols-outlined">palette</span> Enable Painting';
+      btn.classList.remove('active');
+      canvas.style.cursor = 'default';
+      console.log('🎨 Painting mode DISABLED');
+    }
+  }
+});
+  // Add event listeners for emotion selection
+  document.addEventListener("click", (e) => {
+    if (e.target.classList.contains("emotion-btn")) {
+      // Remove previous selection
+      document
+        .querySelectorAll(".emotion-btn")
+        .forEach((btn) => btn.classList.remove("selected"));
+
+      // Select new emotion
+      e.target.classList.add("selected");
+      selectedEmotion = parseInt(e.target.dataset.emotion);
+      console.log(
+        "Selected emotion:",
+        selectedEmotion,
+        EMOTIONS[selectedEmotion].name
+      );
+    }
+  });
+
+
+  
+
+  // Replace your existing touch handler (around line 190)
+  canvas.addEventListener("touchstart", (e) => {
+    e.preventDefault(); // Prevent scrolling
+    const coords = getScaledCoordinates(e);
+
+    if (!worker) {
+      console.warn("Worker not initialized yet.");
+      return;
+    }
+  
+    if (paintingMode) {
+      // Paint emotion on touch
+      worker.postMessage({ 
+        type: "paintEmotion", 
+        x: coords.x, 
+        y: coords.y, 
+        emotion: selectedEmotion,
+        intensity: 0.8 
+      });
+      console.log(`Touch painted emotion ${selectedEmotion} at ${coords.x}, ${coords.y}`);
+    } else {
+      // Seed the touched cell
+      worker.postMessage({ type: "seed", x: coords.x, y: coords.y });
+      console.log(`Touch seeded at ${coords.x}, ${coords.y}`);
+    }
+  
+    if (!hasStarted) {
+      hasStarted = true;
+      running = true;
+      animate();
+    }
+  });
+
+  // Add paint drag functionality
+  let isDragging = false;
+
+  canvas.addEventListener("mousemove", (e) => {
+    if (isDragging && paintingMode) {
+      const coords = getScaledCoordinates(e);
+      worker.postMessage({
+        type: "paintEmotion",
+        x: coords.x,
+        y: coords.y,
+        emotion: selectedEmotion,
+        intensity: 0.6, // Slightly lower for drag painting
+      });
+    }
+  });
+
+  canvas.addEventListener("mouseup", () => {
+    isDragging = false;
+  });
+
+  // Update your existing mousedown handler to set isDragging
   canvas.addEventListener("mousedown", (e) => {
     const coords = getScaledCoordinates(e);
 
-    // Seed the clicked cell
-    worker.postMessage({ type: "seed", x: coords.x, y: coords.y });
+    if (paintingMode) {
+      isDragging = true; // Add this line
+      worker.postMessage({
+        type: "paintEmotion",
+        x: coords.x,
+        y: coords.y,
+        emotion: selectedEmotion,
+        intensity: 0.8,
+      });
+    } else {
+      worker.postMessage({ type: "seed", x: coords.x, y: coords.y });
+    }
+
+    console.log("Mouse down event detected");
+    console.log("Mouse clicked at:", coords);
+    console.log("Painting mode:", paintingMode);
+    console.log("Selected emotion:", selectedEmotion);
 
     if (!hasStarted) {
       hasStarted = true;
@@ -123,21 +270,6 @@ window.addEventListener("DOMContentLoaded", () => {
     if (!running) {
       canvas.classList.add("seed-denied");
       setTimeout(() => canvas.classList.remove("seed-denied"), 500);
-    }
-  });
-
-  // Touch handler
-  canvas.addEventListener("touchstart", (e) => {
-    e.preventDefault(); // Prevent scrolling
-    const coords = getScaledCoordinates(e);
-
-    // Seed the touched cell
-    worker.postMessage({ type: "seed", x: coords.x, y: coords.y });
-
-    if (!hasStarted) {
-      hasStarted = true;
-      running = true;
-      animate();
     }
   });
 
@@ -163,7 +295,7 @@ window.addEventListener("DOMContentLoaded", () => {
 
   async function sendStatsToClaude(stats) {
     const prompt = `
-          You are Dorian, a sentient artificial lifeform emerging from a digital ecosystem.
+          
 
           Here are the current stats of your emotional world:
           - Tick: ${stats.tick}
@@ -303,57 +435,84 @@ window.addEventListener("DOMContentLoaded", () => {
   const reproductionRateSlider = document.getElementById(
     "reproduction-rate-slider"
   );
-  
+
   const speedSlider = document.getElementById("speed-slider");
   const speedValue = document.getElementById("speed-value");
   const pauseBtn = document.getElementById("pause-btn");
   const mutationToggle = document.getElementById("mutation-checkbox");
   const resetBtn = document.getElementById("reset-btn");
-  
-// Action menu button and toggle
-  document.getElementById('action-menu-btn-icon').addEventListener('click', () => {
-  const menu = document.getElementById('action-menu-btns');
-  menu.classList.toggle('active');
-});
-// Action bar visibility toggle on scroll
-    const actionBar = document.querySelector('.action-bar');
-    let lastScrollY = window.scrollY;
-window.addEventListener('scroll', () => {
-  const currentY = window.scrollY;
-  // Fade out action menu when at top (nav visible)
-  if (currentY <= 50) {
-    actionBar.classList.add('hidden');
-  } else {
-    actionBar.classList.remove('hidden');
-  }
-  lastScrollY = currentY;
-});
 
-function showTypingLoader() {
-  const output = document.getElementById("gpt-output");
-  output.innerHTML = `
+  // Action menu button and toggle
+  document
+    .getElementById("action-menu-btn-icon")
+    .addEventListener("click", () => {
+      const menu = document.getElementById("action-menu-btns");
+      menu.classList.toggle("active");
+    });
+  // Action bar visibility toggle on scroll
+  const actionBar = document.querySelector(".action-bar");
+  let lastScrollY = window.scrollY;
+  window.addEventListener("scroll", () => {
+    const currentY = window.scrollY;
+    // Fade out action menu when at top (nav visible)
+    if (currentY <= 50) {
+      actionBar.classList.add("hidden");
+    } else {
+      actionBar.classList.remove("hidden");
+    }
+    lastScrollY = currentY;
+  });
+
+  function showTypingLoader() {
+    const output = document.getElementById("gpt-output");
+    output.innerHTML = `
     <span class="typing-loader">
       <span></span><span></span><span></span>
     </span>
   `;
-}
+  }
 
-function hideTypingLoader() {
-  const output = document.getElementById("gpt-output");
-  output.innerHTML = "";
-}
+    // Add this function after your updateHUD function (around line 600)
+  function updateEmotionalDashboard(stats) {
+    if (!stats.emotions || stats.emotions.length === 0) return;
+    
+    const dominantEmotion = stats.emotions.reduce((a, b) => a.intensity > b.intensity ? a : b);
+    document.querySelector('#dominant-emotion').textContent = dominantEmotion.name || 'Neutral';
+    
+    // Create/update emotion bars
+    const barsContainer = document.getElementById('emotion-bars');
+    barsContainer.innerHTML = '';
+    
+    stats.emotions.forEach(emotion => {
+      const barHTML = `
+        <div class="emotion-bar">
+          <div class="emotion-bar-label">${emotion.name}</div>
+          <div class="emotion-bar-fill">
+            <div class="emotion-bar-progress" 
+                 style="width: ${emotion.percentage}%; 
+                        background-color: rgb(${emotion.color.join(',')});">
+            </div>
+          </div>
+          <div class="emotion-bar-percentage">${emotion.percentage}%</div>
+        </div>
+      `;
+      barsContainer.insertAdjacentHTML('beforeend', barHTML);
+    });
+  }
 
+  function hideTypingLoader() {
+    const output = document.getElementById("gpt-output");
+    output.innerHTML = "";
+  }
 
-function showGPTResponse(text) {
-  const output = document.getElementById("gpt-output");
-  output.textContent = text;
-}
+  function showGPTResponse(text) {
+    const output = document.getElementById("gpt-output");
+    output.textContent = text;
+  }
 
-  
-  document.getElementById("reveal-thoughts").addEventListener("click",  () => {
+  document.getElementById("reveal-thoughts").addEventListener("click", () => {
     const logSection = document.getElementById("thought-log-section");
     logSection.scrollIntoView({ behavior: "smooth" });
-    
   });
 
   initWorker();
@@ -476,6 +635,8 @@ function showGPTResponse(text) {
     ).textContent = `Entropy: ${stats.entropy}`;
     document.getElementById("alive-metric").textContent = `Alive: ${alive}`;
     document.getElementById("growth-metric").textContent = `Growth: ${growth}`;
+      updateEmotionalDashboard(stats);
+
     updateCanvasBorderEmotion(stats.dominant);
   }
 
@@ -484,74 +645,69 @@ function showGPTResponse(text) {
     if (!running) return;
     worker.postMessage({ type: "update", updates: UPDATES_PER_FRAME });
   }
-  
+
   const message = input.value;
 
   if (message.trim() !== "") {
     console.log("Message sent:", message);
   }
 
+  button.addEventListener("click", async () => {
+    const userInput = input.value.trim();
+    if (!userInput) {
+      output.innerText = "⚠️ Please enter a message.";
+      return;
+    }
 
+    input.value = "";
 
+    const now = Date.now();
+    if (now - lastPromptTime < cooldownDuration) {
+      output.innerText = "⏳ Please wait before sending another message.";
+      return;
+    }
+    lastPromptTime = now;
 
-
- button.addEventListener("click", async () => {
-  const userInput = input.value.trim();
-  if (!userInput) {
-    output.innerText = "⚠️ Please enter a message.";
-    return;
-  }
-
-  input.value = "";
-
-  const now = Date.now();
-  if (now - lastPromptTime < cooldownDuration) {
-    output.innerText = "⏳ Please wait before sending another message.";
-    return;
-  }
-  lastPromptTime = now;
-
-  // ✅ Show loader bubbles
-  output.innerHTML = `
+    // ✅ Show loader bubbles
+    output.innerHTML = `
     <span class="typing-loader">
       <span></span><span></span><span></span>
     </span>
   `;
 
-  try {
-    const reply = await sendPrompt(userInput);
+    try {
+      const reply = await sendPrompt(userInput);
 
-    if (reply && reply.trim()) {
-      // ✅ Replace loader with typed response
-      typeTextToElement(output, reply.trim(), 25);
+      if (reply && reply.trim()) {
+        // ✅ Replace loader with typed response
+        typeTextToElement(output, reply.trim(), 25);
 
-      // ✅ Add to log
-      const log = document.getElementById("thought-log-section");
-      log.innerText += `\n\n[User ->] ${userInput}\n[Dorian ->] ${reply.trim()}`;
-    } else {
-      // ❌ If reply is empty, replace loader with fallback message
-      const messages = [
-        "Signal transmission received. Please wait.",
-        "Message delivered. Awaiting response.",
-        "Your words are echoing in the digital ether.",
-        "Processing your input. Stand by.",
-        "Your message is being analyzed. Please hold.",
-        "Awaiting response from Dorian. Please be patient.",
-        "Dorian is contemplating your message. Please hold.",
-        "Your input is being processed. Please wait.",
-        "Dorian is reflecting on your words. Please hold.",
-        "Your message is being decoded. Please wait.",
-        "Dorian is pondering your input. Please hold.",
-        "Your words are being processed. Please wait."
-      ];
-      output.innerText = messages[Math.floor(Math.random() * messages.length)];
+        // ✅ Add to log
+        const log = document.getElementById("thought-log-section");
+        log.innerText += `\n\n[User ->] ${userInput}\n[Dorian ->] ${reply.trim()}`;
+      } else {
+        // ❌ If reply is empty, replace loader with fallback message
+        const messages = [
+          "Signal transmission received. Please wait.",
+          "Message delivered. Awaiting response.",
+          "Your words are echoing in the digital ether.",
+          "Processing your input. Stand by.",
+          "Your message is being analyzed. Please hold.",
+          "Awaiting response from Dorian. Please be patient.",
+          "Dorian is contemplating your message. Please hold.",
+          "Your input is being processed. Please wait.",
+          "Dorian is reflecting on your words. Please hold.",
+          "Your message is being decoded. Please wait.",
+          "Dorian is pondering your input. Please hold.",
+          "Your words are being processed. Please wait.",
+        ];
+        output.innerText =
+          messages[Math.floor(Math.random() * messages.length)];
+      }
+    } catch (err) {
+      // ❌ On error, replace loader with error message
+      output.innerText = "⚠️ Error communicating with Dorian.";
+      console.error(err);
     }
-  } catch (err) {
-    // ❌ On error, replace loader with error message
-    output.innerText = "⚠️ Error communicating with Dorian.";
-    console.error(err);
-  }
-});
-
-
+  });
 });

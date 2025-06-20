@@ -278,3 +278,41 @@ export function shouldTransformEmotion(emotionId, context, intensity) {
   
   return null;
 }
+
+export function createEmotionalHeatmap(emotionData, width, height) {
+  const canvas = document.createElement('canvas');
+  canvas.width = width;
+  canvas.height = height;
+  const ctx = canvas.getContext('2d');
+  
+  // Render emotional intensity as color overlay
+  emotionData.forEach((emotion, index) => {
+    const x = index % width;
+    const y = Math.floor(index / width);
+    const color = EMOTIONS[emotion.type].color;
+    const alpha = emotion.intensity;
+    
+    ctx.fillStyle = `rgba(${color[0]}, ${color[1]}, ${color[2]}, ${alpha * 0.3})`;
+    ctx.fillRect(x, y, 1, 1);
+  });
+  
+  return canvas;
+}
+
+export function getEmotionalWeather(dominantEmotion) {
+  const emotion = EMOTIONS[dominantEmotion];
+  if (!emotion) return null;
+  
+  // Find terrain that supports this emotion
+  for (const [zone, data] of Object.entries(terrainZones)) {
+    if (data.supports.includes(emotion.name)) {
+      return {
+        zone,
+        weather: data.weather_effects[Math.floor(Math.random() * data.weather_effects.length)],
+        intensity: emotion.intensity
+      };
+    }
+  }
+  
+  return null;
+}

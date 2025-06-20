@@ -31,6 +31,25 @@ function startAnimationLoop() {
       CANVAS_HEIGHT
     );
     const stats = universe.getStats();
+
+    // Add emotion breakdown
+    const emotionBreakdown = Object.entries(stats.emotionCounts || {})
+      .map(([id, count]) => {
+        const emotion = EMOTIONS[parseInt(id)];
+        const percentage = Math.round((count / stats.alive) * 100) || 0;
+        return {
+          id: parseInt(id),
+          name: emotion?.name || "Unknown",
+          color: emotion?.color || [128, 128, 128],
+          count,
+          percentage,
+          intensity: percentage / 100,
+        };
+      })
+      .sort((a, b) => b.count - a.count);
+
+    stats.emotions = emotionBreakdown;
+
     self.postMessage({ type: "frame", imageData, stats }, [
       imageData.data.buffer,
     ]);
@@ -90,6 +109,25 @@ self.onmessage = (e) => {
           CANVAS_HEIGHT
         );
         const stats = universe.getStats();
+
+        // Add emotion breakdown
+        const emotionBreakdown = Object.entries(stats.emotionCounts || {})
+          .map(([id, count]) => {
+            const emotion = EMOTIONS[parseInt(id)];
+            const percentage = Math.round((count / stats.alive) * 100) || 0;
+            return {
+              id: parseInt(id),
+              name: emotion?.name || "Unknown",
+              color: emotion?.color || [128, 128, 128],
+              count,
+              percentage,
+              intensity: percentage / 100,
+            };
+          })
+          .sort((a, b) => b.count - a.count);
+
+        stats.emotions = emotionBreakdown;
+
         self.postMessage({ type: "frame", imageData, stats }, [
           imageData.data.buffer,
         ]);
@@ -110,5 +148,6 @@ self.onmessage = (e) => {
         universe.setReproductionRate(rate);
       }
       break;
+
   }
 };

@@ -1001,12 +1001,28 @@ canvas#dorian-canvas {
     border: 1px solid rgba(255, 255, 255, 0.2);
     padding: 1rem;
     width: 100%;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
     max-width: 100%;
     box-sizing: border-box;
     border-radius: 1rem;
   }
   .column-right-column-lower {
-    margin-bottom: 200px;
+    margin-bottom: 50px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 1rem;
+    padding: 1rem;
+    width: 100%;
+    max-width: 100%;
+    box-sizing: border-box;
+    border-radius: 1rem;
+    background: rgba(0, 0, 0, 0.5);
+    box-shadow: 0 0 16px rgba(255, 255, 255, 0.05), 0 -8px 18px #ffffff41;
+    border: 1px solid rgba(255, 255, 255, 0.37);
   }
 
   .canvas-controls-labels-sliders {
@@ -1511,4 +1527,293 @@ canvas#dorian-canvas {
   .column-left-column {
     flex-shrink: 1;
   }
+}
+
+/* Add to your existing style.css */
+/* Emotional UI Components */
+.emotion-palette-card {
+  background: rgba(0, 0, 0, 0.9);
+  backdrop-filter: blur(15px);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  margin: 1rem 0;
+}
+
+.emotion-palette-title,
+.dashboard-title {
+  font-family: "Rajdhani", sans-serif;
+  font-size: 1.5rem;
+  text-align: center;
+  margin-bottom: 1rem;
+  color: #fff;
+  text-shadow: 0 0 10px rgba(255, 255, 255, 0.5);
+}
+
+.emotion-buttons {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 0.5rem;
+  margin: 1rem 0;
+}
+
+.emotion-btn {
+  padding: 0.7rem 0.5rem;
+  border: none;
+  border-radius: 8px;
+  color: white;
+  font-family: "Rajdhani", sans-serif;
+  font-weight: bold;
+  font-size: 0.9rem;
+  text-shadow: 1px 1px 2px rgba(0,0,0,0.8);
+  cursor: pointer;
+  transition: all 0.2s ease;
+  box-shadow: 0 2px 5px rgba(0,0,0,0.3);
+}
+
+.emotion-btn:hover {
+  transform: scale(1.05);
+  box-shadow: 0 4px 10px rgba(0,0,0,0.4);
+}
+
+.emotion-btn.selected {
+  border: 2px solid white;
+  box-shadow: 0 0 15px rgba(255,255,255,0.6);
+  transform: scale(1.08);
+}
+
+.painting-controls {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  align-items: center;
+}
+
+.paint-mode-btn {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.8rem 1.5rem;
+  background: linear-gradient(45deg, #333, #555);
+  color: white;
+  border: none;
+  border-radius: 10px;
+  font-family: "Rajdhani", sans-serif;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  box-shadow: 0 2px 10px rgba(0,0,0,0.3);
+}
+
+.paint-mode-btn.active {
+  background: linear-gradient(45deg, #007bff, #0056b3);
+  box-shadow: 0 0 20px rgba(0, 123, 255, 0.5);
+}
+
+.intensity-control {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-family: "Rajdhani", sans-serif;
+  color: white;
+}
+
+/* Emotional Dashboard */
+.emotional-dashboard {
+  background: rgba(0, 0, 0, 0.9);
+  backdrop-filter: blur(15px);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+.dominant-emotion-display {
+  text-align: center;
+  margin: 1rem 0;
+  padding: 1rem;
+  background: rgba(255, 255, 255, 0.1);
+  border-radius: 10px;
+}
+
+.dominant-emotion {
+  font-family: "Orbitron", sans-serif;
+  font-size: 1.5rem;
+  font-weight: bold;
+  text-transform: uppercase;
+  letter-spacing: 0.1rem;
+  color: #fff;
+  text-shadow: 0 0 10px rgba(255, 255, 255, 0.7);
+}
+
+.emotion-bars {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.emotion-bar {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-family: "Rajdhani", sans-serif;
+  font-size: 0.9rem;
+  color: white;
+}
+
+.emotion-bar-label {
+  min-width: 80px;
+  text-align: right;
+}
+
+.emotion-bar-fill {
+  flex: 1;
+  height: 20px;
+  background: rgba(255, 255, 255, 0.1);
+  border-radius: 10px;
+  overflow: hidden;
+  position: relative;
+}
+
+.emotion-bar-progress {
+  height: 100%;
+  border-radius: 10px;
+  transition: width 0.3s ease;
+  position: relative;
+}
+
+.emotion-bar-percentage {
+  min-width: 40px;
+  text-align: left;
+  font-weight: bold;
+}
+
+/* Mobile Enhancements */
+@media (max-width: 1024px) {
+  .emotion-buttons {
+    grid-template-columns: repeat(3, 1fr);
+    gap: 0.8rem;
+  }
+  
+  .emotion-btn {
+    padding: 1rem 0.5rem;
+    font-size: 1rem;
+    touch-action: manipulation;
+    -webkit-touch-callout: none;
+    -webkit-user-select: none;
+    user-select: none;
+  }
+  
+  .painting-controls {
+    padding: 1rem;
+  }
+  
+  .paint-mode-btn {
+    padding: 1.2rem 2rem;
+    font-size: 1.1rem;
+    min-height: 50px; /* Better touch target */
+  }
+  
+  .intensity-control input[type="range"] {
+    width: 150px;
+    height: 40px; /* Larger touch target */
+  }
+  
+  .emotion-bar {
+    font-size: 1rem;
+    min-height: 30px;
+  }
+  
+  .emotion-bar-fill {
+    height: 25px;
+  }
+  
+  /* Touch-friendly spacing */
+  .emotion-palette-card,
+  .emotional-dashboard {
+    padding: 1.5rem;
+    margin: 1.5rem 0;
+  }
+  
+  /* Prevent accidental zoom */
+  .emotion-btn,
+  .paint-mode-btn,
+  #emotion-intensity {
+    font-size: 16px; /* Prevents iOS zoom */
+  }
+}
+
+/* Visual Feedback for Painting Mode */
+.painting-mode-active #dorian-canvas {
+  cursor: crosshair;
+  box-shadow: 0 0 20px rgba(255, 255, 255, 0.7);
+  border: 2px solid rgba(255, 255, 255, 0.8);
+}
+
+.painting-mode-active .emotion-btn.selected {
+  animation: selectedPulse 1s infinite alternate;
+}
+
+@keyframes selectedPulse {
+  0% { box-shadow: 0 0 15px rgba(255,255,255,0.6); }
+  100% { box-shadow: 0 0 25px rgba(255,255,255,0.9); }
+}
+
+/* Weather Effect Classes */
+.weather-storm canvas {
+  animation: flicker 0.5s infinite alternate;
+}
+
+.weather-eruption canvas {
+  animation: shake 0.3s infinite;
+}
+.emotion-palette {
+  background: rgba(0, 0, 0, 0.8);
+  backdrop-filter: blur(10px);
+  border-radius: 15px;
+  padding: 1rem;
+  margin: 1rem 0;
+  color: white;
+}
+
+.emotion-buttons {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(80px, 1fr));
+  gap: 0.5rem;
+  margin: 1rem 0;
+}
+
+.emotion-btn {
+  padding: 0.5rem;
+  border: none;
+  border-radius: 8px;
+  color: white;
+  font-weight: bold;
+  text-shadow: 1px 1px 2px rgba(0,0,0,0.8);
+  cursor: pointer;
+  transition: transform 0.2s ease;
+}
+
+.emotion-btn:hover {
+  transform: scale(1.05);
+}
+
+.emotion-btn.selected {
+  border: 2px solid white;
+  box-shadow: 0 0 10px rgba(255,255,255,0.5);
+}
+
+/* Weather effect overlays */
+.weather-storm { 
+  animation: flicker 0.5s infinite alternate; 
+}
+
+.weather-eruption { 
+  animation: shake 0.3s infinite; 
+}
+
+@keyframes flicker {
+  0% { opacity: 0.8; }
+  100% { opacity: 1; }
+}
+
+@keyframes shake {
+  0%, 100% { transform: translateX(0); }
+  25% { transform: translateX(-1px); }
+  75% { transform: translateX(1px); }
 }

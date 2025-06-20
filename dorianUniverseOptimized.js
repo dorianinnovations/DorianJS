@@ -291,4 +291,24 @@ for (const n of neighbors) {
   setMutationChance(chance) {
     this.mutationChance = chance;
   }
+
+  // Add this method to DorianUniverseOptimized class
+  setEmotionAt(x, y, emotionId, intensity = 0.8) {
+    if (x < 0 || x >= this.cols || y < 0 || y >= this.rows) return;
+    
+    const idx = this.index(x, y);
+    
+    // Paint the emotion
+    this.lifeForce[idx] = 0.7 + Math.random() * 0.3; // Give it life
+    this.emotion[idx] = emotionId;
+    this.intensity[idx] = intensity;
+    this.energy[idx] = 200 + Math.random() * 100; // Give it energy
+    this.age[idx] = 0;
+    this.groupId[idx] = this.nextGroupId++; // Create new group
+    
+    // Add to active set so it gets processed
+    this.active.add(idx);
+    
+    console.log(`✅ Painted emotion ${emotionId} (${EMOTION_ID_TO_NAME[emotionId]}) at ${x},${y}`);
+  }
 }
