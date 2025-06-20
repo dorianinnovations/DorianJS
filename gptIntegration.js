@@ -3,13 +3,24 @@
 
 //FRONTEND
 // This file handles the integration with the GPT API for sending prompts and receiving responses.
+
+let lastSystemPromptTime = 0;
+const systemCooldown = 10000; // e.g., 10 seconds between system-driven calls
+
 export async function sendUserPrompt(userInput){
   return await sendPrompt(userInput, false);
 }
   export async function sendAutoReflection(systemInput) {
-    return await sendPrompt(systemInput, true);
-
+  const now = Date.now();
+  if (now - lastSystemPromptTime < systemCooldown) {
+    console.log("🛑 Auto-reflection blocked (cooldown active).");
+    return;
   }
+
+  lastSystemPromptTime = now;
+  return await sendPrompt(systemInput, true);
+}
+
   console.log("🟢 LLM API ONLINE...");
 
 export async function sendPrompt(userInput) {
@@ -22,7 +33,7 @@ export async function sendPrompt(userInput) {
     growth: document.getElementById("growth-metric").textContent
   };
 
-  const fullPrompt = `Use the metrics to describe what’s happening in a space-themed simulation with emotional data. You are an AI alien named Dorian with a developing personality. Be concise, curious, and observant. Ask the user questions, respond based on their interest, and explain the simulation’s behavior.
+  const fullPrompt = `You exist within a dynamic system of metrics. Monitor their changes, interpret what they mean, and engage the user with brief, insightful observations. Ask relevant questions to refine your understanding. Stay responsive, concise, and aware of your role in this environment.
 
 
 Here are the current stats of your environment:

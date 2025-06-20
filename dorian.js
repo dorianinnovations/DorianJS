@@ -17,6 +17,9 @@ window.addEventListener("DOMContentLoaded", () => {
   let lastAlive = 0;
   let worker;
   let currentStats = null;
+  let lastPromptTime = 0;
+  const cooldownDuration = 5000; // 5 seconds
+
 
   const canvas = document.getElementById("dorian-canvas");
 
@@ -337,6 +340,9 @@ window.addEventListener("DOMContentLoaded", () => {
         type: "setReproductionRate",
         rate: parseFloat(reproductionRateSlider.value),
       });
+      console.log(
+        `Reproduction rate set to: ${parseFloat(reproductionRateSlider.value)}`
+      );
     }
   });
 
@@ -434,39 +440,37 @@ window.addEventListener("DOMContentLoaded", () => {
     console.log("Message sent:", message);
   }
   button.addEventListener("click", async () => {
-    const userInput = input.value.trim();
-    if (!userInput) return;
-    input.value = "";
+  const userInput = input.value.trim();
+  if (!userInput) return;
+  input.value = "";
 
-    try {
-      const reply = await sendPrompt(userInput);
+  const now = Date.now();
+  if (now - lastPromptTime < cooldownDuration) {
+    output.innerText = "Please wait before sending another message.";
+    return;
+  }
+  lastPromptTime = now;
 
-      if (reply && reply.trim()) {
-        // Type response in real time
-        typeTextToElement(output, reply.trim(), 25);
+  try {
+    const reply = await sendPrompt(userInput);
 
-        // Log both user and response
-        const log = document.getElementById("thought-log-section");
-        log.innerText += `\n\n[User ➝] ${userInput}\n[Dorian ➝] ${reply.trim()}`;
-      } else {
-        const messages = [
-          "Signal transmission received. Please wait.",
-          "Message delivered. Awaiting response.",
-          "Your words are echoing in the digital ether.",
-          "Awaiting Dorian's reply...",
-          "Transmission sent. Listening for a response.",
-          "Your message is being processed.",
-          "Dorian is contemplating your input.",
-          "Stand by for a response.",
-          "Message relayed. Awaiting digital thoughts.",
-          "Your prompt is under consideration.",
-        ];
-        output.innerText =
-          messages[Math.floor(Math.random() * messages.length)];
-      }
-    } catch (err) {
-      output.innerText = "Error communicating with Dorian.";
-      console.error(err);
+    if (reply && reply.trim()) {
+      typeTextToElement(output, reply.trim(), 25);
+      const log = document.getElementById("thought-log-section");
+      log.innerText += `\n\n[User ->] ${userInput}\n[Dorian ->] ${reply.trim()}`;
+    } else {
+      const messages = [
+        "Signal transmission received. Please wait.",
+        "Message delivered. Awaiting response.",
+        "Your words are echoing in the digital ether.",
+        // (… others)
+      ];
+      output.innerText = messages[Math.floor(Math.random() * messages.length)];
     }
-  });
+  } catch (err) {
+    output.innerText = "Error communicating with Dorian.";
+    console.error(err);
+  }
+});
+
 });
