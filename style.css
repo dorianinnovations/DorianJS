@@ -230,13 +230,12 @@ main.layout {
   border-radius: 8px;
   font-size: 1.5rem;
   cursor: pointer;
-  transition: box-shadow 0.9s ease, transform 0.6s ease;
   box-shadow: 0 0 10px rgba(255, 255, 255, 0.1);
 }
 .btn-go-right-column:hover,
 .custom-btn:hover {
   box-shadow: 0 0 5px rgb(255, 255, 255);
-  transform: scale(1.2);
+  transform: scale(0.9);
   color: black;
   background-color: white;
   outline: none;
@@ -651,7 +650,7 @@ canvas#dorian-canvas {
     box-shadow: 0 0 12px 4px rgba(129, 175, 255, 0.544),
       0 0 3px 1px rgb(117, 204, 255), inset 0 0 12px rgba(181, 255, 241, 0.544),
       inset 0 0 3px rgba(153, 255, 245, 0.5);
-    transition: all 0.3s ease;
+    transition: all 0.3s ease-in-out;
     cursor: pointer;
     text-shadow: 0 0 5px #fff, 0 0 20px rgb(221, 221, 221);
   }
@@ -697,21 +696,6 @@ canvas#dorian-canvas {
     display: flex;
     flex-direction: column;
   }
-
- .logo {
-    width: 47px;
-    height: 47px;
-    background: url("logo.png") no-repeat center center;
-    background-size: cover;
-    box-shadow: 0 0 10px rgba(255, 255, 255, 0.1),
-      -4px 4px 2px rgba(0, 4, 255, 0.3);
-    cursor: pointer;
-    opacity: 0.8;
-    transition: all 1.3s ease;
-    border-radius: 50%;
-    z-index: 1001;
-    margin-bottom: 1rem;
- }
 
   .action-menu-btn-icon {
     width: 70px;
@@ -839,73 +823,78 @@ canvas#dorian-canvas {
       opacity: 1;
     }
   }
+.navigation-bar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  height: 60px;
+  width: 100%;
+  padding: 0 1rem;
+  box-sizing: border-box;
+  border-radius: 1rem;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  background: transparent;
+  position: relative;
+  top: 10px;
+}
 
-  .navigation-bar-left {
-    display: flex;
-    width: 20%;
-    height: 50px;
-    background: rgba(0, 0, 0, 0.5);
-    top: 0;
-    z-index: 1000;
-    flex-direction: row;
-    justify-content: flex-start;
-    align-self: flex-start;
-  }
-  .navigation-bar-right {
-    display: flex;
-    bottom: 0;
-    width: 80%;
-    height: 50px;
-    background: rgba(0, 0, 0, 0.5);
-    top: 0;
-    z-index: 1000;
-    flex-direction: row;
-    justify-content: flex-end;
-    align-self: flex-end;
-  .navigation-button{
-    color: rgb(255, 255, 255);
-    background-color: rgba(255, 255, 255, 0);
-    border: none;
-    z-index: 1000;
-    position: relative;
-    font-family: "orbitron";
-    border-radius: 0.5rem;
-    padding: 0.3rem 2rem;
-    opacity: 1;
-    font-size: 1rem;
-    cursor: pointer;
-    transition: background-color 0.7s ease;
-    transition: color 2.1s ease;
-  }
-  }
+.navigation-bar-left {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  flex-grow: 1; /* Allows it to take available space */
+  justify-content: flex-start; /* Aligns items to the left */
+  z-index: 1000; /* Ensures it stays above other elements */
+  position: relative; /* For absolute positioning of logo */
+  padding: 0.5rem;
 
-  .navigation-bar {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    width: 100%;
-    top: 5px;
+}
 
-    background: #000;
-    max-width: 100%;
-    padding: 0.5rem 1rem;
-    box-sizing: border-box;
-    background: transparent;
-    border: 1px solid rgba(255, 255, 255, 0.2);
-    position: relative;
-    border-radius: 1rem;
-    /* No direct height/font-size/margin for flexibility */
-  }
-  .navigation-button {
-    font-size: 1rem;
-    font-family: "rajdhani";
-    margin: 1rem;
-    box-sizing: border-box;
-    justify-content: center;
-    align-items: center;
-    text-align: center;
-    padding: 0.4rem 0.5rem;
-  }
+.navigation-bar-left .logo {
+  height: 57px;
+  width: auto;
+  margin-left: 0.5rem;
+  border-radius: 50%;
+}
+
+.navigation-bar-right {
+  display: flex;
+  gap: 0.5rem;
+  align-items: center;
+
+  flex-wrap: wrap; /* allows wrapping on smaller screens */
+}
+
+.navigation-button {
+  font-family: "Rajdhani", sans-serif;
+  font-size: 0.9rem;
+  padding: 0.3rem 0.8rem;
+  color: white;
+  background-color: transparent;
+  border: none;
+  border-radius: 0.5rem;
+  cursor: pointer;
+  transition: background-color 0.4s ease, color 0.4s ease, scale 0.4s ease;
+}
+
+.navigation-button:hover,
+.custom-btn-dorian:hover
+ {
+  background-color: rgb(255, 255, 255);
+  color: #000000;
+  transition: all 0.3s ease;
+  scale: 0.90;
+}
+
+.navigation-button:active,
+.custom-btn-dorian:active{
+   background-color: rgb(255, 255, 255);
+  color: #000000;
+  transition: all 0.3s ease;
+  scale: 0.80;
+}
+
+
   .center-area-wrapper {
     padding: 0.5rem;
     flex-grow: 1;
@@ -935,7 +924,7 @@ canvas#dorian-canvas {
   }
   .column-right-column-upper {
     gap: 0.1rem;
-    box-shadow: 0 -40px 100px rgb(0, 21, 255),
+    box-shadow: 0 -5px 10px rgb(0, 21, 255),
       inset 0 0 10px rgba(255, 255, 255, 0.585),
       inset 0 0 5px rgba(255, 255, 255, 0.558);
     border: 1px solid rgba(255, 255, 255, 0.2);
@@ -949,8 +938,25 @@ canvas#dorian-canvas {
     box-sizing: border-box;
     border-radius: 1.5rem;
   }
+  
+.emotion-architect-title {
+  font-size: 3rem;
+  font-weight: 600;
+  text-shadow: rgba(255, 255, 255, 0.319) 0 -8px 3px,
+    rgba(255, 255, 255, 0.457) 0 0 3px;
+  color: white;
+  text-align: center;
+  margin-bottom: 1rem;
+  font-family: "rajdhani";
+  letter-spacing: -0.1rem;
+}
+
+  .emotion-architect-subtitle,
+  .emotion-architect-text {
+    border-bottom: 1px solid rgba(0, 34, 255, 0.893);
+    margin-bottom: 2rem;
+  }
   .column-right-column-lower {
-    margin-bottom: 50px;
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -1137,14 +1143,16 @@ canvas#dorian-canvas {
 .custom-btn-dorian{
     background: transparent;
     color: #ffffff8f;
-    box-shadow: inset 0 0 12px rgb(181, 255, 241),
-      inset 0 0 3px rgb(153, 255, 245),
+    box-shadow: inset 0 0 12px rgb(248, 248, 248),
+      inset 0 0 3px rgb(73, 103, 255),
       0 0 12px rgba(129, 175, 255, 0.544),
       0 0 3px rgb(117, 204, 255);
 
     transition: all 0.3s ease;
     cursor: pointer;
     font-family: "rajdhani";
+    width: 100px;
+    height: auto;
     font-weight: 500;
     letter-spacing: -0.1rem;
     font-size: 1rem;
@@ -1164,8 +1172,6 @@ canvas#dorian-canvas {
     align-items: center;
     padding: 0.5rem;
     background: rgba(0, 0, 0, 0.5);
-    box-shadow: 0 0 16px rgba(255, 255, 255, 0.05), 0 -4px 18px #ffffff5a,
-      0 0 16px rgba(255, 255, 255, 0.05), 0 -2px 18px #ffffff31;
     backdrop-filter: blur(12px);
     justify-content: space-evenly;
     gap: 1rem;
@@ -1387,7 +1393,7 @@ canvas#dorian-canvas {
     font-size: 1.5rem;
     font-family: "rajdhani", sans-serif;
     font-weight: 400;
-    padding: 1rem;
+    padding: 2rem;
   }
 
   .texture {
