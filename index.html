@@ -1,134 +1,120 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-
-
   <title>Dorian</title>
 
   <!-- Stylesheets -->
   <link rel="stylesheet" href="style.css" />
-
-  <!-- Fonts & Icons -->
   <link rel="icon" href="favicon.png" />
+
+  <!-- Font Awesome -->
   <script src="https://kit.fontawesome.com/c0ffa5e1d4.js" crossorigin="anonymous"></script>
+  
+  <!-- Google Fonts -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link
-    href="https://fonts.googleapis.com/css2?family=Audiowide&family=Chakra+Petch:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400;1,500;1,600;1,700&family=Orbitron:wght@400..900&family=Rajdhani:wght@300;400;500;600;700&display=swap"
-    rel="stylesheet">
-  <!-- Google Fonts -->
-<link href="https://fonts.googleapis.com/css2?family=Bruno+Ace+SC&family=Goldman:wght@400;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Audiowide&family=Chakra+Petch:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400;1,500;1,600;1,700&family=Orbitron:wght@400..900&family=Rajdhani:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Bruno+Ace+SC&family=Goldman:wght@400;700&display=swap" rel="stylesheet">
+  
+  <!-- Material Symbols -->
+  <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200&display=swap" rel="stylesheet">
 
-<!-- Material Symbols Outlined -->
-<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200&display=swap" rel="stylesheet">
-
-
+  <!-- JavaScript -->
   <script type="module" src="dorian.js"></script>
 </head>
 
 <body>
-
-
-  <!-- Navigation Header -->
-  <header class="nav-header">
-
-
-
-
-
-
-
-    <header>
-
-      <nav class="navigation-bar" id="navigation-bar">
-        <button class="navigation-button">Home</button>
-        <button class="navigation-button">Chat</button>
-        <button class="navigation-button">About</button>
-        <button class="navigation-button">Socials</button>
-      </nav>
-      <nav class="action-bar">
-        <button class="action-menu-btn-icon" id="action-menu-btn-icon">
-        </button>
-      
-      
-        <div class="action-menu-btns" id="action-menu-btns">
-          <a href="#home" class="action-menu-btn-btn"><span class="material-symbols-outlined">
-              home
-            </span> Home</a>
-          <a href="#chat" class="action-menu-btn-btn"><span class="material-symbols-outlined">
-              chat_bubble
-            </span> Chat</a>
-          <a href="#about"class="action-menu-btn-btn"><span class="material-symbols-outlined">
-              info
-            </span> About</a>
-          <a href="#socials"><span class="material-symbols-outlined">
-              3p
-            </span> Socials</a>
-          <a href="#backbutton" class="action-menu-btn-btn"><span class="material-symbols-outlined">
-              arrow_downward
-            </span> </a>
-        </div>
-      
-      
-      </nav>
-
-
-
-
-    </header>
-
-    <!-- Header / Hero Section -->
-    <div class="header">
-      <video autoplay muted loop playsinline class="header-video">
-        <source src="cubesky.webm" type="video/webm" />
-      </video>
-      <a href="https://dorianai.replit.app/" class="heading-title">DORIAN</a>
-      <p class="heading-subtitle">Intelligence, redefined.</p>
-      <div class="header-divider"></div>
-    </div>
-
-    <!-- Core Layout -->
-    <div class="gpt-output-container">
-      <div id="gpt-output" class="gpt-answer-text-box"><span class="typing-loader"><span></span><span></span><span></span></span>
-</div>
-    </div>
-
-    <!-- GPT Input -->
-    <div class="input-text-box">
-      <input type="text" id="gpt-input" class="input-text" placeholder="Ask a question" />
-      <button type="button" class="btn-go-right-column" title="Run Command"><i class="fa-solid fa-arrow-up"></i>
-      </button>
-    </div>
-    <main class="layout">
-
-      <!-- Left Column -->
-      <div class="column-left-column">
-
-        <!-- Metrics Panel -->
+  <!-- Navigation Bar -->
+  <nav class="navigation-bar" id="navigation-bar">
+    <button class="navigation-button" >Overview</button>
+    <button class="navigation-button">Canvas & Controls</button>
+        <button class="navigation-button" id="chatbotBox">Chat</button>
         
 
-        <!-- NEW: Emotion Palette -->
-      
+    <img src="logo.png" alt="Dorian Logo" class="logo">
+    
+  </nav>
 
-        <!-- NEW: Emotional Dashboard -->
+  <!-- Action Menu Bar -->
+  <nav class="action-bar">
+    <button class="action-menu-btn-icon" id="action-menu-btn-icon"></button>
+    <div class="action-menu-btns" id="action-menu-btns">
+      <a href="#home" class="action-menu-btn-btn">
+        <span class="material-symbols-outlined">home</span> Home
+      </a>
+      <a href="#chat" class="action-menu-btn-btn">
+        <span class="material-symbols-outlined">chat_bubble</span> Chat
+      </a>
+      <a href="#about" class="action-menu-btn-btn">
+        <span class="material-symbols-outlined">info</span> About
+      </a>
+    
+    </div>
+  </nav>
+
+  <!-- Header / Hero Section -->
+  <div class="header">
+    <video autoplay muted loop playsinline class="header-video">
+      <source src="cubesky.webm" type="video/webm" />
+    </video>
+    <a href="https://dorianai.replit.app/" class="heading-title">DORIAN</a>
+    <p class="heading-subtitle">Intelligence, redefined.</p>
+    <div class="header-divider"></div>
+  </div>
+
+  <!-- GPT Output Container -->
+  <div class="gpt-output-container">
+    <div id="gpt-output" class="gpt-answer-text-box">
+      <span class="typing-loader">
+        <span></span><span></span><span></span>
+      </span>
+    </div>
+  </div>
+
+  <!-- GPT Input -->
+  <div class="input-text-box">
+    <input type="text" id="gpt-input" class="input-text" placeholder="Ask a question" />
+    <button type="button" class="btn-go-right-column" title="Run Command">
+      <i class="fa-solid fa-arrow-up"></i>
+    </button>
+  </div>
+
+  <!-- Main Layout -->
+  <main class="layout">
+    <!-- Left Column -->
+    <div class="column-left-column"></div>
+    
+    <!-- Center Area / Canvas -->
+    <div class="center-area-wrapper">
+      <!-- UI Speed Controls -->
+      <div class="ui-speed-btns">
        
-
+         <button id="reveal-thoughts" class="custom-btn-dorian">Thoughts
+    </button>
+    <button id="reveal-thoughts" class="custom-btn-dorian">Chat  With Dorian
+    </button>
+    <button id="reveal-thoughts" class="custom-btn-dorian">Controls
+    </button>
+    <button id="reveal-thoughts" class="custom-btn-dorian">About Dorian 
+    </button>
       </div>
-
-      <!-- Canvas Area -->
-      <div class="center-area-wrapper">
-
-        <canvas id="dorian-canvas"></canvas>
-        <div class="canvas-controls">
-          <div class="metric-box-dominant"><span id="dominant-metric">Place agents to begin, allow the simulation to run
-              as you converse with Dorian</span></div>
-
-          <br>
-          <div class="canvas-controls-labels-sliders">
-            <div class="ui-card">
+      <div class="view-dorians-thoughts-container">
+       
+     <button id="pause-btn" class="custom-btn" type="button">Pause</button>
+        <button id="reset-btn" class="custom-btn" type="button">Reset</button>
+      </div>
+      
+      <!-- Canvas -->
+      <canvas id="dorian-canvas"></canvas>
+      
+      <!-- Canvas Controls -->
+      <div class="canvas-controls">
+        <div class="metric-box-dominant">
+          <span id="dominant-metric">Place agents to begin, allow the simulation to run as you converse with Dorian</span>
+        </div>
+        <div class="ui-card">
           <div class="metrics-panel">
             <div class="metric-box"><span id="tick-metric">Interlink Success</span></div>
             <div class="metric-box"><span id="diversity-metric"></span></div>
@@ -137,101 +123,66 @@
             <div class="metric-box"><span id="growth-metric"></span></div>
           </div>
         </div>
-          </div>
+      </div>
+    </div>
+
+    <!-- Right Column -->
+    <div class="column-right-column">
+      <!-- Upper Right Column -->
+      <div class="column-right-column-upper">
+        <div class="sagA-divider"></div>
+
+        <!-- Sliders -->
+        <div class="sagA-sliders-labels">
+          <label class="agent-count-label">Seed Size:</label>
+          <input type="range" id="agent-count-slider" class="speed-slider" min="100" max="1000" value="500" step="1" />
+        </div>
+
+        <div class="sagA-sliders-labels">
+          <label class="reproduction-label">Seed Survival Rate:</label>
+          <input type="range" id="reproduction-rate-slider" class="speed-slider" min="0.1" max="1.0" value="0.5" step="0.1" />
+        </div>
+
+        <div class="under-reproduction-divider"></div>
+
+        <div class="sagA-sliders-labels">
+          <label class="speed-label">Speed:</label>
+          <input type="range" id="speed-slider" class="speed-slider" min="0.1" max="1.0" value="0.5" step="0.1" />
+          <span id="speed-value">0.5</span>
+          
+          <!-- Toggle Switches -->
+          <label class="switch">Mutation
+            <input type="checkbox" id="mutation-checkbox" />
+            <div class="slider">
+              <div class="slider-btn">
+                <div class="light"></div>
+                <div class="texture"></div>
+                <div class="texture"></div>
+                <div class="texture"></div>
+                <div class="light"></div>
+              </div>
+            </div>
+          </label>
+
+          <label class="switch">Music
+            <input type="checkbox" id="ambience-checkbox" />
+            <div class="slider">
+              <div class="slider-btn">
+                <div class="light"></div>
+                <div class="texture"></div>
+                <div class="texture"></div>
+                <div class="texture"></div>
+                <div class="light"></div>
+              </div>
+            </div>
+          </label>
         </div>
       </div>
 
-      <!-- Right Column -->
-      <div class="column-right-column">
-        <div class="column-right-column-upper">
-
-          <h2 class="ux-manager">Sage</h2>
-          <h3 class="ux-manager-subtitle">Structured Assembly for Generative Emergence</h3>
-          <div class="sagA-divider"></div>
-
-          <!-- Sliders -->
-          <div class="sagA-sliders-labels">
-            <label class="agent-count-label">Seed Size:</label>
-            <input type="range" id="agent-count-slider" class="speed-slider" min="100" max="1000" value="500"
-              step="1" />
-          </div>
-
-          <div class="sagA-sliders-labels">
-            <label class="reproduction-label">Seed Survival Rate:</label>
-            <input type="range" id="reproduction-rate-slider" class="speed-slider" min="0.1" max="1.0" value="0.5"
-              step="0.1" />
-          </div>
-
-          <div class="under-reproduction-divider"></div>
-
-          <div class="sagA-sliders-labels">
-            <label class="speed-label">Speed:</label>
-            <input type="range" id="speed-slider" class="speed-slider" min="0.1" max="1.0" value="0.5" step="0.1" />
-            <span id="speed-value">0.5</span>
-            <label class="switch">Mutation
-              <input type="checkbox" id="mutation-checkbox" />
-              <div class="slider">
-                <div class="slider-btn">
-                  <div class="light"></div>
-                  <div class="texture"></div>
-                  <div class="texture"></div>
-                  <div class="texture"></div>
-                  <div class="light"></div>
-                </div>
-              </div>
-            </label>
-            <label class="switch">Storm
-              <input type="checkbox" id="music-checkbox" />
-              <div class="slider">
-                <div class="slider-btn">
-                  <div class="light"></div>
-                  <div class="texture"></div>
-                  <div class="texture"></div>
-                  <div class="texture"></div>
-                  <div class="light"></div>
-                </div>
-              </div>
-            </label>
-
-            <label class="switch">War
-              <input type="checkbox" id="chat-checkbox" />
-              <div class="slider">
-                <div class="slider-btn">
-                  <div class="light"></div>
-                  <div class="texture"></div>
-                  <div class="texture"></div>
-                  <div class="texture"></div>
-                  <div class="light"></div>
-                </div>
-              </div>
-            </label>
-            
-            <label class="switch">Music
-              <input type="checkbox" id="ambience-checkbox" />
-              <div class="slider">
-                <div class="slider-btn">
-                  <div class="light"></div>
-                  <div class="texture"></div>
-                  <div class="texture"></div>
-                  <div class="texture"></div>
-                  <div class="light"></div>
-                </div>
-              </div>
-            </label>
-
-          </div>
-
-          <!-- Speed Buttons -->
-          <div class="ui-speed-box">
-
-          </div>
-
-        </div>
-
-        <!-- Toggles -->
-        <div class="column-right-column-lower">
-
-               <div class="ui-card-emotional-dashboard">
+      <!-- Lower Right Column -->
+      <div class="column-right-column-lower">
+        <!-- Emotional Dashboard -->
+        <div class="ui-card-emotional-dashboard">
           <h3 class="dashboard-title">Emotional Climate</h3>
           <div class="dominant-emotion-display">
             <span class="dominant-emotion" id="dominant-metric">Neutral</span>
@@ -241,41 +192,47 @@
           </div>
         </div>
 
-          <audio id="ambience-audio" src="vibes.wav" type="audio/wav"></audio>
-        </div>
-        <div class="ui-speed-btns">
-          <button id="pause-btn" class="custom-btn" type="button">Pause</button>
-          <button id="reset-btn" class="custom-btn" type="button">Reset</button>
-        </div>
-        <button id="reveal-thoughts" class="custom-btn-dorian"><span>&#8595;</span> View Dorian's Thoughts
-          <span>&#8595;</span></button>
+        <!-- Audio Element -->
+        <audio id="ambience-audio" src="vibes.wav" type="audio/wav"></audio>
       </div>
-    </main>
 
-    <!-- Thought Log Display -->
-    <section class="thought-log-section-visible">
-      <video autoplay muted loop playsinline class="thought-log-video">
-        <source src="footer.webm" type="video/webm" />
-      </video>
-      <h2 class="thought-log-title">Dorian's Recent Thoughts</h2>
-      <h3 class="thought-log-subtitle">Each set tick interval, Dorian reflects on its state. Here, a log can be found of
-        status reports alongside all user interactions with Dorian.</h3>
-    </section>
+      <span>&#8595;</span>
+    </div>
+  </main>
 
-    <!-- Live Thoughts Log -->
-    <section id="thought-log-section" class="thought-log-section-pre">
-      <div class="thought-log-parent">
-        <pre id="thought-log-section" class="thought-log"></pre>
-      </div>
-    </section>
+  <!-- Thought Log Display -->
+  <section class="thought-log-section-visible">
+    <video autoplay muted loop playsinline class="thought-log-video">
+      <source src="footer.webm" type="video/webm" />
+    </video>
+    <h2 class="thought-log-title">Dorian's Recent Thoughts</h2>
+    <h3 class="thought-log-subtitle">Each set tick interval, Dorian reflects on its state. Here, a log can be found of status reports alongside all user interactions with Dorian.</h3>
+  </section>
 
-</body>
-<footer class="footer">
+  <!-- Live Thoughts Log -->
+  <section class="thought-log-section-pre">
+    <div class="thought-log-parent">
+      <pre id="thought-log-section" class="thought-log"></pre>
+    </div>
+  </section>
+
+  <section class="emotion-architect-section">
+    <h1 class="emotion-architect-title">Emotion Simulation System Overview</h1>
+    <p class="emotion-architect-subtitle">Our emotional simulation system models lifelike emotional behavior in virtual entities by combining psychological theory with real-time environmental and temporal responsiveness. Built on a hierarchical emotional architecture, the system simulates how emotions are generated, evolve, and interact—creating deeply immersive, adaptive, and human-like experiences.
+</p>
+    <div class="emotion-architect-content">
+      <p class="emotion-architect-text">At its core are eight primary emotions—such as Joy, Fear, and Anticipation—each with visual and behavioral parameters like intensity, stability, and contagion. From these, more complex emotional states emerge through interaction and combination, enabling rich emotional diversity. The system also models inter-emotional dynamics, such as how one emotion can amplify, suppress, or transform another, creating a responsive emotional network.</p>
+      <p class="emotion-architect-text">Environmental zones (like deserts or mountains) and temporal factors (such as time of day or season) shape emotional behavior in context-sensitive ways, making each experience feel grounded and dynamic. Additionally, an integrated memory system tracks emotional history, allowing virtual entities to learn, adapt, and evolve unique emotional personalities over time.</p>
+      <p class="emotion-architect-text">Whether used for AI-driven storytelling, adaptive game design, or emotional research, this simulation brings emotional intelligence to life in compelling, interactive environments.
+</p>
+    </div>
+  </section>
+
+  <!-- Footer -->
   <footer class="footer">
     <a href="https://dorianai.replit.app/" class="heading-subtitle">Dorian</a>
     <p class="footer-text">All rights reserved</p>
     <p class="footer-text">© 2025 DorianAI</p>
   </footer>
-  </body>
-
+</body>
 </html>

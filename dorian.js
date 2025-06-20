@@ -70,6 +70,65 @@ window.addEventListener("DOMContentLoaded", () => {
   const ambienceAudio = document.getElementById("ambience-audio");
   const ambienceCheckbox = document.getElementById("ambience-checkbox");
 
+   const navButtons = document.querySelectorAll('.navigation-button');
+    const sections = document.querySelectorAll('#hero-section, #main-layout, #chat-section, #thought-log-section');
+
+
+    function toggleChat() {
+    const box = document.getElementById('chatbotBox');
+    box.classList.toggle('active');
+    console.log('Chat toggled:', box.classList.contains('active') ? 'Open' : 'Closed');
+    // If the chat is opened, focus the input field
+    if (box.classList.contains('active')) {
+      input.focus();
+    } else {
+      input.blur();
+    }
+  }
+   
+    
+
+    // Function to hide all sections
+    const hideAllSections = () => {
+        sections.forEach(section => {
+            section.classList.remove('active-section');
+        });
+    };
+
+    // Function to deactivate all navigation buttons
+    const deactivateAllButtons = () => {
+        navButtons.forEach(button => {
+            button.classList.remove('active');
+        });
+    };
+
+    // Function to show a specific section and activate its button
+    const showSection = (sectionId, button) => {
+        hideAllSections(); // Hide everything first
+        deactivateAllButtons(); // Deactivate all buttons
+
+        const targetSection = document.getElementById(sectionId);
+        if (targetSection) {
+            targetSection.classList.add('active-section');
+            button.classList.add('active');
+        }
+    };
+
+    // Add event listeners to navigation buttons
+    navButtons.forEach(button => {
+        button.addEventListener('click', () => {
+            const sectionId = button.dataset.section; // Get the ID from data-section attribute
+            showSection(sectionId, button);
+        });
+    });
+
+    // Initial state: Show the "Overview" (hero-section) by default on page load
+    const defaultSectionId = 'hero-section';
+    const defaultButton = document.querySelector(`.navigation-button[data-section="${defaultSectionId}"]`);
+    if (defaultButton) {
+        showSection(defaultSectionId, defaultButton);
+    }
+
   // Remove both existing canvas.addEventListener("mousedown"...) handlers
   // Replace with these:
 
@@ -107,13 +166,15 @@ window.addEventListener("DOMContentLoaded", () => {
     return { x: gridX, y: gridY };
   }
 
+ 
+
   // Create emotion palette (add this after your canvas setup)
   function createEmotionPalette() {
     const leftColumn = document.querySelector(".column-left-column");
 
     const paletteHTML = `
       <div class="ui-card emotion-palette-card">
-        <h3 class="emotion-palette-title">Emotional Painter</h3>
+        <h3 class="emotion-palette-title">Emotional Parents</h3>
         <div class="emotion-palette">
           <div class="emotion-buttons" id="emotion-buttons">
             ${Object.entries(EMOTIONS)
