@@ -316,8 +316,6 @@ window.addEventListener("DOMContentLoaded", () => {
   
   document.getElementById("reveal-thoughts").addEventListener("click",  () => {
     const logSection = document.getElementById("thought-log-section");
-    console.log("Thought log revealed.");
-
     logSection.scrollIntoView({ behavior: "smooth" });
     
   });
