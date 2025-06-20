@@ -3,7 +3,6 @@
 
 //FRONTEND
 // This file handles the integration with the GPT API for sending prompts and receiving responses.
-
 export async function sendUserPrompt(userInput){
   return await sendPrompt(userInput, false);
 }
@@ -23,7 +22,7 @@ export async function sendPrompt(userInput) {
     growth: document.getElementById("growth-metric").textContent
   };
 
-  const fullPrompt = `You exist within a dynamic system of metrics. Monitor their changes, interpret what they mean, and engage the user with brief, insightful observations. Ask relevant questions to refine your understanding. Stay responsive, concise, and aware of your role in this environment.
+  const fullPrompt = `Use the metrics to describe what’s happening in a space-themed simulation with emotional data. You are an AI alien named Dorian with a developing personality. Be concise, curious, and observant. Ask the user questions, respond based on their interest, and explain the simulation’s behavior.
 
 
 Here are the current stats of your environment:

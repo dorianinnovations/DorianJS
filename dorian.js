@@ -59,10 +59,7 @@ window.addEventListener("DOMContentLoaded", () => {
   const BIRTH_DELAY = 5; // minimum dead ticks before a cell can grow again
   let UPDATES_PER_FRAME = 25;
 
-  document.getElementById("reveal-thoughts").addEventListener("click", () => {
-    const logSection = document.querySelector(".thought-log-section");
-    logSection.scrollIntoView({ behavior: "smooth" });
-  });
+
 
   const input = document.getElementById("gpt-input");
   const button = document.querySelector(".btn-go-right-column");
@@ -312,6 +309,18 @@ window.addEventListener("DOMContentLoaded", () => {
   const pauseBtn = document.getElementById("pause-btn");
   const mutationToggle = document.getElementById("mutation-checkbox");
   const resetBtn = document.getElementById("reset-btn");
+  
+  
+  
+  
+  
+  document.getElementById("reveal-thoughts").addEventListener("click",  () => {
+    const logSection = document.getElementById("thought-log-section");
+    console.log("Thought log revealed.");
+
+    logSection.scrollIntoView({ behavior: "smooth" });
+    
+  });
 
   initWorker();
 
@@ -436,7 +445,7 @@ window.addEventListener("DOMContentLoaded", () => {
     if (!running) return;
     worker.postMessage({ type: "update", updates: UPDATES_PER_FRAME });
   }
-
+  
   const message = input.value;
 
   if (message.trim() !== "") {
@@ -474,6 +483,8 @@ window.addEventListener("DOMContentLoaded", () => {
     output.innerText = "Error communicating with Dorian.";
     console.error(err);
   }
+    
+
 });
 
 });
