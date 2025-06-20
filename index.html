@@ -19,9 +19,12 @@
   <link
     href="https://fonts.googleapis.com/css2?family=Audiowide&family=Chakra+Petch:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400;1,500;1,600;1,700&family=Orbitron:wght@400..900&family=Rajdhani:wght@300;400;500;600;700&display=swap"
     rel="stylesheet">
-  <link href="https://fonts.googleapis.com/css2?family=Bruno+Ace+SC&display=swap" rel="stylesheet">
-  <link href="https://fonts.googleapis.com/css2?family=Bruno+Ace+SC&family=Goldman:wght@400;700&display=swap"
-    rel="stylesheet">
+  <!-- Google Fonts -->
+<link href="https://fonts.googleapis.com/css2?family=Bruno+Ace+SC&family=Goldman:wght@400;700&display=swap" rel="stylesheet">
+
+<!-- Material Symbols Outlined -->
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200&display=swap" rel="stylesheet">
+
 
   <script type="module" src="dorian.js"></script>
 </head>
@@ -48,20 +51,28 @@
       </nav>
       <nav class="action-bar">
         <button class="action-menu-btn-icon" id="action-menu-btn-icon">
-          </button>
-
-
-
+        </button>
+      
+      
         <div class="action-menu-btns" id="action-menu-btns">
-          <a class="action-menu-btn-btn">Home</a>
-          <a class="action-menu-btn-btn">Chat</a>
-          <a class="action-menu-btn-btn">About</a>
-          <a class="action-menu-btn-btn">Socials</a>
+          <a href="#home" class="action-menu-btn-btn"><span class="material-symbols-outlined">
+              home
+            </span> Home</a>
+          <a href="#chat" class="action-menu-btn-btn"><span class="material-symbols-outlined">
+              chat_bubble
+            </span> Chat</a>
+          <a href="#about"class="action-menu-btn-btn"><span class="material-symbols-outlined">
+              info
+            </span> About</a>
+          <a href="#socials"><span class="material-symbols-outlined">
+              3p
+            </span> Socials</a>
+          <a href="#back" class="action-menu-btn-btn"><span class="material-symbols-outlined">
+              arrow_downward
+            </span> </a>
         </div>
-
-
-
-
+      
+      
       </nav>
 
 
@@ -81,7 +92,8 @@
 
     <!-- Core Layout -->
     <div class="gpt-output-container">
-      <p id="gpt-output" class="gpt-answer-text-box"></p>
+      <div id="gpt-output" class="gpt-answer-text-box"><span class="typing-loader"><span></span><span></span><span></span></span>
+</div>
     </div>
 
     <!-- GPT Input -->
@@ -115,11 +127,12 @@
 
         <canvas id="dorian-canvas"></canvas>
         <div class="canvas-controls">
-          <div class="metric-box-dominant"><span id="dominant-metric">Place agents to begin, allow the simulation to run as you converse with Dorian</span></div>
+          <div class="metric-box-dominant"><span id="dominant-metric">Place agents to begin, allow the simulation to run
+              as you converse with Dorian</span></div>
 
           <br>
           <div class="canvas-controls-labels-sliders">
-            <label class="switch">Music
+            <label class="switch">Storm
               <input type="checkbox" id="music-checkbox" />
               <div class="slider">
                 <div class="slider-btn">
@@ -132,7 +145,7 @@
               </div>
             </label>
 
-            <label class="switch">Chat
+            <label class="switch">War
               <input type="checkbox" id="chat-checkbox" />
               <div class="slider">
                 <div class="slider-btn">
@@ -157,7 +170,7 @@
               </div>
             </label>
 
-            <label class="switch">Ambience
+            <label class="switch">Music
               <input type="checkbox" id="ambience-checkbox" />
               <div class="slider">
                 <div class="slider-btn">

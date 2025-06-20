@@ -310,31 +310,44 @@ window.addEventListener("DOMContentLoaded", () => {
   const mutationToggle = document.getElementById("mutation-checkbox");
   const resetBtn = document.getElementById("reset-btn");
   
-
+// Action menu button and toggle
   document.getElementById('action-menu-btn-icon').addEventListener('click', () => {
   const menu = document.getElementById('action-menu-btns');
-  menu.classList.toggle('.active');
-  console.log('Action menu toggled');
+  menu.classList.toggle('active');
 });
-
+// Action bar visibility toggle on scroll
     const actionBar = document.querySelector('.action-bar');
-let lastScrollY = window.scrollY;
-
+    let lastScrollY = window.scrollY;
 window.addEventListener('scroll', () => {
   const currentY = window.scrollY;
-
   // Fade out action menu when at top (nav visible)
   if (currentY <= 50) {
     actionBar.classList.add('hidden');
   } else {
     actionBar.classList.remove('hidden');
   }
-
-  
-
   lastScrollY = currentY;
 });
 
+function showTypingLoader() {
+  const output = document.getElementById("gpt-output");
+  output.innerHTML = `
+    <span class="typing-loader">
+      <span></span><span></span><span></span>
+    </span>
+  `;
+}
+
+function hideTypingLoader() {
+  const output = document.getElementById("gpt-output");
+  output.innerHTML = "";
+}
+
+
+function showGPTResponse(text) {
+  const output = document.getElementById("gpt-output");
+  output.textContent = text;
+}
 
   
   document.getElementById("reveal-thoughts").addEventListener("click",  () => {
@@ -351,6 +364,11 @@ window.addEventListener('scroll', () => {
     const mutationCheckbox = document.getElementById("mutation-checkbox");
     if (worker) {
       worker.postMessage({ type: "setMutation", mutationChance: chance });
+      if (mutationCheckbox.checked) {
+        console.log(`Mutation enabled with chance: ${chance}`);
+      } else {
+        console.log("Mutation disabled");
+      }
     }
   });
 
@@ -472,40 +490,68 @@ window.addEventListener('scroll', () => {
   if (message.trim() !== "") {
     console.log("Message sent:", message);
   }
-  button.addEventListener("click", async () => {
+
+
+
+
+
+ button.addEventListener("click", async () => {
   const userInput = input.value.trim();
-  if (!userInput) return;
+  if (!userInput) {
+    output.innerText = "⚠️ Please enter a message.";
+    return;
+  }
+
   input.value = "";
 
   const now = Date.now();
   if (now - lastPromptTime < cooldownDuration) {
-    output.innerText = "Please wait before sending another message.";
+    output.innerText = "⏳ Please wait before sending another message.";
     return;
   }
   lastPromptTime = now;
+
+  // ✅ Show loader bubbles
+  output.innerHTML = `
+    <span class="typing-loader">
+      <span></span><span></span><span></span>
+    </span>
+  `;
 
   try {
     const reply = await sendPrompt(userInput);
 
     if (reply && reply.trim()) {
+      // ✅ Replace loader with typed response
       typeTextToElement(output, reply.trim(), 25);
+
+      // ✅ Add to log
       const log = document.getElementById("thought-log-section");
       log.innerText += `\n\n[User ->] ${userInput}\n[Dorian ->] ${reply.trim()}`;
     } else {
+      // ❌ If reply is empty, replace loader with fallback message
       const messages = [
         "Signal transmission received. Please wait.",
         "Message delivered. Awaiting response.",
         "Your words are echoing in the digital ether.",
-        // (… others)
+        "Processing your input. Stand by.",
+        "Your message is being analyzed. Please hold.",
+        "Awaiting response from Dorian. Please be patient.",
+        "Dorian is contemplating your message. Please hold.",
+        "Your input is being processed. Please wait.",
+        "Dorian is reflecting on your words. Please hold.",
+        "Your message is being decoded. Please wait.",
+        "Dorian is pondering your input. Please hold.",
+        "Your words are being processed. Please wait."
       ];
       output.innerText = messages[Math.floor(Math.random() * messages.length)];
     }
   } catch (err) {
-    output.innerText = "Error communicating with Dorian.";
+    // ❌ On error, replace loader with error message
+    output.innerText = "⚠️ Error communicating with Dorian.";
     console.error(err);
   }
-    
-
 });
+
 
 });
