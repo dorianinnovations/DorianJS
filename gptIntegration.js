@@ -4,23 +4,13 @@
 //FRONTEND
 // This file handles the integration with the GPT API for sending prompts and receiving responses.
 
-let lastSystemPromptTime = 0;
-const systemCooldown = 10000; // e.g., 10 seconds between system-driven calls
-
 export async function sendUserPrompt(userInput){
   return await sendPrompt(userInput, false);
 }
   export async function sendAutoReflection(systemInput) {
-  const now = Date.now();
-  if (now - lastSystemPromptTime < systemCooldown) {
-    console.log("🛑 Auto-reflection blocked (cooldown active).");
-    return;
+    return await sendPrompt(systemInput, true);
+
   }
-
-  lastSystemPromptTime = now;
-  return await sendPrompt(systemInput, true);
-}
-
   console.log("🟢 LLM API ONLINE...");
 
 export async function sendPrompt(userInput) {

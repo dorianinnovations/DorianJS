@@ -306,6 +306,7 @@ window.addEventListener("DOMContentLoaded", () => {
   const reproductionRateSlider = document.getElementById(
     "reproduction-rate-slider"
   );
+  
   const speedSlider = document.getElementById("speed-slider");
   const speedValue = document.getElementById("speed-value");
   const pauseBtn = document.getElementById("pause-btn");
@@ -348,6 +349,8 @@ window.addEventListener("DOMContentLoaded", () => {
 
   //SPEED SLIDER
   speedSlider.max = "5";
+  speedSlider.min = "1";
+  speedSlider.value = "1"; // Default value
   speedSlider.addEventListener("input", () => {
     if (parseInt(speedSlider.value) > 5) speedSlider.value = "5";
     UPDATES_PER_FRAME = parseInt(speedSlider.value);
