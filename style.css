@@ -191,6 +191,106 @@ main.layout {
   padding: 4rem;
   box-sizing: border-box;
 }
+.action-bar {
+  position: fixed;
+  bottom: 1em;
+  left: 1em;
+  z-index: 900;
+  display: flex;
+  flex-direction: column-reverse;
+  transition: opacity 1.3s ease, transform 1.3s ease;
+}
+
+
+.action-bar.hidden {
+  opacity: 0;
+  pointer-events: none;
+  transform: translateX(-7%);
+}
+
+
+
+.action-menu-btn-icon {
+  width: 70px;
+  height: 70px;
+  font-size: 2rem;
+  cursor: pointer;
+  border: none;
+  background: url('logo.png') no-repeat center center;
+  background-size: cover;
+  display: flex;
+  backdrop-filter: blur(5px);
+  opacity: 0.8;
+  color: white;
+  animation: livingGlow 3s infinite alternate;
+  outline: 1px solid rgba(255, 255, 255, 0.2);
+  border-radius: 25px;
+  box-shadow: 0 0 0px rgba(255, 255, 255, 0.517),
+              -4px 4px 2px rgba(0, 4, 255, 0.3),
+              0 0 10px rgba(255, 255, 255, 0.1),
+              0 0 20px rgba(255, 255, 255, 0.1);
+  z-index: 2;
+  text-shadow: 0 0 5px #ffffff, 0 0 10px rgba(255, 255, 255, 0.5);
+  transition: all 1.3s ease;
+}
+
+
+.action-menu-btn-btn {
+  flex-direction: column;
+  color: white;
+}
+
+.action-menu-btns{
+  width: 75px;
+  display: none;
+  height: 50px;
+  flex-direction: column;
+  padding: 0.5rem 1rem;
+  margin: 0.5rem;
+  font-family: "Rajdhani", sans-serif;
+  font-weight: 500;
+  text-transform: uppercase;
+  letter-spacing: 0.05rem;
+  text-align: center;
+  border-radius: 14px;
+  border: none;
+  outline: none;
+  background: #ffffff;
+  color: black;
+  box-shadow: 0 0 10px rgba(255, 255, 255, 0.1),
+              0 0 20px rgba(255, 255, 255, 0.1);
+  transition: all 0.3s ease;
+  cursor: pointer;
+  z-index: 10;
+}
+
+/* Optional: Show menu with a class toggle */
+.action-menu-btns.active {
+  display: flex;
+  width: 80px;
+  height: 100px;
+  flex-direction: column;
+  padding: 0.5rem 1rem;
+  margin: 0.5rem;
+  font-family: "Rajdhani", sans-serif;
+  font-weight: 500;
+  font-size: 1.2rem;
+  text-transform: uppercase;
+  letter-spacing: 0.05rem;
+  text-align: center;
+  background-color: #00000000;
+  backdrop-filter: blur(10px);
+  opacity: 0.87;
+  color: white;
+  border-radius: 15px;
+  box-shadow: 0 0 10px rgba(255, 255, 255, 0.192),
+              0 0 10px rgba(255, 255, 255, 0.26);
+  text-shadow: 0 0 5px #ffffff, 0 0 10px rgba(255, 255, 255, 0.5);
+  transition: all 1.3s ease;
+      border: 1px solid rgb(127, 127, 127);
+
+}
+
 .column-right-column-upper {
   display: flex;
   flex-direction: column;
@@ -471,6 +571,7 @@ canvas#dorian-canvas {
     animation-iteration-count: infinite;
     border-radius: 1.2rem;
   }
+  
 
   canvas#dorian-canvas {
     width: 100%;
@@ -684,11 +785,113 @@ canvas#dorian-canvas {
       );
   }
 
+.action-bar {
+  position: fixed;
+  bottom: 1em;
+  left: 1em;
+  z-index: 900;
+  display: flex;
+  flex-direction: column-reverse;
+  transition: opacity 1.3s ease, transform 1.3s ease;
+}
+
+
+.action-bar.hidden {
+  opacity: 0;
+  pointer-events: none;
+  transform: translateX(-7%);
+}
+
+
+
+.action-menu-btn-icon {
+  width: 70px;
+  height: 70px;
+  font-size: 2rem;
+  cursor: pointer;
+  border: none;
+  background: url('logo.png') no-repeat center center;
+  background-size: cover;
+  display: flex;
+  backdrop-filter: blur(5px);
+  opacity: 0.8;
+  color: white;
+  animation: livingGlow 3s infinite alternate;
+  outline: 1px solid rgba(255, 255, 255, 0.2);
+  border-radius: 25px;
+  box-shadow: 0 0 0px rgba(255, 255, 255, 0.517),
+              -4px 4px 2px rgba(0, 4, 255, 0.3),
+              0 0 10px rgba(255, 255, 255, 0.1),
+              0 0 20px rgba(255, 255, 255, 0.1);
+  z-index: 2;
+  text-shadow: 0 0 5px #ffffff, 0 0 10px rgba(255, 255, 255, 0.5);
+  transition: all 1.3s ease;
+}
+
+
+.action-menu-btn-btn {
+  flex-direction: column;
+  color: white;
+}
+
+.action-menu-btns{
+  width: 75px;
+  display: none;
+  height: 50px;
+  flex-direction: column;
+  padding: 0.5rem 1rem;
+  margin: 0.5rem;
+  font-family: "Rajdhani", sans-serif;
+  font-weight: 500;
+  text-transform: uppercase;
+  letter-spacing: 0.05rem;
+  text-align: center;
+  border-radius: 14px;
+  border: none;
+  outline: none;
+  background: #ffffff;
+  color: black;
+  box-shadow: 0 0 10px rgba(255, 255, 255, 0.1),
+              0 0 20px rgba(255, 255, 255, 0.1);
+  transition: all 0.3s ease;
+  cursor: pointer;
+  z-index: 10;
+}
+
+/* Optional: Show menu with a class toggle */
+.action-menu-btns.active {
+  display: flex;
+  width: 80px;
+  height: 100px;
+  flex-direction: column;
+  padding: 0.5rem 1rem;
+  margin: 0.5rem;
+  font-family: "Rajdhani", sans-serif;
+  font-weight: 500;
+  font-size: 1.2rem;
+  text-transform: uppercase;
+  letter-spacing: 0.05rem;
+  text-align: center;
+  background-color: #00000000;
+  backdrop-filter: blur(10px);
+  opacity: 0.87;
+  color: white;
+  border-radius: 15px;
+  box-shadow: 0 0 10px rgba(255, 255, 255, 0.192),
+              0 0 10px rgba(255, 255, 255, 0.26);
+  text-shadow: 0 0 5px #ffffff, 0 0 10px rgba(255, 255, 255, 0.5);
+  transition: all 1.3s ease;
+      border: 1px solid rgb(127, 127, 127);
+
+}
+
+
   .navigation-bar {
     margin: 0.2rem;
     padding: 0.2rem; /* or adjust if needed */
     font-size: 0.2rem; /* scale down slightly */
     display: flex;
+    top: 0;
     justify-content: center; /* or center depending on layout */
     align-items: center;
     transition: all 0.4s;

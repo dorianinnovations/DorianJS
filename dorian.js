@@ -245,7 +245,7 @@ window.addEventListener("DOMContentLoaded", () => {
         // Trigger Claude
         if (
           currentStats &&
-          currentStats.tick % 2000 === 0 &&
+          currentStats.tick % 3500 === 0 &&
           currentStats.tick !== lastClaudeTick
         ) {
           sendStatsToClaude(currentStats).then((emotion) => {
@@ -310,9 +310,32 @@ window.addEventListener("DOMContentLoaded", () => {
   const mutationToggle = document.getElementById("mutation-checkbox");
   const resetBtn = document.getElementById("reset-btn");
   
+
+  document.getElementById('action-menu-btn-icon').addEventListener('click', () => {
+  const menu = document.getElementById('action-menu-btns');
+  menu.classList.toggle('.active');
+  console.log('Action menu toggled');
+});
+
+    const actionBar = document.querySelector('.action-bar');
+let lastScrollY = window.scrollY;
+
+window.addEventListener('scroll', () => {
+  const currentY = window.scrollY;
+
+  // Fade out action menu when at top (nav visible)
+  if (currentY <= 50) {
+    actionBar.classList.add('hidden');
+  } else {
+    actionBar.classList.remove('hidden');
+  }
+
   
-  
-  
+
+  lastScrollY = currentY;
+});
+
+
   
   document.getElementById("reveal-thoughts").addEventListener("click",  () => {
     const logSection = document.getElementById("thought-log-section");

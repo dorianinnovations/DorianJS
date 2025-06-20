@@ -28,191 +28,219 @@
 
 <body>
 
+
   <!-- Navigation Header -->
   <header class="nav-header">
-    <div class="nav-left">
-      <div class="hamburger" id="hamburger">
-        <span></span><span></span><span></span>
-      </div>
-    </div>
-    <nav class="navigation-bar" id="navigation-bar">
-      <button class="navigation-button">Home</button>
-      <button class="navigation-button">Chat</button>
-      <button class="navigation-button">About</button>
-      <button class="navigation-button">Socials</button>
-    </nav>
-  </header>
 
-  <!-- Header / Hero Section -->
-  <div class="header">
-    <video autoplay muted loop playsinline class="header-video">
-      <source src="cubesky.webm" type="video/webm" />
-    </video>
-    <a href="https://dorianai.replit.app/" class="heading-title">DORIAN</a>
-    <p class="heading-subtitle">Intelligence, redefined.</p>
-    <div class="header-divider"></div>
-  </div>
 
-  <!-- Core Layout -->
-  <div class="gpt-output-container">
-    <p id="gpt-output" class="gpt-answer-text-box"></p>
-  </div>
 
-  <!-- GPT Input -->
-  <div class="input-text-box">
-    <input type="text" id="gpt-input" class="input-text" placeholder="Ask a question" />
-    <button type="button" class="btn-go-right-column" title="Run Command"><i class="fa-solid fa-arrow-up"></i>
-    </button>
-  </div>
-  <main class="layout">
 
-    <!-- Left Column -->
-    <div class="column-left-column">
 
-      <!-- Metrics Panel -->
-      <div class="ui-card">
-        <div class="metrics-panel">
-          <div class="metric-box"><span id="tick-metric">Interlink Success</span></div>
-          <div class="metric-box"><span id="diversity-metric"></span></div>
-          <div class="metric-box"><span id="entropy-metric"></span></div>
-          <div class="metric-box"><span id="alive-metric"></span></div>
-          <div class="metric-box"><span id="growth-metric"></span></div>
+
+
+    <header>
+
+      <nav class="navigation-bar" id="navigation-bar">
+        <button class="navigation-button">Home</button>
+        <button class="navigation-button">Chat</button>
+        <button class="navigation-button">About</button>
+        <button class="navigation-button">Socials</button>
+      </nav>
+      <nav class="action-bar">
+        <button class="action-menu-btn-icon" id="action-menu-btn-icon">
+          </button>
+
+
+
+        <div class="action-menu-btns" id="action-menu-btns">
+          <a class="action-menu-btn-btn">Home</a>
+          <a class="action-menu-btn-btn">Chat</a>
+          <a class="action-menu-btn-btn">About</a>
+          <a class="action-menu-btn-btn">Socials</a>
         </div>
-      </div>
 
-      <!-- GPT Output -->
 
+
+
+      </nav>
+
+
+
+
+    </header>
+
+    <!-- Header / Hero Section -->
+    <div class="header">
+      <video autoplay muted loop playsinline class="header-video">
+        <source src="cubesky.webm" type="video/webm" />
+      </video>
+      <a href="https://dorianai.replit.app/" class="heading-title">DORIAN</a>
+      <p class="heading-subtitle">Intelligence, redefined.</p>
+      <div class="header-divider"></div>
     </div>
 
-    <!-- Canvas Area -->
-    <div class="center-area-wrapper">
+    <!-- Core Layout -->
+    <div class="gpt-output-container">
+      <p id="gpt-output" class="gpt-answer-text-box"></p>
+    </div>
 
-      <canvas id="dorian-canvas"></canvas>
-      <div class="canvas-controls">
-        <div class="metric-box-dominant"><span id="dominant-metric">Access Cognition...</span></div>
+    <!-- GPT Input -->
+    <div class="input-text-box">
+      <input type="text" id="gpt-input" class="input-text" placeholder="Ask a question" />
+      <button type="button" class="btn-go-right-column" title="Run Command"><i class="fa-solid fa-arrow-up"></i>
+      </button>
+    </div>
+    <main class="layout">
 
-        <br>
-        <div class="canvas-controls-labels-sliders">
-          <label class="switch">Music
-            <input type="checkbox" id="music-checkbox" />
-            <div class="slider">
-              <div class="slider-btn">
-                <div class="light"></div>
-                <div class="texture"></div>
-                <div class="texture"></div>
-                <div class="texture"></div>
-                <div class="light"></div>
+      <!-- Left Column -->
+      <div class="column-left-column">
+
+        <!-- Metrics Panel -->
+        <div class="ui-card">
+          <div class="metrics-panel">
+            <div class="metric-box"><span id="tick-metric">Interlink Success</span></div>
+            <div class="metric-box"><span id="diversity-metric"></span></div>
+            <div class="metric-box"><span id="entropy-metric"></span></div>
+            <div class="metric-box"><span id="alive-metric"></span></div>
+            <div class="metric-box"><span id="growth-metric"></span></div>
+          </div>
+        </div>
+
+        <!-- GPT Output -->
+
+      </div>
+
+      <!-- Canvas Area -->
+      <div class="center-area-wrapper">
+
+        <canvas id="dorian-canvas"></canvas>
+        <div class="canvas-controls">
+          <div class="metric-box-dominant"><span id="dominant-metric">Place agents to begin, allow the simulation to run as you converse with Dorian</span></div>
+
+          <br>
+          <div class="canvas-controls-labels-sliders">
+            <label class="switch">Music
+              <input type="checkbox" id="music-checkbox" />
+              <div class="slider">
+                <div class="slider-btn">
+                  <div class="light"></div>
+                  <div class="texture"></div>
+                  <div class="texture"></div>
+                  <div class="texture"></div>
+                  <div class="light"></div>
+                </div>
               </div>
-            </div>
-          </label>
+            </label>
 
-          <label class="switch">Chat
-            <input type="checkbox" id="chat-checkbox" />
-            <div class="slider">
-              <div class="slider-btn">
-                <div class="light"></div>
-                <div class="texture"></div>
-                <div class="texture"></div>
-                <div class="texture"></div>
-                <div class="light"></div>
+            <label class="switch">Chat
+              <input type="checkbox" id="chat-checkbox" />
+              <div class="slider">
+                <div class="slider-btn">
+                  <div class="light"></div>
+                  <div class="texture"></div>
+                  <div class="texture"></div>
+                  <div class="texture"></div>
+                  <div class="light"></div>
+                </div>
               </div>
-            </div>
-          </label>
-          <label class="switch">Mutation
-            <input type="checkbox" id="mutation-checkbox" />
-            <div class="slider">
-              <div class="slider-btn">
-                <div class="light"></div>
-                <div class="texture"></div>
-                <div class="texture"></div>
-                <div class="texture"></div>
-                <div class="light"></div>
+            </label>
+            <label class="switch">Mutation
+              <input type="checkbox" id="mutation-checkbox" />
+              <div class="slider">
+                <div class="slider-btn">
+                  <div class="light"></div>
+                  <div class="texture"></div>
+                  <div class="texture"></div>
+                  <div class="texture"></div>
+                  <div class="light"></div>
+                </div>
               </div>
-            </div>
-          </label>
+            </label>
 
-          <label class="switch">Ambience
-            <input type="checkbox" id="ambience-checkbox" />
-            <div class="slider">
-              <div class="slider-btn">
-                <div class="light"></div>
-                <div class="texture"></div>
-                <div class="texture"></div>
-                <div class="texture"></div>
-                <div class="light"></div>
+            <label class="switch">Ambience
+              <input type="checkbox" id="ambience-checkbox" />
+              <div class="slider">
+                <div class="slider-btn">
+                  <div class="light"></div>
+                  <div class="texture"></div>
+                  <div class="texture"></div>
+                  <div class="texture"></div>
+                  <div class="light"></div>
+                </div>
               </div>
-            </div>
-          </label>
+            </label>
+          </div>
         </div>
       </div>
-    </div>
 
-    <!-- Right Column -->
-    <div class="column-right-column">
-      <div class="column-right-column-upper">
+      <!-- Right Column -->
+      <div class="column-right-column">
+        <div class="column-right-column-upper">
 
-        <h2 class="ux-manager">Sage</h2>
-        <h3 class="ux-manager-subtitle">Structured Assembly for Generative Emergence</h3>
-        <div class="sagA-divider"></div>
+          <h2 class="ux-manager">Sage</h2>
+          <h3 class="ux-manager-subtitle">Structured Assembly for Generative Emergence</h3>
+          <div class="sagA-divider"></div>
 
-        <!-- Sliders -->
-        <div class="sagA-sliders-labels">
-          <label class="agent-count-label">Agent Count:</label>
-          <input type="range" id="agent-count-slider" class="speed-slider" min="100" max="1000" value="500" step="1" />
+          <!-- Sliders -->
+          <div class="sagA-sliders-labels">
+            <label class="agent-count-label">Seed Size:</label>
+            <input type="range" id="agent-count-slider" class="speed-slider" min="100" max="1000" value="500"
+              step="1" />
+          </div>
+
+          <div class="sagA-sliders-labels">
+            <label class="reproduction-label">Seed Survival Rate:</label>
+            <input type="range" id="reproduction-rate-slider" class="speed-slider" min="0.1" max="1.0" value="0.5"
+              step="0.1" />
+          </div>
+
+          <div class="under-reproduction-divider"></div>
+
+          <div class="sagA-sliders-labels">
+            <label class="speed-label">Speed:</label>
+            <input type="range" id="speed-slider" class="speed-slider" min="0.1" max="1.0" value="0.5" step="0.1" />
+            <span id="speed-value">0.5</span>
+          </div>
+
+          <!-- Speed Buttons -->
+          <div class="ui-speed-box">
+
+          </div>
+
         </div>
 
-        <div class="sagA-sliders-labels">
-          <label class="reproduction-label">Reproduction Rate:</label>
-          <input type="range" id="reproduction-rate-slider" class="speed-slider" min="0.1" max="1.0" value="0.5"
-            step="0.1" />
+        <!-- Toggles -->
+        <div class="column-right-column-lower">
+
+
+
+          <audio id="ambience-audio" src="vibes.wav" type="audio/wav"></audio>
         </div>
-
-        <div class="under-reproduction-divider"></div>
-
-        <div class="sagA-sliders-labels">
-          <label class="speed-label">Speed:</label>
-          <input type="range" id="speed-slider" class="speed-slider" min="0.1" max="1.0" value="0.5" step="0.1" />
-          <span id="speed-value">0.5</span>
+        <div class="ui-speed-btns">
+          <button id="pause-btn" class="custom-btn" type="button">Pause</button>
+          <button id="reset-btn" class="custom-btn" type="button">Reset</button>
         </div>
-
-        <!-- Speed Buttons -->
-        <div class="ui-speed-box">
-
-        </div>
-
+        <button id="reveal-thoughts" class="custom-btn-dorian"><span>&#8595;</span> View Dorian's Thoughts
+          <span>&#8595;</span></button>
       </div>
+    </main>
 
-      <!-- Toggles -->
-      <div class="column-right-column-lower">
+    <!-- Thought Log Display -->
+    <section class="thought-log-section-visible">
+      <video autoplay muted loop playsinline class="thought-log-video">
+        <source src="footer.webm" type="video/webm" />
+      </video>
+      <h2 class="thought-log-title">Dorian's Recent Thoughts</h2>
+      <h3 class="thought-log-subtitle">Each set tick interval, Dorian reflects on its state. Here, a log can be found of
+        status reports alongside all user interactions with Dorian.</h3>
+    </section>
 
-
-
-        <audio id="ambience-audio" src="vibes.wav" type="audio/wav"></audio>
+    <!-- Live Thoughts Log -->
+    <section id="thought-log-section" class="thought-log-section-pre">
+      <div class="thought-log-parent">
+        <pre id="thought-log-section" class="thought-log"></pre>
       </div>
-      <div class="ui-speed-btns">
-        <button id="pause-btn" class="custom-btn" type="button">Pause</button>
-        <button id="reset-btn" class="custom-btn" type="button">Reset</button>
-      </div>
-      <button id="reveal-thoughts" class="custom-btn-dorian"><span>&#8595;</span> View Dorian's Thoughts <span>&#8595;</span></button>
-    </div>
-  </main>
-
-  <!-- Thought Log Display -->
-  <section class="thought-log-section-visible">
-    <video autoplay muted loop playsinline class="thought-log-video">
-      <source src="footer.webm" type="video/webm" />
-    </video>
-    <h2 class="thought-log-title">Dorian's Recent Thoughts</h2>
-    <h3 class="thought-log-subtitle">Each set tick interval, Dorian reflects on its state. Here, a log can be found of
-      status reports alongside all user interactions with Dorian.</h3>
-  </section>
-
-  <!-- Live Thoughts Log -->
-  <section id="thought-log-section" class="thought-log-section-pre">
-    <div class="thought-log-parent">
-      <pre id="thought-log-section" class="thought-log"></pre>
-    </div>
-  </section>
+    </section>
 
 </body>
 <footer class="footer">
