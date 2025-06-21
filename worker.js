@@ -1,4 +1,5 @@
 import { DorianUniverseOptimized } from "./dorianUniverseOptimized.js";
+import { EMOTIONS } from "./emotions.js";
 
 let universe = null;
 let cellSize = 5; // rendered pixel size
