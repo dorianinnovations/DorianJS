@@ -17,7 +17,8 @@ const PORT = process.env.PORT || 8080;
 const allowedOrigins = [
   'https://www.aidorian.com',                    //  custom domain
   'https://leafy-centaur-370c2f.netlify.app',  //  Netlify deploy preview
-  'http://localhost:3000'                      //  local dev (optional)
+  'http://localhost:3000',                     //  local dev (optional)
+  'https://dorianjs.onrender.com'              //  Render deployment
 ];
 
 app.use(
