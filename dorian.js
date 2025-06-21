@@ -74,18 +74,7 @@ window.addEventListener("DOMContentLoaded", () => {
     const sections = document.querySelectorAll('#hero-section, #main-layout, #chat-section, #thought-log-section');
 
 
-    function toggleChat() {
-    const box = document.getElementById('chatbotBox');
-    box.classList.toggle('active');
-    console.log('Chat toggled:', box.classList.contains('active') ? 'Open' : 'Closed');
-    // If the chat is opened, focus the input field
-    if (box.classList.contains('active')) {
-      input.focus();
-    } else {
-      input.blur();
-    }
-  }
-   
+    
     
 
     // Function to hide all sections
@@ -502,7 +491,34 @@ document.addEventListener('click', (e) => {
   const pauseBtn = document.getElementById("pause-btn");
   const mutationToggle = document.getElementById("mutation-checkbox");
   const resetBtn = document.getElementById("reset-btn");
+  
+  
+  
+    document.getElementById('about-button').addEventListener('click', function() {
+    const aboutScrollButton = document.getElementById('about-spot');
+    console.log('Chat spot clicked, scrolling to section:', aboutScrollButton);
 
+    if (aboutScrollButton) {
+        aboutScrollButton.scrollIntoView({
+            behavior: 'smooth', // Optional: for smooth scrolling
+            block: 'start'      // Optional: align the top of the element to the top of the viewport
+        });
+        
+    }
+});
+  
+  document.getElementById('chat-button').addEventListener('click', function() {
+    const chatScrollButton = document.getElementById('chat-spot');
+    console.log('Chat spot clicked, scrolling to section:', chatScrollButton);
+
+    if (chatScrollButton) {
+        chatScrollButton.scrollIntoView({
+            behavior: 'smooth', // Optional: for smooth scrolling
+            block: 'start'      // Optional: align the top of the element to the top of the viewport
+        });
+        
+    }
+});
   // Action menu button and toggle
   document
     .getElementById("action-menu-btn-icon")

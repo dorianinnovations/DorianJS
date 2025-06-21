@@ -804,6 +804,7 @@ canvas#dorian-canvas {
     letter-spacing: 0.05rem;
     font-size: 1.2rem;
     text-align: center;
+    border: none;
     background-color: #00000000;
     text-shadow: none;
   }

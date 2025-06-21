@@ -54,10 +54,10 @@
       <a class="action-menu-btn-btn" href="index.html" target="_self">
         <span class="material-symbols-outlined">home</span> Home
       </a>
-      <button class="action-menu-btn-btn" data-target="#chat">
+      <button class="action-menu-btn-btn" id="chat-button">
         <span class="material-symbols-outlined">chat_bubble</span> Chat
       </button>
-      <button class="action-menu-btn-btn" data-target="#about">
+      <button class="action-menu-btn-btn" id="about-button">
         <span class="material-symbols-outlined">info</span> About
       </button>
     </div>
@@ -74,9 +74,8 @@
     <p class="heading-subtitle">Intelligence, redefined.</p>
     <div class="header-divider"></div>
   </div>
-
-  <!-- GPT Output Container -->
-  <div class="gpt-output-container">
+<section id="chat-spot">
+    <div class="gpt-output-container">
     <div id="gpt-output" class="gpt-answer-text-box">
       <span class="typing-loader">
         <span></span><span></span><span></span>
@@ -91,7 +90,10 @@
       <i class="fa-solid fa-arrow-up"></i>
     </button>
   </div>
+</section>
 
+  <!-- GPT Output Container -->
+ 
   <!-- Main Layout -->
   <main class="layout">
     <!-- Left Column -->
@@ -230,7 +232,7 @@
     </div>
   </section>
 
-  <section class="emotion-architect-section">
+  <section id="about-spot" class="emotion-architect-section">
     <h1 class="emotion-architect-title">Emotion Simulation System Overview</h1>
     <p class="emotion-architect-subtitle">Our emotional simulation system models lifelike emotional behavior in virtual
       entities by combining psychological theory with real-time environmental and temporal responsiveness. Built on a
