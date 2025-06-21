@@ -340,17 +340,17 @@ document.addEventListener('click', (e) => {
       }
 
       await botui.message.add({ human: true, content: userInput });
-      const loadingMsg = await botui.message.add({ content: "...", loading: true });
+      const loadingMsgIndex = await botui.message.add({ content: "...", loading: true });
 
       try {
         const reply = await sendPrompt(userInput);
         const content = reply && reply.trim() ? reply.trim() : "⚠️ Error communicating with Dorian.";
-        await botui.message.update(loadingMsg.id, { loading: false, content });
+        await botui.message.update(loadingMsgIndex, { loading: false, content });
 
         const log = document.getElementById("thought-log-section");
         log.innerText += `\n\n[User ->] ${userInput}\n[Dorian ->] ${content}`;
       } catch (err) {
-        await botui.message.update(loadingMsg.id, { loading: false, content: "⚠️ Error communicating with Dorian." });
+        await botui.message.update(loadingMsgIndex, { loading: false, content: "⚠️ Error communicating with Dorian." });
         console.error(err);
       }
 
