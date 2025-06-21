@@ -12,39 +12,55 @@ const app = express();
 const PORT = process.env.PORT || 8080;
 
 // CORS Configuration - Development-friendly with strict production
-const allowedOrigins = [
+// Base origins that are always allowed
+const defaultAllowedOrigins = [
   'https://aidorian.com',
   'https://leafy-centaur-370c2f.netlify.app'
 ];
 
+// Allow additional origins from environment variable (comma separated)
+const envAllowedOrigins = process.env.ALLOWED_ORIGINS
+  ? process.env.ALLOWED_ORIGINS.split(',').map(o => o.trim())
+  : [];
+
+const allowedOrigins = [...defaultAllowedOrigins, ...envAllowedOrigins];
+
 const isDevelopment = process.env.NODE_ENV !== 'production';
+
+const localOrigins = [
+  'http://localhost:8080',
+  'http://127.0.0.1:8080',
+  'http://localhost:3000',
+  'http://localhost:5500',
+  null // Allow `null` origin for local file testing
+];
 
 app.use(cors({
   origin: function(origin, callback) {
-    const localOrigins = [
-      'http://localhost:8080',
-      'http://127.0.0.1:8080',
-      'http://localhost:3000',
-      'http://localhost:5500',
-      null // Allow `null` origin for local file testing
-    ];
+    console.log('CORS Origin:', origin);
 
-    console.log("CORS Origin:", origin);
+    if (!origin) return callback(null, true); // non-browser request
 
-    // Allow all origins in development mode
-    if (isDevelopment || !origin) {
+    // Allow in development or if origin is in the allow list
+    const fullAllowList = allowedOrigins.concat(localOrigins);
+    if (isDevelopment || fullAllowList.includes(origin)) {
       return callback(null, true);
     }
 
-    // Check allowed origins in production
-    if (allowedOrigins.includes(origin)) {
-      return callback(null, true);
-    }
-
-    callback(new Error('Not allowed by CORS'));
+    // Reject without throwing to avoid 500 errors
+    return callback(null, false);
   },
   credentials: true
 }));
+
+// Provide a clear response when CORS blocks a request
+app.use((err, req, res, next) => {
+  if (err && err.message === 'Not allowed by CORS') {
+    console.error('CORS error:', err.message);
+    return res.status(403).json({ error: err.message });
+  }
+  next(err);
+});
 
 // Handle OPTIONS preflight requests
 app.options('*', cors());

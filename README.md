@@ -44,5 +44,17 @@ Documentation
 Collaboration
 
 This project is open to future contributors who understand its intention: to explore emergence and emotional structure without reducing life to utility or prediction. If you're interested in building with or integrating Dorian, feel free to reach out.
+
+## Server Configuration
+
+Set environment variables in a `.env` file before running the Node server:
+
+```
+OPENROUTER_API_KEY=your-openrouter-key
+# Optional: comma separated list of extra origins allowed by CORS
+ALLOWED_ORIGINS=https://example.com,https://staging.example.com
+```
+
+`ALLOWED_ORIGINS` extends the default origin list used in `server.js`. This helps resolve CORS errors when deploying to new domains.
  
 
