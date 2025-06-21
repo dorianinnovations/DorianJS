@@ -975,7 +975,7 @@ canvas#dorian-canvas {
 
 .navigation-bar-right {
   display: flex;
-  gap: 0.5rem;
+  gap: 4rem;
   align-items: center;
   flex-wrap: wrap; /* allows wrapping on smaller screens */
   transition: all 0.3s ease-in-out;
@@ -996,7 +996,7 @@ canvas#dorian-canvas {
 
 .navigation-button {
   font-family: "Rajdhani", sans-serif;
-  font-size: 1.3rem;
+  font-size: 1rem;
   padding: 0.3rem 0.5rem;
   font-weight: 500;
   color: white;

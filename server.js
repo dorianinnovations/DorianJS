@@ -1,4 +1,9 @@
 // server.js (ESM-compatible version)
+app.get('/healthz', (req, res) => {
+  res.send('OK');
+});
+
+
 import express from 'express';
 import dotenv from 'dotenv';
 import axios from 'axios';
@@ -87,9 +92,6 @@ app.post('/ask', async (req, res) => {
      
 });
 
-app.get('/healthz', (req, res) => {
-  res.send('OK');
-});
 
 
 memory.meta.currentTick += 1;
