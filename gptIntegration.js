@@ -1,11 +1,16 @@
 //FRONTEND
 // This file handles the integration with the GPT API for sending prompts and receiving responses.
 
+// Configurable API endpoint. Can be injected via <script> or process.env for Node
+const API_URL = (typeof window !== 'undefined' && window.API_URL) ||
+  (typeof process !== 'undefined' && process.env.API_URL) ||
+  'https://dorianjs.onrender.com';
+
 export async function sendUserPrompt(userInput) {
-  return await sendPrompt(userInput, false);
+  return await sendPrompt(userInput);
 }
 export async function sendAutoReflection(systemInput) {
-  return await sendPrompt(systemInput, true);
+  return await sendPrompt(systemInput);
 }
 console.log("🟢 LLM API ONLINE...");
 
@@ -39,7 +44,7 @@ ${userInput}`;
 
 
 try {
-    const res = await fetch("https://dorianjs.onrender.com/ask", {
+    const res = await fetch(`${API_URL}/ask`, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ prompt: fullPrompt }),
