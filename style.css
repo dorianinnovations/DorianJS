@@ -234,18 +234,7 @@ main.layout {
   transform: scale(0.94);
 }
 
-.custom-btn {
-  background-color: #111;
-  color: #fff;
-  border: 1px solid #555;
-  padding: 1rem;
-  border-radius: 14px;
-  font-family: "Chakra Petch", sans-serif;
-  font-size: 1.2rem;
-  cursor: pointer;
-  transition: box-shadow 0.3s ease, transform 0.2s ease;
-  box-shadow: 0 0 10px rgba(255, 255, 255, 0.1);
-}
+
 
 .input-text-box {
   display: flex;
@@ -464,22 +453,22 @@ canvas#dorian-canvas {
 
   @keyframes rgbBoxShadow {
     0% {
-      box-shadow: -40px 0 40px 36px rgba(69, 59, 255, 0.34);
+      box-shadow: -30px 0 30px 28px rgba(69, 59, 255, 0.28);
     }
     15% {
-      box-shadow: 0 0 90px 20px rgba(0, 47, 255, 0.43);
+      box-shadow: 0 0 70px 16px rgba(0, 47, 255, 0.36);
     }
     50% {
-      box-shadow: 0 0 110px 24px rgba(0, 47, 255, 0.43);
+      box-shadow: 0 0 85px 18px rgba(0, 47, 255, 0.36);
     }
     65% {
-      box-shadow: 0 0 120px 28px rgba(0, 8, 160, 0.85);
+      box-shadow: 0 0 90px 20px rgba(0, 8, 160, 0.7);
     }
     85% {
-      box-shadow: 0 0 120px 36px rgba(46, 46, 255, 0.622);
+      box-shadow: 0 0 90px 28px rgba(46, 46, 255, 0.5);
     }
     100% {
-      box-shadow: -40px 0 40px 36px rgba(48, 37, 255, 0.34); /* Matches 0% for perfect loop */
+      box-shadow: -30px 0 30px 28px rgba(48, 37, 255, 0.28);
     }
   }
 
@@ -488,8 +477,9 @@ canvas#dorian-canvas {
   }
      .heading-title-living-grid {
     font-size: 1.7rem;
-    font-weight: 400;
-    letter-spacing: 0;
+    font-weight: 500;
+    letter-spacing: -0.04em;
+    z-index: 1000;
     color: white;
     animation: none;
     text-shadow: rgba(230, 230, 230, 0.885) 0 -8px 3px,
@@ -563,8 +553,11 @@ canvas#dorian-canvas {
   }
 
   .heading-subtitle {
-    margin-bottom: 50px;
-    font-size: 0.4rem;
+    margin-bottom: 200px;
+    font-size: 0.6rem;
+    letter-spacing: 0.05rem;
+    font-weight: 100;
+    z-index: 1000;
     font-family: "Bruno Ace SC", sans-serif;
     text-shadow: rgba(255, 255, 255, 0.319) 0 -8px 3px,
       rgba(255, 255, 255, 0.457) 0 0 3px;
@@ -705,7 +698,15 @@ canvas#dorian-canvas {
   font-weight: 600;
   text-decoration: none;
   color: white;
+  margin-top: 6rem;
+  z-index: 1000;
   font-family: "Bruno Ace SC", sans-serif;
+  border-bottom: 4px solid;
+  border-image: linear-gradient(90deg, #111 0%, #6f6f6f 30%, #ffffff 50%, #6b6b6b 70%, #000 100%) 1;
+  transition: all 1s cubic-bezier(0.4, 0.2, 0.2, 1),
+    text-shadow 1s ease-in-out,
+    color 1s ease-in-out;
+  
 }
   .action-bar {
     position: fixed;
@@ -722,27 +723,44 @@ canvas#dorian-canvas {
     pointer-events: none;
     transform: translateX(-7%);
   }
+  .toggle-switches-container {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    gap: 3rem;
+    width: 280px;
+    padding: 1rem;
+    border-radius: 15px;
+    background-color: transparent;
+  }
 
-  .sagA-sliders-labels {
+  .sliders-container {
     display: flex;
     flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+    width: 280px;
+    padding: 1rem;
+    border-radius: 15px;
+    background-color: transparent;
   }
 
   .action-menu-btn-icon {
-    width: 70px;
-    height: 70px;
+    width: 50px;
+    height: 50px;
     font-size: 2rem;
     cursor: pointer;
     border: none;
-    background: url("logo.png") no-repeat center center;
-    background-size: cover;
+    background: url("menu-bar.png") no-repeat center center;
+    background-size: fill;
     display: flex;
-    backdrop-filter: blur(5px);
     opacity: 0.8;
     color: white;
     animation: livingGlow 3s infinite alternate;
     outline: 1px solid rgba(255, 255, 255, 0.2);
-    border-radius: 55px;
+    border-radius: 15px;
     box-shadow: 0 0 0px rgba(255, 255, 255, 0.517),
       -4px 4px 2px rgba(0, 4, 255, 0.3), 0 0 10px rgba(255, 255, 255, 0.1),
       0 0 20px rgba(255, 255, 255, 0.1);
@@ -866,6 +884,8 @@ canvas#dorian-canvas {
   border: 1px solid rgba(255, 255, 255, 0.2);
   background: transparent;
   position: relative;
+  box-shadow: 0 -2px 10px rgba(255, 255, 255, 0.679),
+    inset 0 0 5px rgba(255, 255, 255, 0.05);
   top: 10px;
 }
 
@@ -886,7 +906,7 @@ canvas#dorian-canvas {
     opacity: 0.6;
   }
   60% {
-    transform: rotate(660deg) scale(1.44);
+    transform: rotate(660deg) scale(1.34);
     opacity: 1;
   }
   100% {
@@ -899,7 +919,8 @@ canvas#dorian-canvas {
   height: 50px;
   width: auto;
   margin-left: 0.5rem;
-  border-radius: 150px;
+  border-radius: 9999px; /* Fully rounded corners */
+  
   transition: box-shadow 0.6s cubic-bezier(0.4, 0.2, 0.2, 1), filter 0.4s;
   animation: rotate 1.2s cubic-bezier(0.4, 0.2, 0.2, 1) 1;
   animation-iteration-count: 1;
@@ -909,8 +930,21 @@ canvas#dorian-canvas {
   display: flex;
   gap: 0.5rem;
   align-items: center;
-
   flex-wrap: wrap; /* allows wrapping on smaller screens */
+  transition: all 0.3s ease-in-out;
+  animation-name: slideIn;
+  animation-duration: 2.6s;
+  animation-fill-mode: backwards;
+  animation-iteration-count: 1;
+}
+
+@keyframes slideIn {
+  from {
+    transform: translateX(30%);
+  }
+  to {
+    transform: translateX(0);
+  }
 }
 
 .navigation-button {
@@ -990,7 +1024,6 @@ canvas#dorian-canvas {
     border: 1px solid rgba(255, 255, 255, 0.2);
     padding: 1rem;
     width: 100%;
-    flex-direction: column;
     align-items: center;
     justify-content: center;
     max-width: 100%;
@@ -1056,6 +1089,35 @@ canvas#dorian-canvas {
     gap: 2rem;
     height: auto;
   }
+
+  .speed-pause-box {
+    max-width: 100%;
+    display: flex;
+    width: 100%;
+    margin-top: 1rem;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+  }
+  .speed-pause-btns {
+    background: transparent;
+    color: #fff;
+    font-family: "rajdhani";
+    border: 1px solid #555;
+    width: 200px;
+    margin: 0 1rem;
+    padding: 1rem 2rem;
+    border-radius: 8px;
+    font-size: 1rem;
+    font-weight: 500;
+    cursor: pointer;
+    box-shadow: inset 0 0 0 1px rgba(3, 3, 3, 0.13),
+      0 0 6px rgba(255, 255, 255, 0.22),
+      0 0 10px rgba(255, 255, 255, 0.12),
+      0 0 18px #0000ff22;
+  }
+
 
   .ui-card {
     width: 90%;
@@ -1175,31 +1237,11 @@ canvas#dorian-canvas {
   .switch,
   .slider,
   .slider-btn {
-    transition-duration: 0.5s;
+    transition-duration: 0.2s;
   }
 
-  .custom-btn {
-    background: transparent;
-    color: #fff;
-    font-family: "rajdhani";
-    border: 1px solid #555;
-    padding: 1rem 3rem;
-    margin: 0.5rem;
-    text-align: center;
-    text-decoration: none;
-    display: inline-block;
-    box-sizing: border-box;
-    border-radius: 8px;
-    font-size: 2rem;
-    font-weight: 500;
-    cursor: pointer;
-    transition: box-shadow 0.9s ease, transform 0.6s ease;
-    box-shadow: inset 0 0 0 1x rgba(3, 3, 3, 0.226),
-      0 0 10px rgba(255, 255, 255, 0.457),
-      0 0 20px rgba(255, 255, 255, 0.224),
-      0 0 30px #0000ff38;
-  }
 
+  
 .custom-btn-dorian{
     background: transparent;
     color: #ffffff8f;
@@ -1291,6 +1333,8 @@ canvas#dorian-canvas {
   }
   input[type="range"]:focus {
     outline: none;
+    box-shadow: 0 0 5px #7abaff, 0 0 10px #1a75ff;
+    
   }
   input[type="range"]::-webkit-slider-thumb {
     -webkit-appearance: none;
@@ -1302,7 +1346,7 @@ canvas#dorian-canvas {
     box-shadow: 0 0 6px #7abaff, 0 0 12px #1a75ff;
     margin-top: -0.35rem; /* centers thumb on track */
     transition: transform 0.2s ease;
-    z-index: 2; /* Ensure thumb is above track */
+    z-index: 1000; /* Ensure thumb is above track */
   }
   input[type="range"]::-webkit-slider-thumb:hover {
     transform: scale(1.1);
