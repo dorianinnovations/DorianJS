@@ -20,7 +20,11 @@ const allowedOrigins = [
   'http://localhost:3000'                      //  local dev (optional)
 ];
 
-app.use(cors());
+app.use(
+  cors({
+    origin: allowedOrigins,
+  })
+);
 
 app.use(bodyParser.json());
 app.use('/media', express.static('media'));
