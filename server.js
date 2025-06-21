@@ -22,16 +22,26 @@ const isDevelopment = process.env.NODE_ENV !== 'production';
 
 app.use(cors({
   origin: function(origin, callback) {
-    // Allow all in development mode or when origin is undefined (server-to-server)
+    const allowedOrigins = [
+      'https://www.aidorian.com',
+      'https://leafy-centaur-370c2f.netlify.app',
+      'https://dorianjs.onrender.com',
+      'http://localhost:8080',
+      'http://127.0.0.1:8080',
+      null // Allow `null` origin for local file testing
+    ];
+
+    // Allow all origins in development mode
+    const isDevelopment = process.env.NODE_ENV !== 'production';
     if (isDevelopment || !origin) {
       return callback(null, true);
     }
-    
+
     // Check allowed origins in production
     if (allowedOrigins.includes(origin)) {
       return callback(null, true);
     }
-    
+
     callback(new Error('Not allowed by CORS'));
   },
   credentials: true
