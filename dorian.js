@@ -491,10 +491,65 @@ document.addEventListener('click', (e) => {
   const pauseBtn = document.getElementById("pause-btn");
   const mutationToggle = document.getElementById("mutation-checkbox");
   const resetBtn = document.getElementById("reset-btn");
+
+
+
+ document
+    .getElementById("action-menu-btn-icon")
+    .addEventListener("click", () => {
+      const menu = document.getElementById("action-menu-btns");
+      menu.classList.toggle("active");
+      
+    });
+  // Action bar visibility toggle on scroll
+  const actionBar = document.querySelector(".action-bar");
+  let lastScrollY = window.scrollY;
+  window.addEventListener("scroll", () => {
+    const currentY = window.scrollY;
+    // Fade out action menu when at top (nav visible)
+    if (currentY <= 50) {
+      actionBar.classList.add("hidden");
+    } else {
+      actionBar.classList.remove("hidden");
+    }
+    lastScrollY = currentY;
+  });
+
+
   
-  
+    document.getElementById('chat-btn-nav').addEventListener('click', function() {
+    const chatScrollButton = document.getElementById('chat-spot');
+    console.log('Chat spot clicked, scrolling to section:', chatScrollButton);
+
+    if (chatScrollButton) {
+        chatScrollButton.scrollIntoView({
+            behavior: 'smooth', // Optional: for smooth scrolling
+            block: 'start'      // Optional: align the top of the element to the top of the viewport
+        });
+        
+    }
+});
+
+
+
+
+
+
+
   
     document.getElementById('about-button').addEventListener('click', function() {
+    const aboutScrollButton = document.getElementById('about-spot');
+    console.log('Chat spot clicked, scrolling to section:', aboutScrollButton);
+
+    if (aboutScrollButton) {
+        aboutScrollButton.scrollIntoView({
+            behavior: 'smooth', // Optional: for smooth scrolling
+            block: 'start'      // Optional: align the top of the element to the top of the viewport
+        });
+        
+    }
+});
+   document.getElementById('about-btn-nav').addEventListener('click', function() {
     const aboutScrollButton = document.getElementById('about-spot');
     console.log('Chat spot clicked, scrolling to section:', aboutScrollButton);
 
@@ -519,27 +574,22 @@ document.addEventListener('click', (e) => {
         
     }
 });
-  // Action menu button and toggle
-  document
-    .getElementById("action-menu-btn-icon")
-    .addEventListener("click", () => {
-      const menu = document.getElementById("action-menu-btns");
-      menu.classList.toggle("active");
-      
-    });
-  // Action bar visibility toggle on scroll
-  const actionBar = document.querySelector(".action-bar");
-  let lastScrollY = window.scrollY;
-  window.addEventListener("scroll", () => {
-    const currentY = window.scrollY;
-    // Fade out action menu when at top (nav visible)
-    if (currentY <= 50) {
-      actionBar.classList.add("hidden");
-    } else {
-      actionBar.classList.remove("hidden");
+
+document.getElementById('social-btn-nav').addEventListener('click', function() {
+    const socialScrollButton = document.getElementById('social-spot');
+    console.log('Chat spot clicked, scrolling to section:', socialScrollButton);
+
+    if (socialScrollButton) {
+        socialScrollButton.scrollIntoView({
+            behavior: 'smooth', // Optional: for smooth scrolling
+            block: 'start'      // Optional: align the top of the element to the top of the viewport
+        });
+        
     }
-    lastScrollY = currentY;
-  });
+});
+
+  // Action menu button and toggle
+ 
 
   function showTypingLoader() {
     const output = document.getElementById("gpt-output");

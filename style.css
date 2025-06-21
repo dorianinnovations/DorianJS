@@ -179,7 +179,7 @@ main.layout {
   gap: 2rem;
   padding: 12px 16px;
   border-radius: 15px;
-  background-color: #ffffff00;
+  background-color: #000000;
   color: #ffffff;
   text-shadow: white 0 0 13px, rgba(163, 163, 163, 0.739) 0 0 2px;
   font-family: "orbitron";
@@ -194,7 +194,7 @@ main.layout {
 
 .speed-slider-wrapper {
   display: flex;
-  background: #00000000;
+  background: #000000;
   align-items: center;
   gap: 15px;
   width: 100%;
@@ -252,6 +252,7 @@ main.layout {
 .center-area-wrapper {
   display: flex;
   justify-content: center;
+  background-color: #000;
   align-items: center;
   min-width: 0;
   overflow: hidden;
@@ -1313,6 +1314,52 @@ canvas#dorian-canvas {
     max-width: 100%;
     box-sizing: border-box;
   }
+  .social-links-section {
+  margin-top: 2rem;
+
+  padding: 1rem;
+  text-align: center;
+}
+
+.social-links-list {
+  list-style: none;
+  padding: 0;
+}
+
+.social-links-list li {
+  margin: 0.5rem 0;
+  font-size: 1.1rem;
+}
+
+.emotion-architect-video {
+  position: fixed;
+  left: 0;
+  bottom: 400px; /* Adjust as needed */
+  width: 100vw;
+  height: auto;
+  z-index: 2000; /* Behind all content */
+  opacity: 0.5; /* Dim it so text stands out */
+  pointer-events: none; /* Prevent interaction */
+}
+
+.social-links-list a {
+  color: #ffffff;
+  text-decoration: none;
+}
+
+.social-links-list a:hover,
+.social-links-list a:focus,
+.social-links-list a:active {
+  text-decoration: underline;
+  color: #0015ff;
+  transition: color 0.3s ease;
+  text-shadow: 0 0 5px #00ccff, 0 0 10px rgba(0, 204, 255, 0.5);
+}
+
+
+  #socials-spot {
+    padding: 2rem;
+  }
 
   input.toggle-checkbox {
     display: none;
@@ -1546,6 +1593,7 @@ input[type="range"]::-moz-range-thumb:hover {
     font-size: 1.5rem;
     font-family: "rajdhani", sans-serif;
     font-weight: 400;
+    background-color: rgba(0, 0, 0, 0);
     padding: 2rem;
   }
 
