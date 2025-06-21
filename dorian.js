@@ -525,6 +525,7 @@ document.addEventListener('click', (e) => {
     .addEventListener("click", () => {
       const menu = document.getElementById("action-menu-btns");
       menu.classList.toggle("active");
+      
     });
   // Action bar visibility toggle on scroll
   const actionBar = document.querySelector(".action-bar");

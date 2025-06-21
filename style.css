@@ -779,7 +779,6 @@ canvas#dorian-canvas {
     font-size: 2rem;
     cursor: pointer;
     border: none;
-    pointer-events: none;
     background: url("menu-bar.png") no-repeat center center;
     background-size: fill;
     display: flex;
