@@ -67,19 +67,7 @@ body::-webkit-scrollbar {
   animation-iteration-count: 1, 1;
 }
 
-.heading-title {
-  letter-spacing: -0.4rem;
-  font-size: 6rem;
-  font-weight: 600;
-  font-family: "bruno ace sc", sans-serif;
-  animation-name: livingGlow, slideFadeIn;
-  font-weight: 500;
-  text-decoration: none;
-  color: white;
-  transition: scale 0.2s ease-in-out;
-  cursor: pointer;
-  z-index: 10;
-}
+
 .heading-title:hover {
   scale: 1.08;
   transition-duration: 2s;
@@ -516,7 +504,8 @@ canvas#dorian-canvas {
     margin-left: -1.6rem;
     font-family: "bruno ace sc", sans-serif;
     margin-bottom: 0.3rem;
-    animation-duration: 3s;
+    animation-duration: 1s;
+    z-index: 1000;
   }
 @keyframes slideIn {
     from {
@@ -543,19 +532,8 @@ canvas#dorian-canvas {
     translate: -50%;
   }
   
-}
-  .heading-title {
-    font-size: 2rem;
-    font-weight: 400;
-    letter-spacing: -0.3rem;
-    animation-name: livingGlow;
-    animation-iteration-count: infinite;
-    transition: 2s ease-in-out;
-    animation-duration: 3s;
-    text-shadow: rgba(230, 230, 230, 0.885) 0 -8px 3px,
-      rgba(255, 255, 255, 0.921) 0 0 3px;
-  }
- 
+
+
 
   .material-symbols-outlined {
     font-variation-settings: "FILL" 1, "wght" 400, "GRAD" 0, "opsz" 48;
@@ -722,7 +700,13 @@ canvas#dorian-canvas {
         transparent 32px
       );
   }
-
+.heading-title {
+  font-size: 2.5rem;
+  font-weight: 600;
+  text-decoration: none;
+  color: white;
+  font-family: "Bruno Ace SC", sans-serif;
+}
   .action-bar {
     position: fixed;
     bottom: 1em;
@@ -894,14 +878,31 @@ canvas#dorian-canvas {
   z-index: 1000; /* Ensures it stays above other elements */
   position: relative; /* For absolute positioning of logo */
   padding: 0.5rem;
-
+  
+}
+@keyframes rotate {
+  0% {
+    transform: rotate(0deg) scale(0.95);
+    opacity: 0.6;
+  }
+  60% {
+    transform: rotate(660deg) scale(1.44);
+    opacity: 1;
+  }
+  100% {
+    transform: rotate(720deg) scale(1);
+    opacity: 1;
+  }
 }
 
 .navigation-bar-left .logo {
-  height: 57px;
+  height: 50px;
   width: auto;
   margin-left: 0.5rem;
-  border-radius: 50%;
+  border-radius: 150px;
+  transition: box-shadow 0.6s cubic-bezier(0.4, 0.2, 0.2, 1), filter 0.4s;
+  animation: rotate 1.2s cubic-bezier(0.4, 0.2, 0.2, 1) 1;
+  animation-iteration-count: 1;
 }
 
 .navigation-bar-right {
