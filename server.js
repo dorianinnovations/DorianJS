@@ -14,27 +14,24 @@ const PORT = process.env.PORT || 8080;
 // CORS Configuration - Development-friendly with strict production
 const allowedOrigins = [
   'https://www.aidorian.com',
-  'https://leafy-centaur-370c2f.netlify.app', 
-  'https://dorianjs.onrender.com'
+  'https://leafy-centaur-370c2f.netlify.app'
 ];
 
 const isDevelopment = process.env.NODE_ENV !== 'production';
 
 app.use(cors({
   origin: function(origin, callback) {
-    const allowedOrigins = [
-      'https://www.aidorian.com',
-      'https://leafy-centaur-370c2f.netlify.app',
-      'https://dorianjs.onrender.com',
+    const localOrigins = [
       'http://localhost:8080',
       'http://127.0.0.1:8080',
       'http://localhost:3000',
-      'http://localhost:5000',
+      'http://localhost:5500',
       null // Allow `null` origin for local file testing
     ];
 
+    console.log("CORS Origin:", origin);
+
     // Allow all origins in development mode
-    const isDevelopment = process.env.NODE_ENV !== 'production';
     if (isDevelopment || !origin) {
       return callback(null, true);
     }
@@ -48,6 +45,9 @@ app.use(cors({
   },
   credentials: true
 }));
+
+// Handle OPTIONS preflight requests
+app.options('*', cors());
 
 // Parse JSON requests
 app.use(express.json());
@@ -84,6 +84,12 @@ app.post('/ask', async (req, res) => {
 // Health check endpoint
 app.get('/', (req, res) => {
   res.json({ status: 'Dorian API is running' });
+});
+
+// Log request origin
+app.use((req, res, next) => {
+  console.log('Request Origin:', req.headers.origin);
+  next();
 });
 
 // Start server
