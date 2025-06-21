@@ -8,6 +8,8 @@
 
   <!-- Stylesheets -->
   <link rel="stylesheet" href="style.css" />
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/botui/build/botui.min.css" />
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/botui/build/botui-theme-default.css" />
   <link rel="icon" href="logo.png" />
 
   <!-- Font Awesome -->
@@ -28,6 +30,8 @@
     rel="stylesheet">
 
   <!-- JavaScript -->
+  <script src="https://cdn.jsdelivr.net/npm/vue@2/dist/vue.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/botui/build/botui.min.js"></script>
   <script type="module" src="dorian.js"></script>
 </head>
 
@@ -75,20 +79,8 @@
     <div class="header-divider"></div>
   </div>
 <section id="chat-spot">
-    <div class="gpt-output-container">
-    <div id="gpt-output" class="gpt-answer-text-box">
-      <span class="typing-loader">
-        <span></span><span></span><span></span>
-      </span>
-    </div>
-  </div>
-
-  <!-- GPT Input -->
-  <div class="input-text-box">
-    <input type="text" id="gpt-input" class="input-text" placeholder="Ask a question" />
-    <button type="button" class="btn-go-right-column" title="Run Command">
-      <i class="fa-solid fa-arrow-up"></i>
-    </button>
+  <div id="botui-app">
+    <bot-ui></bot-ui>
   </div>
 </section>
 

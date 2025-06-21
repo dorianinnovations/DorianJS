@@ -2043,3 +2043,16 @@ input[type="range"]::-moz-range-thumb:hover {
     transform: translateX(1px);
   }
 }
+
+/* BotUI customization */
+#botui-app .botui-message-content {
+  font-family: "rajdhani", sans-serif;
+  font-size: 1.5rem;
+  color: #fff;
+}
+
+#botui-app .botui-actions-text-input {
+  background: transparent;
+  border-color: #555;
+  color: #fff;
+}

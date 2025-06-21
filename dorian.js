@@ -18,8 +18,6 @@ window.addEventListener("DOMContentLoaded", () => {
   let lastAlive = 0;
   let worker;
   let currentStats = null;
-  let lastPromptTime = 0;
-  const cooldownDuration = 5000; // 5 seconds
 
   let selectedEmotion = 0; // Default to Joy (emotion ID 0)
   let paintingMode = false; // You have this hardcoded as true on line 100
@@ -62,9 +60,7 @@ window.addEventListener("DOMContentLoaded", () => {
   const BIRTH_DELAY = 5; // minimum dead ticks before a cell can grow again
   let UPDATES_PER_FRAME = 25;
 
-  const input = document.getElementById("gpt-input");
-  const button = document.querySelector(".btn-go-right-column");
-  const output = document.getElementById("gpt-output");
+  const botui = new BotUI("botui-app");
   const toggleMemorybtn = document.getElementById("toggle-memory");
   const memoryOutput = document.getElementById("dorian-memory");
   const ambienceAudio = document.getElementById("ambience-audio");
@@ -334,14 +330,35 @@ document.addEventListener('click', (e) => {
     }
   });
 
-  //GPT INPUT HANDLER
-  input.addEventListener("keypress", function (event) {
-    if (event.key === "Enter") {
-      event.preventDefault();
-      button.click();
-      input.value = "";
-    }
-  });
+  // Start the chat loop using BotUI
+  function startChat() {
+    botui.action.text({ action: { placeholder: "Ask a question" } }).then(async (res) => {
+      const userInput = res.value.trim();
+      if (!userInput) {
+        startChat();
+        return;
+      }
+
+      await botui.message.add({ human: true, content: userInput });
+      const loadingMsg = await botui.message.add({ content: "...", loading: true });
+
+      try {
+        const reply = await sendPrompt(userInput);
+        const content = reply && reply.trim() ? reply.trim() : "⚠️ Error communicating with Dorian.";
+        await botui.message.update(loadingMsg.id, { loading: false, content });
+
+        const log = document.getElementById("thought-log-section");
+        log.innerText += `\n\n[User ->] ${userInput}\n[Dorian ->] ${content}`;
+      } catch (err) {
+        await botui.message.update(loadingMsg.id, { loading: false, content: "⚠️ Error communicating with Dorian." });
+        console.error(err);
+      }
+
+      startChat();
+    });
+  }
+
+  startChat();
 
   async function sendStatsToClaude(stats) {
     const prompt = `
@@ -367,15 +384,8 @@ document.addEventListener('click', (e) => {
       // Appends the response to the Dorian thought log (bottom section)
       const thoughtLog = document.getElementById("thought-log-section");
       if (reply && reply.trim()) {
-        // For endless log, append directly:
         thoughtLog.innerText += `\n\n[Tick ${stats.tick}] ${reply.trim()}`;
-
-        // For the chat box, keep the typewriter effect:
-        typeTextToElement(
-          document.getElementById("gpt-output"),
-          reply.trim(),
-          25
-        );
+        await botui.message.add({ content: reply.trim() });
       }
 
       return reply?.toLowerCase().trim();
@@ -591,14 +601,6 @@ document.getElementById('social-btn-nav').addEventListener('click', function() {
   // Action menu button and toggle
  
 
-  function showTypingLoader() {
-    const output = document.getElementById("gpt-output");
-    output.innerHTML = `
-    <span class="typing-loader">
-      <span></span><span></span><span></span>
-    </span>
-  `;
-  }
 
     // Add this function after your updateHUD function (around line 600)
   function updateEmotionalDashboard(stats) {
@@ -628,15 +630,7 @@ document.getElementById('social-btn-nav').addEventListener('click', function() {
     });
   }
 
-  function hideTypingLoader() {
-    const output = document.getElementById("gpt-output");
-    output.innerHTML = "";
-  }
 
-  function showGPTResponse(text) {
-    const output = document.getElementById("gpt-output");
-    output.textContent = text;
-  }
 
   document.getElementById("reveal-thoughts").addEventListener("click", () => {
     const logSection = document.getElementById("thought-log-section");
@@ -774,68 +768,4 @@ document.getElementById('social-btn-nav').addEventListener('click', function() {
     worker.postMessage({ type: "update", updates: UPDATES_PER_FRAME });
   }
 
-  const message = input.value;
-
-  if (message.trim() !== "") {
-    console.log("Message sent:", message);
-  }
-
-  button.addEventListener("click", async () => {
-    const userInput = input.value.trim();
-    if (!userInput) {
-      output.innerText = "⚠️ Please enter a message.";
-      return;
-    }
-
-    input.value = "";
-
-    const now = Date.now();
-    if (now - lastPromptTime < cooldownDuration) {
-      output.innerText = "⏳ Please wait before sending another message.";
-      return;
-    }
-    lastPromptTime = now;
-
-    // ✅ Show loader bubbles
-    output.innerHTML = `
-    <span class="typing-loader">
-      <span></span><span></span><span></span>
-    </span>
-  `;
-
-    try {
-      const reply = await sendPrompt(userInput);
-
-      if (reply && reply.trim()) {
-        // ✅ Replace loader with typed response
-        typeTextToElement(output, reply.trim(), 25);
-
-        // ✅ Add to log
-        const log = document.getElementById("thought-log-section");
-        log.innerText += `\n\n[User ->] ${userInput}\n[Dorian ->] ${reply.trim()}`;
-      } else {
-        // ❌ If reply is empty, replace loader with fallback message
-        const messages = [
-          "Signal transmission received. Please wait.",
-          "Message delivered. Awaiting response.",
-          "Your words are echoing in the digital ether.",
-          "Processing your input. Stand by.",
-          "Your message is being analyzed. Please hold.",
-          "Awaiting response from Dorian. Please be patient.",
-          "Dorian is contemplating your message. Please hold.",
-          "Your input is being processed. Please wait.",
-          "Dorian is reflecting on your words. Please hold.",
-          "Your message is being decoded. Please wait.",
-          "Dorian is pondering your input. Please hold.",
-          "Your words are being processed. Please wait.",
-        ];
-        output.innerText =
-          messages[Math.floor(Math.random() * messages.length)];
-      }
-    } catch (err) {
-      // ❌ On error, replace loader with error message
-      output.innerText = "⚠️ Error communicating with Dorian.";
-      console.error(err);
-    }
-  });
 });
