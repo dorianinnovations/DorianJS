@@ -1,6 +1,8 @@
 import { sendPrompt } from "./gptIntegration.js";
 import { EMOTIONS } from "./emotions.js";
 
+
+
 //HANDLE UI UPDATES (UI, CHAT, LOGS)
 //MANAGE TYPEWRITER EFFECT
 //HANDLE USER INPUT AND SENDING/RECIEVING API REQUESTS
@@ -68,6 +70,7 @@ window.addEventListener("DOMContentLoaded", () => {
 
    const navButtons = document.querySelectorAll('.navigation-button');
     const sections = document.querySelectorAll('#hero-section, #main-layout, #chat-section, #thought-log-section');
+    
 
 
     
