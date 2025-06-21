@@ -1422,20 +1422,20 @@ input[type="range"]::-moz-range-thumb:hover {
             background: #4a90e2;
             border-radius: 3px;
         }
-  }
-  input[type="range"]::-ms-fill-upper {
+  
+          input[type="range"]::-ms-fill-upper {
             background: #444;
             border-radius: 3px;
         }
   input[type="range"]::-ms-thumb {
-            height: 20px;
+    height: 20px;
             width: 20px;
             border-radius: 50%;
             background: #4a90e2;
             cursor: pointer;
             border: none;
             box-shadow: 0 0 10px rgba(74, 144, 226, 0.5);
-        }
+  }
   input[type="range"]::-ms-tooltip {
     display: none;
   }
@@ -1476,6 +1476,9 @@ input[type="range"]::-moz-range-thumb:hover {
   input[type="checkbox"]:checked {
     transform: translateX(100%);
   }
+  
+      }
+  
 
   @keyframes blink {
     0%,
@@ -1657,7 +1660,7 @@ input[type="range"]::-moz-range-thumb:hover {
   .column-left-column {
     flex-shrink: 1;
   }
-}
+
 
 /* Add to your existing style.css */
 /* Emotional UI Components */
