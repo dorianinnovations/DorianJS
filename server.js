@@ -28,6 +28,8 @@ app.use(cors({
       'https://dorianjs.onrender.com',
       'http://localhost:8080',
       'http://127.0.0.1:8080',
+      'http://localhost:3000',
+      'http://localhost:5000',
       null // Allow `null` origin for local file testing
     ];
 
