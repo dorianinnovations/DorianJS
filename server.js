@@ -13,7 +13,7 @@ const PORT = process.env.PORT || 8080;
 
 // CORS Configuration - Development-friendly with strict production
 const allowedOrigins = [
-  'https://www.aidorian.com',
+  'https://aidorian.com',
   'https://leafy-centaur-370c2f.netlify.app'
 ];
 
