@@ -41,6 +41,11 @@ app.get('/memory', (req, res) => {
 // Add static file serving for your frontend
 app.use(express.static('.')); // Serve your HTML/CSS/JS files
 
+// Health-check endpoint
+app.get('/healthz', (req, res) => {
+  res.send('OK');
+});
+
 
 // Consistent response parsing for both agents
 const parseResponse = (response) => {
@@ -89,10 +94,6 @@ app.post('/ask', async (req, res) => {
     tick: memory.meta.currentTick,
     reflection: reply,
      
-});
-
-app.get('/healthz', (req, res) => {
-  res.send('OK');
 });
 
 
