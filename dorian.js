@@ -13,6 +13,13 @@ let canvas, ctx;
 
 //DOM CONTENT LOADED ENSURES ALL DOM ELEMENTS HAVE BEEN LOADED
 window.addEventListener("DOMContentLoaded", () => {
+  // Prevent the browser from restoring the previous scroll position
+  if ("scrollRestoration" in history) {
+    history.scrollRestoration = "manual";
+  }
+
+  // Ensure the page always loads at the top
+  window.scrollTo(0, 0);
   const CELL_SIZE = 5; // px per cell
 
   let running = true;
@@ -189,6 +196,14 @@ function startChat() {
 
       startChat();
     });
+
+    // BotUI automatically focuses the input which can cause unwanted scrolling
+    setTimeout(() => {
+      if (document.activeElement) {
+        document.activeElement.blur();
+      }
+      window.scrollTo(0, 0);
+    }, 0);
   }
 
   startChat();
