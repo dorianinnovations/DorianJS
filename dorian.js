@@ -22,7 +22,7 @@ window.addEventListener("DOMContentLoaded", () => {
   let currentStats = null;
 
   let selectedEmotion = 0; // Default to Joy (emotion ID 0)
-  let paintingMode = false; // You have this hardcoded as true on line 100
+  let paintingMode = false; 
 
   const canvas = document.getElementById("dorian-canvas");
 
@@ -76,49 +76,6 @@ window.addEventListener("DOMContentLoaded", () => {
     
     
 
-    // Function to hide all sections
-    const hideAllSections = () => {
-        sections.forEach(section => {
-            section.classList.remove('active-section');
-        });
-    };
-
-    // Function to deactivate all navigation buttons
-    const deactivateAllButtons = () => {
-        navButtons.forEach(button => {
-            button.classList.remove('active');
-        });
-    };
-
-    // Function to show a specific section and activate its button
-    const showSection = (sectionId, button) => {
-        hideAllSections(); // Hide everything first
-        deactivateAllButtons(); // Deactivate all buttons
-
-        const targetSection = document.getElementById(sectionId);
-        if (targetSection) {
-            targetSection.classList.add('active-section');
-            button.classList.add('active');
-        }
-    };
-
-    // Add event listeners to navigation buttons
-    navButtons.forEach(button => {
-        button.addEventListener('click', () => {
-            const sectionId = button.dataset.section; // Get the ID from data-section attribute
-            showSection(sectionId, button);
-        });
-    });
-
-    // Initial state: Show the "Overview" (hero-section) by default on page load
-    const defaultSectionId = 'hero-section';
-    const defaultButton = document.querySelector(`.navigation-button[data-section="${defaultSectionId}"]`);
-    if (defaultButton) {
-        showSection(defaultSectionId, defaultButton);
-    }
-
-  // Remove both existing canvas.addEventListener("mousedown"...) handlers
-  // Replace with these:
 
   let screen_size_ratio = 1; // Global variable for scaling
 
@@ -154,140 +111,7 @@ window.addEventListener("DOMContentLoaded", () => {
     return { x: gridX, y: gridY };
   }
 
- 
-
-  // Create emotion palette (add this after your canvas setup)
-  function createEmotionPalette() {
-    const leftColumn = document.querySelector(".column-left-column");
-
-    const paletteHTML = `
-      <div class="ui-card emotion-palette-card">
-        <h3 class="emotion-palette-title">Emotional Parents</h3>
-        <div class="emotion-palette">
-          <div class="emotion-buttons" id="emotion-buttons">
-            ${Object.entries(EMOTIONS)
-              .slice(0, 8)
-              .map(
-                ([id, emotion]) => `
-              <button class="emotion-btn ${id == 0 ? "selected" : ""}" 
-                      data-emotion="${id}" 
-                      style="background-color: rgb(${emotion.color.join(",")})">
-                ${emotion.name}
-              </button>
-            `
-              )
-              .join("")}
-          </div>
-          <div class="painting-controls">
-            <button id="toggle-paint-mode" class="paint-mode-btn">
-              <span class="material-symbols-outlined">palette</span>
-              Enable Painting
-            </button>
-          </div>
-        </div>
-      </div>
-    `;
-
-    leftColumn.insertAdjacentHTML("beforeend", paletteHTML);
-  }
-
-  // Initialize emotion palette
-  createEmotionPalette();
-// Add paint mode toggle after your emotion selection listener (around line 170)
-document.addEventListener('click', (e) => {
-  if (e.target.id === 'toggle-paint-mode' || e.target.closest('#toggle-paint-mode')) {
-    paintingMode = !paintingMode;
-    const btn = document.getElementById('toggle-paint-mode');
-    
-    if (paintingMode) {
-      btn.innerHTML = '<span class="material-symbols-outlined">brush</span> Painting Mode ON';
-      btn.classList.add('active');
-      canvas.style.cursor = 'crosshair';
-      console.log('🎨 Painting mode ENABLED');
-    } else {
-      btn.innerHTML = '<span class="material-symbols-outlined">palette</span> Enable Painting';
-      btn.classList.remove('active');
-      canvas.style.cursor = 'default';
-      console.log('🎨 Painting mode DISABLED');
-    }
-  }
-});
-  // Add event listeners for emotion selection
-  document.addEventListener("click", (e) => {
-    if (e.target.classList.contains("emotion-btn")) {
-      // Remove previous selection
-      document
-        .querySelectorAll(".emotion-btn")
-        .forEach((btn) => btn.classList.remove("selected"));
-
-      // Select new emotion
-      e.target.classList.add("selected");
-      selectedEmotion = parseInt(e.target.dataset.emotion);
-      console.log(
-        "Selected emotion:",
-        selectedEmotion,
-        EMOTIONS[selectedEmotion].name
-      );
-    }
-  });
-
-
-  
-
-  // Replace your existing touch handler (around line 190)
-  canvas.addEventListener("touchstart", (e) => {
-    e.preventDefault(); // Prevent scrolling
-    const coords = getScaledCoordinates(e);
-
-    if (!worker) {
-      console.warn("Worker not initialized yet.");
-      return;
-    }
-  
-    if (paintingMode) {
-      // Paint emotion on touch
-      worker.postMessage({ 
-        type: "paintEmotion", 
-        x: coords.x, 
-        y: coords.y, 
-        emotion: selectedEmotion,
-        intensity: 0.8 
-      });
-      console.log(`Touch painted emotion ${selectedEmotion} at ${coords.x}, ${coords.y}`);
-    } else {
-      // Seed the touched cell
-      worker.postMessage({ type: "seed", x: coords.x, y: coords.y });
-      console.log(`Touch seeded at ${coords.x}, ${coords.y}`);
-    }
-  
-    if (!hasStarted) {
-      hasStarted = true;
-      running = true;
-      animate();
-    }
-  });
-
-  // Add paint drag functionality
-  let isDragging = false;
-
-  canvas.addEventListener("mousemove", (e) => {
-    if (isDragging && paintingMode) {
-      const coords = getScaledCoordinates(e);
-      worker.postMessage({
-        type: "paintEmotion",
-        x: coords.x,
-        y: coords.y,
-        emotion: selectedEmotion,
-        intensity: 0.6, // Slightly lower for drag painting
-      });
-    }
-  });
-
-  canvas.addEventListener("mouseup", () => {
-    isDragging = false;
-  });
-
-  // Update your existing mousedown handler to set isDragging
+//review for deletion
   canvas.addEventListener("mousedown", (e) => {
     const coords = getScaledCoordinates(e);
 
@@ -334,7 +158,7 @@ document.addEventListener('click', (e) => {
   });
 
   // Start the chat loop using BotUI
-  function startChat() {
+function startChat() {
     botui.action.text({ action: { placeholder: "Ask a question" } }).then(async (res) => {
       const userInput = res.value.trim();
       if (!userInput) {
@@ -342,19 +166,25 @@ document.addEventListener('click', (e) => {
         return;
       }
 
-      await botui.message.add({ human: true, content: userInput });
+      // Only add the user message to the log, not as a botui message
+      const log = document.getElementById("thought-log-section");
+      log.innerText += `\n\n[User ->] ${userInput}`;
+
       const loadingMsgIndex = await botui.message.add({ content: "...", loading: true });
-      
       try {
         const reply = await sendPrompt(userInput);
         const content = reply && reply.trim() ? reply.trim() : "⚠️ Dorian is currently under maintence.";
         await botui.message.update(loadingMsgIndex, { loading: false, content });
 
-        const log = document.getElementById("thought-log-section");
-        log.innerText += `\n\n[User ->] ${userInput}\n[Dorian ->] ${content}`;
+        log.innerText += `\n[Dorian ->] ${content}`;
       } catch (err) {
         await botui.message.update(loadingMsgIndex, { loading: false, content: "⚠️ Try again later, Dorian is currently under maintenence." });
         console.error(err);
+      }
+
+      // Blur the active element (input field) to prevent unwanted scrolling
+      if (document.activeElement) {
+        document.activeElement.blur();
       }
 
       startChat();
@@ -362,6 +192,7 @@ document.addEventListener('click', (e) => {
   }
 
   startChat();
+  
 
   async function sendStatsToClaude(stats) {
     const prompt = `
@@ -398,29 +229,7 @@ document.addEventListener('click', (e) => {
     }
   }
 
-  // HANDLE THE TYPEWRITER EFFECT
-  function typeTextToElement(element, text, speed = 25) {
-    // Cancel any previous animation
-    if (element.typewriterTimeout) {
-      clearTimeout(element.typewriterTimeout);
-      element.typewriterTimeout = null;
-    }
-    element.innerText = ""; // Clear the old text
-    let i = 0;
-    function type() {
-      if (i < text.length) {
-        element.innerText += text.charAt(i);
-        i++;
-        element.typewriterTimeout = setTimeout(
-          type,
-          speed + Math.random() * 10
-        );
-      } else {
-        element.typewriterTimeout = null; // Clean up
-      }
-    }
-    type();
-  }
+
 
   // INITIALIZATION OF THE WEB WORKER STARTS HERE //
   function initWorker() {
@@ -542,7 +351,6 @@ document.addEventListener('click', (e) => {
         
     }
 });
-
 
 
 

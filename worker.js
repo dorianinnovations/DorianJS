@@ -17,7 +17,10 @@ function startAnimationLoop() {
   let partialTick = 0;
 
   function loop() {
-    if (!universe) return;
+    if (!universe) {
+      animationLoopRunning = false;
+      return;
+    }
 
     partialTick += speed * 1;
 

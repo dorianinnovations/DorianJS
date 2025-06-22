@@ -19,8 +19,6 @@ export function createBot() {
 
         const response = await fetch('https://openrouter.ai/api/v1/chat/completions', {
           method: 'POST',
-          mode: 'cors',
-          credentials: 'include',
           headers: {
             'Content-Type': 'application/json',
             'Authorization': `Bearer ${apiKey}`
