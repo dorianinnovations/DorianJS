@@ -170,6 +170,7 @@ function startChat() {
       const userInput = res.value.trim();
       if (!userInput) {
         startChat();
+        document.activeElement?.blur(); // Blur the input to prevent unwanted scrolling
         return;
       }
 

@@ -2,6 +2,8 @@
 html,
 body {
   margin: 0;
+  scroll-behavior: smooth;
+  overflow-anchor: hide;
   padding: 0;
   width: 100%;
   max-width: 100vw;
@@ -15,6 +17,10 @@ body {
 
   -ms-overflow-style: none;
   scrollbar-width: none;
+  /* --- 100px autoscroll defensives --- */
+  overscroll-behavior-y: contain;
+  scroll-padding-top: 100px;
+  scroll-margin-top: 100px;
 }
 @keyframes slideFadeIn {
   from {
