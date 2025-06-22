@@ -2,6 +2,9 @@
 // This file handles the integration with the GPT API for sending prompts and receiving responses.
 
 // Configurable API endpoint. Can be injected via <script> or process.env for Node
+const API_URL = (typeof window !== 'undefined' && window.API_URL) ||
+  (typeof process !== 'undefined' && process.env.API_URL) ||
+  'https://dorianjs.onrender.com';
 
 export async function sendUserPrompt(userInput) {
   return await sendPrompt(userInput);

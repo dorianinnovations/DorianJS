@@ -15,7 +15,8 @@ const PORT = process.env.PORT || 8080;
 // Base origins that are always allowed
 const defaultAllowedOrigins = [
   'https://aidorian.com',
-  'https://leafy-centaur-370c2f.netlify.app'
+  'https://leafy-centaur-370c2f.netlify.app',
+  'https://www.aidorian.com'
 ];
 
 // Allow additional origins from environment variable (comma separated)

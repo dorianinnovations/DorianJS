@@ -11,7 +11,8 @@
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/botui/build/botui.min.css" />
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/botui/build/botui-theme-default.css" />
   <link rel="icon" href="logo.png" />
-  
+  <link rel="stylesheet" href="bot-ui-theme.css"/>
+
 
   <!-- Font Awesome -->
   <script src="https://kit.fontawesome.com/c0ffa5e1d4.js" crossorigin="anonymous"></script>
@@ -31,9 +32,7 @@
     rel="stylesheet">
 
   <!-- Configuration -->
-  <script>
-    window.API_URL = 'https://dorianjs.onrender.com';
-  </script>
+  <script src="config.js"></script>
 
   <!-- JavaScript -->
   <script src="https://cdn.jsdelivr.net/npm/vue@2/dist/vue.min.js"></script>
@@ -84,14 +83,14 @@
     <p class="heading-subtitle">Intelligence, redefined.</p>
     <div class="header-divider"></div>
   </div>
-<section id="chat-spot">
-  <div id="botui-app">
-    <bot-ui></bot-ui>
-  </div>
-</section>
+  <section id="chat-spot">
+    <div id="botui-app">
+      <bot-ui></bot-ui>
+    </div>
+  </section>
 
   <!-- GPT Output Container -->
- 
+
   <!-- Main Layout -->
   <main class="layout">
     <!-- Left Column -->
@@ -153,14 +152,14 @@
           <label class="reproduction-label">Seed Survival Rate:</label>
           <input type="range" id="reproduction-rate-slider" class="speed-slider" min="0.1" max="1.0" value="0.5"
             step="0.1" />
-            <label class="speed-label">Speed: <span id="speed-value">0.5</span></label>
-          <input type="range" id="speed-slider" class="speed-slider" min="0.1" max="1.0" value="0.5"        step="0.1" />      
+          <label class="speed-label">Speed: <span id="speed-value">0.5</span></label>
+          <input type="range" id="speed-slider" class="speed-slider" min="0.1" max="1.0" value="0.5" step="0.1" />
         </div>
 
 
         <div class="toggle-switches-container">
-          
-    
+
+
           <label class="switch">Mutation
             <input type="checkbox" id="mutation-checkbox" />
             <div class="slider">
@@ -243,7 +242,7 @@
         emotional states emerge through interaction and combination, enabling rich emotional diversity. The system also
         models inter-emotional dynamics, such as how one emotion can amplify, suppress, or transform another, creating a
         responsive emotional network.</p>
-        
+
       <p class="emotion-architect-text">Environmental zones (like deserts or mountains) and temporal factors (such as
         time of day or season) shape emotional behavior in context-sensitive ways, making each experience feel grounded
         and dynamic. Additionally, an integrated memory system tracks emotional history, allowing virtual entities to
@@ -253,29 +252,29 @@
       </p>
     </div>
   </section>
-    <section id="features-spot">
-      
+  <section id="features-spot">
 
-      <ul>
-  <li>🧠 Emotionally intelligent agents with adaptive behavior</li>
-  <li>🎛️ Fully interactive UI blending aesthetics with function</li>
-  <li>🧵 Crafted solo — code, concept, design, and integration</li>
-  <li>📈 Real-time simulation driven by mood, memory, and time</li>
-  <li>🕹️ Chat-enabled AI with dynamic responses and evolving state</li>
-  <li>🌌 Built as an evolving canvas — not just a product, but a world</li>
-  <li>🧪 Experimental, expressive, and grounded in psychological theory</li>
-  <li>⚡ Progressing fast — less than 30 days of development so far</li>
-</ul>
-<section id="social-spot" class="social-links-section">
-  <h2>📡 Stay Connected</h2>
-  <p>Follow Dorian for updates, development logs, and glimpses into the evolving emotional grid:</p>
-  <ul class="social-links-list">
-    <li><a href="https://x.com/Dorianworks" target="_blank">🐦 Twitter (X)</a></li>
-    <li><a href="https://github.com/dorianinnovations" target="_blank">💻 GitHub</a></li>
-    <li><a href="https://www.instagram.com/yourhandle" target="_blank">📷 LinkedIn</a></li>
-    <li><a href="mailto:dorianinnovations@gmail.com">📬 Email</a></li>
-  </ul>
-</section>
+
+    <ul>
+      <li>🧠 Emotionally intelligent agents with adaptive behavior</li>
+      <li>🎛️ Fully interactive UI blending aesthetics with function</li>
+      <li>🧵 Crafted solo — code, concept, design, and integration</li>
+      <li>📈 Real-time simulation driven by mood, memory, and time</li>
+      <li>🕹️ Chat-enabled AI with dynamic responses and evolving state</li>
+      <li>🌌 Built as an evolving canvas — not just a product, but a world</li>
+      <li>🧪 Experimental, expressive, and grounded in psychological theory</li>
+      <li>⚡ Progressing fast — less than 30 days of development so far</li>
+    </ul>
+    <section id="social-spot" class="social-links-section">
+      <h2>📡 Stay Connected</h2>
+      <p>Follow Dorian for updates, development logs, and glimpses into the evolving emotional grid:</p>
+      <ul class="social-links-list">
+        <li><a href="https://x.com/Dorianworks" target="_blank">🐦 Twitter (X)</a></li>
+        <li><a href="https://github.com/dorianinnovations" target="_blank">💻 GitHub</a></li>
+        <li><a href="https://www.instagram.com/yourhandle" target="_blank">📷 LinkedIn</a></li>
+        <li><a href="mailto:dorianinnovations@gmail.com">📬 Email</a></li>
+      </ul>
+    </section>
   </section>
 
   <!-- Footer -->

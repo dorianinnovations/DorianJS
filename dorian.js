@@ -344,16 +344,16 @@ document.addEventListener('click', (e) => {
 
       await botui.message.add({ human: true, content: userInput });
       const loadingMsgIndex = await botui.message.add({ content: "...", loading: true });
-
+      
       try {
         const reply = await sendPrompt(userInput);
-        const content = reply && reply.trim() ? reply.trim() : "⚠️ Error communicating with Dorian.";
+        const content = reply && reply.trim() ? reply.trim() : "⚠️ Dorian is currently under maintence.";
         await botui.message.update(loadingMsgIndex, { loading: false, content });
 
         const log = document.getElementById("thought-log-section");
         log.innerText += `\n\n[User ->] ${userInput}\n[Dorian ->] ${content}`;
       } catch (err) {
-        await botui.message.update(loadingMsgIndex, { loading: false, content: "⚠️ Error communicating with Dorian." });
+        await botui.message.update(loadingMsgIndex, { loading: false, content: "⚠️ Try again later, Dorian is currently under maintenence." });
         console.error(err);
       }
 
