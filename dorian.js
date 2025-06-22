@@ -1,8 +1,6 @@
 import { sendPrompt } from "./gptIntegration.js";
 import { EMOTIONS } from "./emotions.js";
 
-
-
 //HANDLE UI UPDATES (UI, CHAT, LOGS)
 //MANAGE TYPEWRITER EFFECT
 //HANDLE USER INPUT AND SENDING/RECIEVING API REQUESTS
@@ -29,7 +27,7 @@ window.addEventListener("DOMContentLoaded", () => {
   let currentStats = null;
 
   let selectedEmotion = 0; // Default to Joy (emotion ID 0)
-  let paintingMode = false; 
+  let paintingMode = false;
 
   const canvas = document.getElementById("dorian-canvas");
 
@@ -75,14 +73,10 @@ window.addEventListener("DOMContentLoaded", () => {
   const ambienceAudio = document.getElementById("ambience-audio");
   const ambienceCheckbox = document.getElementById("ambience-checkbox");
 
-   const navButtons = document.querySelectorAll('.navigation-button');
-    const sections = document.querySelectorAll('#hero-section, #main-layout, #chat-section, #thought-log-section');
-    
-
-
-    
-    
-
+  const navButtons = document.querySelectorAll(".navigation-button");
+  const sections = document.querySelectorAll(
+    "#hero-section, #main-layout, #chat-section, #thought-log-section"
+  );
 
   let screen_size_ratio = 1; // Global variable for scaling
 
@@ -118,7 +112,7 @@ window.addEventListener("DOMContentLoaded", () => {
     return { x: gridX, y: gridY };
   }
 
-//review for deletion
+  //review for deletion
   canvas.addEventListener("mousedown", (e) => {
     const coords = getScaledCoordinates(e);
 
@@ -165,50 +159,58 @@ window.addEventListener("DOMContentLoaded", () => {
   });
 
   // Start the chat loop using BotUI
-function startChat() {
-    botui.action.text({ action: { placeholder: "Ask a question" } }).then(async (res) => {
-      const userInput = res.value.trim();
-      if (!userInput) {
+  function startChat() {
+    botui.action
+      .text({ action: { placeholder: "Ask a question" } })
+      .then(async (res) => {
+        const userInput = res.value.trim();
+        if (!userInput) {
+          startChat();
+          document.activeElement?.blur(); // Blur the input to prevent unwanted scrolling
+          return;
+        }
+
+        // Only add the user message to the log, not as a botui message
+        const log = document.getElementById("thought-log-section");
+        log.innerText += `\n\n[User ->] ${userInput}`;
+
+        const loadingMsgIndex = await botui.message.add({
+          content: "...",
+          loading: true,
+        });
+        try {
+          const reply = await sendPrompt(userInput);
+          const content =
+            reply && reply.trim()
+              ? reply.trim()
+              : "⚠️ Dorian is currently under maintence.";
+          await botui.message.update(loadingMsgIndex, {
+            loading: false,
+            content,
+          });
+
+          log.innerText += `\n[Dorian ->] ${content}`;
+        } catch (err) {
+          await botui.message.update(loadingMsgIndex, {
+            loading: false,
+            content:
+              "⚠️ Try again later, Dorian is currently under maintenence.",
+          });
+          console.error(err);
+        }
+
+        // Blur the active element (input field) to prevent unwanted scrolling
+        if (document.activeElement) {
+          document.activeElement.blur();
+        }
+
         startChat();
-        document.activeElement?.blur(); // Blur the input to prevent unwanted scrolling
-        return;
-      }
+      });
 
-      // Only add the user message to the log, not as a botui message
-      const log = document.getElementById("thought-log-section");
-      log.innerText += `\n\n[User ->] ${userInput}`;
-
-      const loadingMsgIndex = await botui.message.add({ content: "...", loading: true });
-      try {
-        const reply = await sendPrompt(userInput);
-        const content = reply && reply.trim() ? reply.trim() : "⚠️ Dorian is currently under maintence.";
-        await botui.message.update(loadingMsgIndex, { loading: false, content });
-
-        log.innerText += `\n[Dorian ->] ${content}`;
-      } catch (err) {
-        await botui.message.update(loadingMsgIndex, { loading: false, content: "⚠️ Try again later, Dorian is currently under maintenence." });
-        console.error(err);
-      }
-
-      // Blur the active element (input field) to prevent unwanted scrolling
-      if (document.activeElement) {
-        document.activeElement.blur();
-      }
-
-      startChat();
-    });
-
-    // BotUI automatically focuses the input which can cause unwanted scrolling
-    setTimeout(() => {
-      if (document.activeElement) {
-        document.activeElement.blur();
-      }
-      window.scrollTo(0, 0);
-    }, 0);
+    // Removed setTimeout block for chat input scroll
   }
 
   startChat();
-  
 
   async function sendStatsToClaude(stats) {
     const prompt = `
@@ -244,8 +246,6 @@ function startChat() {
       return null;
     }
   }
-
-
 
   // INITIALIZATION OF THE WEB WORKER STARTS HERE //
   function initWorker() {
@@ -330,14 +330,18 @@ function startChat() {
   const mutationToggle = document.getElementById("mutation-checkbox");
   const resetBtn = document.getElementById("reset-btn");
 
-
-
- document
+  document
     .getElementById("action-menu-btn-icon")
     .addEventListener("click", () => {
       const menu = document.getElementById("action-menu-btns");
       menu.classList.toggle("active");
-      
+    });
+
+  document
+    .getElementById("toggle-popout-chat")
+    .addEventListener("click", () => {
+      const menu = document.getElementById("toggle-popout-chat");
+      menu.classList.toggle("active");
     });
   // Action bar visibility toggle on scroll
   const actionBar = document.querySelector(".action-bar");
@@ -353,111 +357,114 @@ function startChat() {
     lastScrollY = currentY;
   });
 
+  document
+    .getElementById("chat-btn-nav")
+    .addEventListener("click", function () {
+      const chatScrollButton = document.getElementById("chat-spot");
+      console.log("Chat spot clicked, scrolling to section:", chatScrollButton);
 
-  
-    document.getElementById('chat-btn-nav').addEventListener('click', function() {
-    const chatScrollButton = document.getElementById('chat-spot');
-    console.log('Chat spot clicked, scrolling to section:', chatScrollButton);
+      if (chatScrollButton) {
+        chatScrollButton.scrollIntoView({
+          behavior: "smooth", // Optional: for smooth scrolling
+          block: "start", // Optional: align the top of the element to the top of the viewport
+        });
+      }
+    });
+
+  document
+    .getElementById("about-button")
+    .addEventListener("click", function () {
+      const aboutScrollButton = document.getElementById("about-spot");
+      console.log(
+        "Chat spot clicked, scrolling to section:",
+        aboutScrollButton
+      );
+
+      if (aboutScrollButton) {
+        aboutScrollButton.scrollIntoView({
+          behavior: "smooth", // Optional: for smooth scrolling
+          block: "start", // Optional: align the top of the element to the top of the viewport
+        });
+      }
+    });
+  document
+    .getElementById("about-btn-nav")
+    .addEventListener("click", function () {
+      const aboutScrollButton = document.getElementById("about-spot");
+      console.log(
+        "Chat spot clicked, scrolling to section:",
+        aboutScrollButton
+      );
+
+      if (aboutScrollButton) {
+        aboutScrollButton.scrollIntoView({
+          behavior: "smooth", // Optional: for smooth scrolling
+          block: "start", // Optional: align the top of the element to the top of the viewport
+        });
+      }
+    });
+
+  document.getElementById("chat-button").addEventListener("click", function () {
+    const chatScrollButton = document.getElementById("chat-spot");
+    console.log("Chat spot clicked, scrolling to section:", chatScrollButton);
 
     if (chatScrollButton) {
-        chatScrollButton.scrollIntoView({
-            behavior: 'smooth', // Optional: for smooth scrolling
-            block: 'start'      // Optional: align the top of the element to the top of the viewport
-        });
-        
+      chatScrollButton.scrollIntoView({
+        behavior: "smooth", // Optional: for smooth scrolling
+        block: "start", // Optional: align the top of the element to the top of the viewport
+      });
     }
-});
+  });
 
+  document
+    .getElementById("social-btn-nav")
+    .addEventListener("click", function () {
+      const socialScrollButton = document.getElementById("social-spot");
+      console.log(
+        "Chat spot clicked, scrolling to section:",
+        socialScrollButton
+      );
 
-
-
-
-
-  
-    document.getElementById('about-button').addEventListener('click', function() {
-    const aboutScrollButton = document.getElementById('about-spot');
-    console.log('Chat spot clicked, scrolling to section:', aboutScrollButton);
-
-    if (aboutScrollButton) {
-        aboutScrollButton.scrollIntoView({
-            behavior: 'smooth', // Optional: for smooth scrolling
-            block: 'start'      // Optional: align the top of the element to the top of the viewport
-        });
-        
-    }
-});
-   document.getElementById('about-btn-nav').addEventListener('click', function() {
-    const aboutScrollButton = document.getElementById('about-spot');
-    console.log('Chat spot clicked, scrolling to section:', aboutScrollButton);
-
-    if (aboutScrollButton) {
-        aboutScrollButton.scrollIntoView({
-            behavior: 'smooth', // Optional: for smooth scrolling
-            block: 'start'      // Optional: align the top of the element to the top of the viewport
-        });
-        
-    }
-});
-  
-  document.getElementById('chat-button').addEventListener('click', function() {
-    const chatScrollButton = document.getElementById('chat-spot');
-    console.log('Chat spot clicked, scrolling to section:', chatScrollButton);
-
-    if (chatScrollButton) {
-        chatScrollButton.scrollIntoView({
-            behavior: 'smooth', // Optional: for smooth scrolling
-            block: 'start'      // Optional: align the top of the element to the top of the viewport
-        });
-        
-    }
-});
-
-document.getElementById('social-btn-nav').addEventListener('click', function() {
-    const socialScrollButton = document.getElementById('social-spot');
-    console.log('Chat spot clicked, scrolling to section:', socialScrollButton);
-
-    if (socialScrollButton) {
+      if (socialScrollButton) {
         socialScrollButton.scrollIntoView({
-            behavior: 'smooth', // Optional: for smooth scrolling
-            block: 'start'      // Optional: align the top of the element to the top of the viewport
+          behavior: "smooth", // Optional: for smooth scrolling
+          block: "start", // Optional: align the top of the element to the top of the viewport
         });
-        
-    }
-});
+      }
+    });
 
   // Action menu button and toggle
- 
 
-
-    // Add this function after your updateHUD function (around line 600)
+  // Add this function after your updateHUD function (around line 600)
   function updateEmotionalDashboard(stats) {
     if (!stats.emotions || stats.emotions.length === 0) return;
-    
-    const dominantEmotion = stats.emotions.reduce((a, b) => a.intensity > b.intensity ? a : b);
-    document.querySelector('#dominant-emotion').textContent = dominantEmotion.name || 'Neutral';
-    
+
+    const dominantEmotion = stats.emotions.reduce((a, b) =>
+      a.intensity > b.intensity ? a : b
+    );
+    document.querySelector("#dominant-emotion").textContent =
+      dominantEmotion.name || "Neutral";
+
     // Create/update emotion bars
-    const barsContainer = document.getElementById('emotion-bars');
-    barsContainer.innerHTML = '';
-    
-    stats.emotions.forEach(emotion => {
+    const barsContainer = document.getElementById("emotion-bars");
+    barsContainer.innerHTML = "";
+
+    stats.emotions.forEach((emotion) => {
       const barHTML = `
         <div class="emotion-bar">
           <div class="emotion-bar-label">${emotion.name}</div>
           <div class="emotion-bar-fill">
             <div class="emotion-bar-progress" 
                  style="width: ${emotion.percentage}%; 
-                        background-color: rgb(${emotion.color.join(',')});">
+                        background-color: rgb(${emotion.color.join(",")});">
             </div>
           </div>
           <div class="emotion-bar-percentage">${emotion.percentage}%</div>
         </div>
       `;
-      barsContainer.insertAdjacentHTML('beforeend', barHTML);
+      barsContainer.insertAdjacentHTML("beforeend", barHTML);
     });
   }
-
-
 
   document.getElementById("reveal-thoughts").addEventListener("click", () => {
     const logSection = document.getElementById("thought-log-section");
@@ -584,7 +591,7 @@ document.getElementById('social-btn-nav').addEventListener('click', function() {
     ).textContent = `Entropy: ${stats.entropy}`;
     document.getElementById("alive-metric").textContent = `Alive: ${alive}`;
     document.getElementById("growth-metric").textContent = `Growth: ${growth}`;
-      updateEmotionalDashboard(stats);
+    updateEmotionalDashboard(stats);
 
     updateCanvasBorderEmotion(stats.dominant);
   }
@@ -594,5 +601,4 @@ document.getElementById('social-btn-nav').addEventListener('click', function() {
     if (!running) return;
     worker.postMessage({ type: "update", updates: UPDATES_PER_FRAME });
   }
-
 });

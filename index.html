@@ -40,8 +40,8 @@
 </head>
 
 <body>
-  <!-- Navigation Bar -->
-  <nav class="navigation-bar" id="navigation-bar">
+<section id="main-top">
+   <nav class="navigation-bar" id="navigation-bar">
     <div class="navigation-bar-left">
       <img src="/media/logo.png" alt="Dorian Logo" class="logo">
       <span class="navigation-title">Dorian</span>
@@ -50,10 +50,10 @@
       <button id="about-btn-nav" class="navigation-button">About</button>
       <button class="navigation-button" id="chat-btn-nav">Chat</button>
       <button class="navigation-button" id="social-btn-nav">Socials</button>
-
     </div>
-
   </nav>
+</section>  <!-- Navigation Bar -->
+ 
 
   <!-- Action Menu Bar -->
   <nav class="action-bar">
@@ -82,13 +82,15 @@
     <p class="heading-subtitle">Intelligence, redefined.</p>
     <div class="header-divider"></div>
   </div>
-  <section id="chat-spot">
+ 
+
+  <!-- GPT Output Container -->
+    <section id="chat-spot">
     <div id="botui-app">
+      <button id="toggle-popout-chat" class="toggle-popout-chat-btn"> </button>
       <bot-ui></bot-ui>
     </div>
   </section>
-
-  <!-- GPT Output Container -->
 
   <!-- Main Layout -->
   <main class="layout">
