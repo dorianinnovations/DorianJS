@@ -22,7 +22,6 @@ window.addEventListener("DOMContentLoaded", () => {
   let currentStats = null;
 
   let selectedEmotion = 0; // Default to Joy (emotion ID 0)
-  let paintingMode = false; // You have this hardcoded as true on line 100
 
   const canvas = document.getElementById("dorian-canvas");
 
@@ -67,6 +66,12 @@ window.addEventListener("DOMContentLoaded", () => {
   const memoryOutput = document.getElementById("dorian-memory");
   const ambienceAudio = document.getElementById("ambience-audio");
   const ambienceCheckbox = document.getElementById("ambience-checkbox");
+
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'Enter' && e.target.classList.contains('botui-actions-text-input')) {
+      e.stopPropagation();
+    }
+  });
 
    const navButtons = document.querySelectorAll('.navigation-button');
     const sections = document.querySelectorAll('#hero-section, #main-layout, #chat-section, #thought-log-section');
@@ -178,12 +183,6 @@ window.addEventListener("DOMContentLoaded", () => {
               )
               .join("")}
           </div>
-          <div class="painting-controls">
-            <button id="toggle-paint-mode" class="paint-mode-btn">
-              <span class="material-symbols-outlined">palette</span>
-              Enable Painting
-            </button>
-          </div>
         </div>
       </div>
     `;
@@ -193,25 +192,6 @@ window.addEventListener("DOMContentLoaded", () => {
 
   // Initialize emotion palette
   createEmotionPalette();
-// Add paint mode toggle after your emotion selection listener (around line 170)
-document.addEventListener('click', (e) => {
-  if (e.target.id === 'toggle-paint-mode' || e.target.closest('#toggle-paint-mode')) {
-    paintingMode = !paintingMode;
-    const btn = document.getElementById('toggle-paint-mode');
-    
-    if (paintingMode) {
-      btn.innerHTML = '<span class="material-symbols-outlined">brush</span> Painting Mode ON';
-      btn.classList.add('active');
-      canvas.style.cursor = 'crosshair';
-      console.log('🎨 Painting mode ENABLED');
-    } else {
-      btn.innerHTML = '<span class="material-symbols-outlined">palette</span> Enable Painting';
-      btn.classList.remove('active');
-      canvas.style.cursor = 'default';
-      console.log('🎨 Painting mode DISABLED');
-    }
-  }
-});
   // Add event listeners for emotion selection
   document.addEventListener("click", (e) => {
     if (e.target.classList.contains("emotion-btn")) {
@@ -244,21 +224,9 @@ document.addEventListener('click', (e) => {
       return;
     }
   
-    if (paintingMode) {
-      // Paint emotion on touch
-      worker.postMessage({ 
-        type: "paintEmotion", 
-        x: coords.x, 
-        y: coords.y, 
-        emotion: selectedEmotion,
-        intensity: 0.8 
-      });
-      console.log(`Touch painted emotion ${selectedEmotion} at ${coords.x}, ${coords.y}`);
-    } else {
-      // Seed the touched cell
-      worker.postMessage({ type: "seed", x: coords.x, y: coords.y });
-      console.log(`Touch seeded at ${coords.x}, ${coords.y}`);
-    }
+    // Seed the touched cell
+    worker.postMessage({ type: "seed", x: coords.x, y: coords.y });
+    console.log(`Touch seeded at ${coords.x}, ${coords.y}`);
   
     if (!hasStarted) {
       hasStarted = true;
@@ -267,46 +235,13 @@ document.addEventListener('click', (e) => {
     }
   });
 
-  // Add paint drag functionality
-  let isDragging = false;
-
-  canvas.addEventListener("mousemove", (e) => {
-    if (isDragging && paintingMode) {
-      const coords = getScaledCoordinates(e);
-      worker.postMessage({
-        type: "paintEmotion",
-        x: coords.x,
-        y: coords.y,
-        emotion: selectedEmotion,
-        intensity: 0.6, // Slightly lower for drag painting
-      });
-    }
-  });
-
-  canvas.addEventListener("mouseup", () => {
-    isDragging = false;
-  });
-
-  // Update your existing mousedown handler to set isDragging
+  // Update your existing mousedown handler
   canvas.addEventListener("mousedown", (e) => {
     const coords = getScaledCoordinates(e);
-
-    if (paintingMode) {
-      isDragging = true; // Add this line
-      worker.postMessage({
-        type: "paintEmotion",
-        x: coords.x,
-        y: coords.y,
-        emotion: selectedEmotion,
-        intensity: 0.8,
-      });
-    } else {
-      worker.postMessage({ type: "seed", x: coords.x, y: coords.y });
-    }
+    worker.postMessage({ type: "seed", x: coords.x, y: coords.y });
 
     console.log("Mouse down event detected");
     console.log("Mouse clicked at:", coords);
-    console.log("Painting mode:", paintingMode);
     console.log("Selected emotion:", selectedEmotion);
 
     if (!hasStarted) {
@@ -335,30 +270,35 @@ document.addEventListener('click', (e) => {
 
   // Start the chat loop using BotUI
   function startChat() {
-    botui.action.text({ action: { placeholder: "Ask a question" } }).then(async (res) => {
-      const userInput = res.value.trim();
-      if (!userInput) {
+    botui
+      .action.text({ action: { placeholder: "Ask a question" } })
+      .then(async (res) => {
+        const userInput = res.value.trim();
+        if (!userInput) {
+          startChat();
+          return;
+        }
+
+        await botui.message.add({ human: true, content: userInput });
+        scrollBotuiToBottom();
+        const loadingMsgIndex = await botui.message.add({ content: "...", loading: true });
+
+        try {
+          const reply = await sendPrompt(userInput);
+          const content = reply && reply.trim() ? reply.trim() : "⚠️ Dorian is currently under maintence.";
+          await botui.message.update(loadingMsgIndex, { loading: false, content: "" });
+          await typeBotuiMessage(loadingMsgIndex, content);
+
+          const log = document.getElementById("thought-log-section");
+          log.innerText += `\n\n[User ->] ${userInput}\n[Dorian ->] ${content}`;
+        } catch (err) {
+          await botui.message.update(loadingMsgIndex, { loading: false, content: "⚠️ Try again later, Dorian is currently under maintenence." });
+          console.error(err);
+        }
+
+        scrollBotuiToBottom();
         startChat();
-        return;
-      }
-
-      await botui.message.add({ human: true, content: userInput });
-      const loadingMsgIndex = await botui.message.add({ content: "...", loading: true });
-      
-      try {
-        const reply = await sendPrompt(userInput);
-        const content = reply && reply.trim() ? reply.trim() : "⚠️ Dorian is currently under maintence.";
-        await botui.message.update(loadingMsgIndex, { loading: false, content });
-
-        const log = document.getElementById("thought-log-section");
-        log.innerText += `\n\n[User ->] ${userInput}\n[Dorian ->] ${content}`;
-      } catch (err) {
-        await botui.message.update(loadingMsgIndex, { loading: false, content: "⚠️ Try again later, Dorian is currently under maintenence." });
-        console.error(err);
-      }
-
-      startChat();
-    });
+      });
   }
 
   startChat();
@@ -388,7 +328,8 @@ document.addEventListener('click', (e) => {
       const thoughtLog = document.getElementById("thought-log-section");
       if (reply && reply.trim()) {
         thoughtLog.innerText += `\n\n[Tick ${stats.tick}] ${reply.trim()}`;
-        await botui.message.add({ content: reply.trim() });
+        const idx = await botui.message.add({ content: "" });
+        await typeBotuiMessage(idx, reply.trim());
       }
 
       return reply?.toLowerCase().trim();
@@ -420,6 +361,21 @@ document.addEventListener('click', (e) => {
       }
     }
     type();
+  }
+
+  async function typeBotuiMessage(index, text, speed = 25) {
+    for (let i = 1; i <= text.length; i++) {
+      await botui.message.update(index, { content: text.slice(0, i) });
+      await new Promise((r) => setTimeout(r, speed));
+      scrollBotuiToBottom();
+    }
+  }
+
+  function scrollBotuiToBottom() {
+    const container = document.querySelector('#botui-app .botui-messages-container');
+    if (container) {
+      container.scrollTop = container.scrollHeight;
+    }
   }
 
   // INITIALIZATION OF THE WEB WORKER STARTS HERE //

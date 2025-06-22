@@ -1791,41 +1791,6 @@ input[type="range"]::-moz-range-thumb:hover {
   transform: scale(1.08);
 }
 
-.painting-controls {
-  display: flex;
-  flex-direction: column;
-  gap: 1rem;
-  align-items: center;
-}
-
-.paint-mode-btn {
-  display: flex;
-  align-items: center;
-  gap: 0.5rem;
-  padding: 0.8rem 1.5rem;
-  background: linear-gradient(45deg, #333, #555);
-  color: white;
-  border: none;
-  border-radius: 10px;
-  font-family: "Rajdhani", sans-serif;
-  font-weight: 500;
-  cursor: pointer;
-  transition: all 0.3s ease;
-  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
-}
-
-.paint-mode-btn.active {
-  background: linear-gradient(45deg, #007bff, #0056b3);
-  box-shadow: 0 0 20px rgba(0, 123, 255, 0.5);
-}
-
-.intensity-control {
-  display: flex;
-  align-items: center;
-  gap: 0.5rem;
-  font-family: "Rajdhani", sans-serif;
-  color: white;
-}
 
 /* Emotional Dashboard */
 .emotional-dashboard {
@@ -1910,20 +1875,6 @@ input[type="range"]::-moz-range-thumb:hover {
     user-select: none;
   }
 
-  .painting-controls {
-    padding: 1rem;
-  }
-
-  .paint-mode-btn {
-    padding: 1.2rem 2rem;
-    font-size: 1.1rem;
-    min-height: 50px; /* Better touch target */
-  }
-
-  .intensity-control input[type="range"] {
-    width: 150px;
-    height: 40px; /* Larger touch target */
-  }
 
   /* Dorian Chat Theme */
 .dorian-chat-theme {
@@ -2060,31 +2011,11 @@ input[type="range"]::-moz-range-thumb:hover {
 
   /* Prevent accidental zoom */
   .emotion-btn,
-  .paint-mode-btn,
   #emotion-intensity {
     font-size: 16px; /* Prevents iOS zoom */
   }
 }
 
-/* Visual Feedback for Painting Mode */
-.painting-mode-active #dorian-canvas {
-  cursor: crosshair;
-  box-shadow: 0 0 20px rgba(255, 255, 255, 0.7);
-  border: 2px solid rgba(255, 255, 255, 0.8);
-}
-
-.painting-mode-active .emotion-btn.selected {
-  animation: selectedPulse 1s infinite alternate;
-}
-
-@keyframes selectedPulse {
-  0% {
-    box-shadow: 0 0 15px rgba(255, 255, 255, 0.6);
-  }
-  100% {
-    box-shadow: 0 0 25px rgba(255, 255, 255, 0.9);
-  }
-}
 
 /* Weather Effect Classes */
 .weather-storm canvas {
