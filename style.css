@@ -352,11 +352,9 @@ canvas#dorian-canvas {
   width: 100%;
   height: 100%; /* Maintain aspect ratio */
   aspect-ratio: 1 / 1; /* Square canvas (or use 16 / 9 etc) */
-
   display: block; /* Removes extra spacing under canvas */
   margin: 1rem auto; /* Center it and add spacing */ /* Classic border box */
   border-radius: 1rem; /* Rounded corners */
-  box-shadow: 0 0 16px rgba(187, 187, 187, 0.15); /* Optional glow/shadow */
   box-sizing: border-box; /* Makes padding/border fit inside width */
 }
 
@@ -449,10 +447,13 @@ canvas#dorian-canvas {
     height: auto;
     display: block;
     border-radius: 1rem;
-    box-shadow: 0 15px 35px rgba(22, 22, 22, 0.699),
-      0 0 16px rgba(255, 255, 255, 0.05),
-      0 0 8px #ffffff70 /* Optional glow/shadow */, inset;
-    border: 1px solid rgba(255, 255, 255, 0.249);
+    background-color: #000;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    box-shadow: 0 0 10px rgba(255, 255, 255, 0.1),
+      0 0 20px rgba(0, 0, 0, 0.1);
+    margin: 1rem auto;
+    padding: 0.5rem;
+   
   }
   canvas:hover {
     box-shadow: none;
@@ -941,7 +942,7 @@ canvas#dorian-canvas {
     align-items: center;
     justify-content: space-between;
     height: 90px;
-    width: 90%;
+    width: 100%;
     margin: 0 auto;
     max-width: 100%;
     padding: 0 1rem;
@@ -970,14 +971,22 @@ canvas#dorian-canvas {
     0% {
       transform: rotate(0deg) scale(0.95);
       opacity: 0.6;
+      animation-timing-function: cubic-bezier(0.7, 0, 1, 1); /* fast start */
     }
-    60% {
-      transform: rotate(660deg) scale(1.34);
+    30% {
+      transform: rotate(900deg) scale(1.2);
       opacity: 1;
+      animation-timing-function: cubic-bezier(0.7, 0, 1, 1); /* still fast */
+    }
+    70% {
+      transform: rotate(1400deg) scale(1.05);
+      opacity: 1;
+      animation-timing-function: cubic-bezier(0.2, 0.8, 0.2, 1); /* start slowing */
     }
     100% {
-      transform: rotate(720deg) scale(1);
+      transform: rotate(1720deg) scale(1);
       opacity: 1;
+      animation-timing-function: cubic-bezier(0.2, 0.8, 0.2, 1); /* slow finish */
     }
   }
 
@@ -995,7 +1004,6 @@ canvas#dorian-canvas {
     display: flex;
     gap: 0.5rem;
     align-items: center;
-    flex-wrap: wrap; /* allows wrapping on smaller screens */
     transition: all 0.3s ease-in-out;
     animation-name: slideIn;
     animation-duration: 0.9s;
@@ -1003,17 +1011,9 @@ canvas#dorian-canvas {
     animation-iteration-count: 1;
   }
 
-  @keyframes slideIn {
-    from {
-      transform: translateX(30%);
-    }
-    to {
-      transform: translateX(0);
-    }
-  }
 
   .navigation-button {
-    font-size: 1.8rem;
+    font-size: 1rem;
     padding: 1.3rem 1.5rem;
     gap: 0.5rem;
     z-index: 1000;
@@ -1042,6 +1042,16 @@ canvas#dorian-canvas {
     transition: all 0.3s ease;
     scale: 0.8;
   }
+
+  @keyframes slideIn {
+    from {
+      transform: translateX(30%);
+    }
+    to {
+      transform: translateX(0);
+    }
+  }
+
 
   .btn-go-right-column:active {
     background-color: rgb(0, 0, 0);
