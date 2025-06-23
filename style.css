@@ -1889,7 +1889,8 @@ main.layout,
   display: flex;
   border-top: 1px solid #444;
   background-color: #202123;
-  padding: 1rem;
+  padding: 0.5rem;
+  max-width: 100%;
 }
 
 .chat-input {
