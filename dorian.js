@@ -67,7 +67,6 @@ window.addEventListener("DOMContentLoaded", () => {
   const BIRTH_DELAY = 5; // minimum dead ticks before a cell can grow again
   let UPDATES_PER_FRAME = 25;
 
-  const botui = new BotUI("botui-app");
   const toggleMemorybtn = document.getElementById("toggle-memory");
   const memoryOutput = document.getElementById("dorian-memory");
   const ambienceAudio = document.getElementById("ambience-audio");
@@ -159,58 +158,6 @@ window.addEventListener("DOMContentLoaded", () => {
   });
 
   // Start the chat loop using BotUI
-  function startChat() {
-    botui.action
-      .text({ action: { placeholder: "Ask a question" } })
-      .then(async (res) => {
-        const userInput = res.value.trim();
-        if (!userInput) {
-          startChat();
-          document.activeElement?.blur(); // Blur the input to prevent unwanted scrolling
-          return;
-        }
-
-        // Only add the user message to the log, not as a botui message
-        const log = document.getElementById("thought-log-section");
-        log.innerText += `\n\n[User ->] ${userInput}`;
-
-        const loadingMsgIndex = await botui.message.add({
-          content: "...",
-          loading: true,
-        });
-        try {
-          const reply = await sendPrompt(userInput);
-          const content =
-            reply && reply.trim()
-              ? reply.trim()
-              : "⚠️ Dorian is currently under maintence.";
-          await botui.message.update(loadingMsgIndex, {
-            loading: false,
-            content,
-          });
-
-          log.innerText += `\n[Dorian ->] ${content}`;
-        } catch (err) {
-          await botui.message.update(loadingMsgIndex, {
-            loading: false,
-            content:
-              "⚠️ Try again later, Dorian is currently under maintenence.",
-          });
-          console.error(err);
-        }
-
-        // Blur the active element (input field) to prevent unwanted scrolling
-        if (document.activeElement) {
-          document.activeElement.blur();
-        }
-
-        startChat();
-      });
-
-    // Removed setTimeout block for chat input scroll
-  }
-
-  startChat();
 
   async function sendStatsToClaude(stats) {
     const prompt = `
@@ -232,12 +179,12 @@ window.addEventListener("DOMContentLoaded", () => {
     try {
       const reply = await sendPrompt(prompt);
       console.log("API FULL PROMPT RESPONSE:", reply);
+      WebTransportBidirectionalStream.sendPromptToClaude = sendPromnpt;
 
       // Appends the response to the Dorian thought log (bottom section)
       const thoughtLog = document.getElementById("thought-log-section");
       if (reply && reply.trim()) {
         thoughtLog.innerText += `\n\n[Tick ${stats.tick}] ${reply.trim()}`;
-        await botui.message.add({ content: reply.trim() });
       }
 
       return reply?.toLowerCase().trim();
@@ -337,12 +284,18 @@ window.addEventListener("DOMContentLoaded", () => {
       menu.classList.toggle("active");
     });
 
-  document
-    .getElementById("toggle-popout-chat")
-    .addEventListener("click", () => {
-      const menu = document.getElementById("toggle-popout-chat");
-      menu.classList.toggle("active");
-    });
+  const widget = document.querySelector(".chat-widget-root");
+
+  function showWidget() {
+    widget.classList.remove("animate-out");
+    widget.classList.add("animate-in");
+  }
+
+  function hideWidget() {
+    widget.classList.remove("animate-in");
+    widget.classList.add("animate-out");
+  }
+
   // Action bar visibility toggle on scroll
   const actionBar = document.querySelector(".action-bar");
   let lastScrollY = window.scrollY;
@@ -528,6 +481,28 @@ window.addEventListener("DOMContentLoaded", () => {
     pauseBtn.textContent = running ? "Pause" : "Resume";
     if (running) animate();
   });
+
+
+  //FLIPPABLE CARD TOGGLE
+document.querySelectorAll('.flip-card').forEach((card) => {
+  card.addEventListener("click", () => {
+    card.classList.toggle("flipped");
+
+    if (card.classList.contains("flipped")) {
+      card.querySelector(".flip-card-back").style.display = "block";
+      card.querySelector(".flip-card-front").style.display = "none";
+    }
+    else {
+      card.querySelector(".flip-card-back").style.display = "none";
+      card.querySelector(".flip-card-front").style.display = "block";
+    }
+  });
+});
+
+
+
+
+
 
   //RESET BUTTON
   if (!resetBtn) {

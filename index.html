@@ -3,19 +3,18 @@
 
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <meta name="viewport" content="width=device-width, initial-scale=0.5, maximum-scale=0.5, user-scalable=no">
   <title>Dorian</title>
 
   <!-- Stylesheets -->
   <link rel="stylesheet" href="style.css" />
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/botui/build/botui.min.css" />
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/botui/build/botui-theme-default.css" />
   <link rel="icon" href="/media/logo.png" />
-  <link rel="stylesheet" href="bot-ui-theme.css"/>
 
 
   <!-- Font Awesome -->
   <script src="https://kit.fontawesome.com/c0ffa5e1d4.js" crossorigin="anonymous"></script>
+  <script crossorigin src="https://unpkg.com/react@18/umd/react.production.min.js"></script>
+
 
   <!-- Google Fonts -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -34,26 +33,24 @@
   <!-- Configuration -->
 
   <!-- JavaScript -->
-  <script src="https://cdn.jsdelivr.net/npm/vue@2/dist/vue.min.js"></script>
-  <script src="https://cdn.jsdelivr.net/npm/botui/build/botui.min.js"></script>
-  <script type="module" src="dorian.js"></script>
 </head>
 
 <body>
-<section id="main-top">
-   <nav class="navigation-bar" id="navigation-bar">
-    <div class="navigation-bar-left">
-      <img src="/media/logo.png" alt="Dorian Logo" class="logo">
-      <span class="navigation-title">Dorian</span>
-    </div>
-    <div class="navigation-bar-right">
-      <button id="about-btn-nav" class="navigation-button">About</button>
-      <button class="navigation-button" id="chat-btn-nav">Chat</button>
-      <button class="navigation-button" id="social-btn-nav">Socials</button>
-    </div>
-  </nav>
-</section>  <!-- Navigation Bar -->
- 
+  <section id="main-top">
+    <nav class="navigation-bar" id="navigation-bar">
+      <div class="navigation-bar-left">
+        <img src="/media/logo.png" alt="Dorian Logo" class="logo">
+        <span class="navigation-title">Dorian</span>
+      </div>
+      <div class="navigation-bar-right">
+        <button id="about-btn-nav" class="navigation-button">About</button>
+        <button class="navigation-button" id="chat-btn-nav">Chat</button>
+        <button class="navigation-button" id="social-btn-nav">Socials</button>
+        <button id="reveal-thoughts" class="navigation-button">Thoughts</button>
+      </div>
+    </nav>
+  </section> <!-- Navigation Bar -->
+
 
   <!-- Action Menu Bar -->
   <nav class="action-bar">
@@ -82,16 +79,151 @@
     <p class="heading-subtitle">Intelligence, redefined.</p>
     <div class="header-divider"></div>
   </div>
- 
+
 
   <!-- GPT Output Container -->
-    <section id="chat-spot">
-    <div id="botui-app">
-      <button id="toggle-popout-chat" class="toggle-popout-chat-btn"> </button>
-      <bot-ui></bot-ui>
-    </div>
+  <section id="chat-spot">
+    <div id="root"></div>
   </section>
 
+  <!-- React CDN -->
+  <script crossorigin src="https://unpkg.com/react@18/umd/react.production.min.js"></script>
+  <script crossorigin src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js"></script>
+  <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+
+  <!-- Chat Widget -->
+  <script type="text/babel">
+    // Chat Widget Component
+    const ChatWidget = () => {
+      const [response, setResponse] = React.useState("");
+      const [loading, setLoading] = React.useState(false);
+      const [isOpen, setIsOpen] = React.useState(false);
+      const [messages, setMessages] = React.useState([]);
+
+      const sendMessage = async (prompt) => {
+        setLoading(true);
+        setResponse("");
+
+        // Add user message
+        const userMessage = { type: 'user', content: prompt };
+        setMessages(prev => [...prev, userMessage]);
+
+        try {
+          // Replace with your actual API endpoint
+          const res = await fetch("https://dorianjs.onrender.com", {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({ prompt }),
+          });
+
+          // Use await res.json() to get the response body
+          const data = await res.json();
+          const reply = data?.reply || data?.content || "Dorian is currently away, Come back later";
+
+          // Add AI response
+          const aiMessage = { type: 'ai', content: reply };
+          setMessages(prev => [...prev, aiMessage]);
+          setResponse(reply);
+
+        } catch (err) {
+          console.error("Error from Claude:", err);
+          const errorMessage = { type: 'ai', content: "Sorry, I'm having trouble connecting right now." };
+          setMessages(prev => [...prev, errorMessage]);
+          setResponse("Error talking to Claude :(");
+        } finally {
+          setLoading(false);
+        }
+      };
+
+      const handleSubmit = (e) => {
+        e.preventDefault();
+        const prompt = e.target.message.value.trim();
+        if (prompt) {
+          sendMessage(prompt);
+          e.target.reset();
+        }
+      };
+
+      return (
+        <div className="chat-widget-root">
+          {/* Chat Toggle Button */}
+          <button
+            className="chat-toggle-btn"
+            onClick={() => setIsOpen(!isOpen)}
+          >
+            💬
+          </button>
+
+          {/* Chat Window */}
+          {isOpen && (
+            <div className="chat-container">
+              {/* Header */}
+              <div className="chat-header">
+                <h3 className="chat-title">Ask Dorian</h3>
+                <button
+                  className="chat-close-btn"
+                  onClick={() => setIsOpen(false)}
+                >
+                  ×
+                </button>
+              </div>
+
+              {/* Messages */}
+              <div className="chat-messages">
+                {messages.length === 0 && (
+                  <div className="chat-empty-msg">
+                    Ask me anything
+                  </div>
+                )}
+
+                {messages.map((msg, index) => (
+                  <div
+                    key={index}
+                    className={`chat-message-row ${msg.type === 'user' ? 'chat-message-user' : 'chat-message-ai'}`}
+                  >
+                    <div className={`chat-message-bubble ${msg.type === 'user' ? 'chat-message-bubble-user' : 'chat-message-bubble-ai'}`}>
+                      {msg.content}
+                    </div>
+                  </div>
+                ))}
+
+                {loading && (
+                  <div className="chat-loading">
+                    <span className="chat-loading-text">Thinking...</span>
+                  </div>
+                )}
+              </div>
+
+              {/* Input Form */}
+              <form className="chat-input-form" onSubmit={handleSubmit}>
+                <input
+                  name="message"
+                  type="text"
+                  className="chat-input"
+                  placeholder="Type your message..."
+                  disabled={loading}
+                />
+                <button
+                  type="submit"
+                  className="chat-send-btn"
+                  disabled={loading}
+                >
+                  Send
+                </button>
+              </form>
+            </div>
+          )}
+        </div>
+      );
+    };
+
+    // Render the ChatWidget into the root div
+    ReactDOM.createRoot(document.getElementById('root')).render(<ChatWidget />);
+  </script>
+
+  
   <!-- Main Layout -->
   <main class="layout">
     <!-- Left Column -->
@@ -102,14 +234,44 @@
       <!-- UI Speed Controls -->
       <div class="ui-speed-btns">
 
-        <button id="reveal-thoughts" class="custom-btn-dorian">Thoughts
-        </button>
-        <button id="chat-with-dorian" class="custom-btn-dorian">Chat With Dorian
-        </button>
-        <button id="controls-btn" class="custom-btn-dorian">Controls
-        </button>
-        <button id="about-dorian" class="custom-btn-dorian">About Dorian
-        </button>
+      <section id="about-spot" class="emotion-architect-section">
+    <div class="hero-flip">
+    <div class="flip-card" id="card-1">
+      <div class="flip-card-inner">
+        <div class="flip-card-front">
+          <h1 class="emotion-architect-title">Emotion Simulation System Overview</h1>
+          <p class="emotion-architect-subtitle">
+            Click to learn
+          </p>
+        </div>
+        <div class="flip-card-back">
+          <h2>More about Dorian: The Living Grid</h2>
+          <p class="emotion-architect-text">
+            At its core are eight primary emotions—such as Joy, Fear, and Anticipation—each with visual and behavioral parameters like intensity, stability, and contagion.
+          </p>
+        </div>
+      </div>
+    </div>
+  
+    <div class="flip-card" id="card-2">
+      <div class="flip-card-inner">
+        <div class="flip-card-front">
+          <h1 class="emotion-architect-title">Environmental Zones</h1>
+          <p class="emotion-architect-subtitle">
+            Click to learn more.
+          </p>
+        </div>
+        <div class="flip-card-back">
+          <h2>Dynamic Emotional Behavior</h2>
+          <p class="emotion-architect-text">
+            Environmental zones like deserts or mountains shape emotional behavior in context-sensitive ways, making each experience feel grounded and dynamic.
+          </p>
+        </div>
+      </div>
+    </div>
+    </div>
+  </section>
+       
       </div>
       <div class="speed-pause-box">
 
@@ -230,29 +392,7 @@
     </div>
   </section>
 
-  <section id="about-spot" class="emotion-architect-section">
-    <h1 class="emotion-architect-title">Emotion Simulation System Overview</h1>
-    <p class="emotion-architect-subtitle">Our emotional simulation system models lifelike emotional behavior in virtual
-      entities by combining psychological theory with real-time environmental and temporal responsiveness. Built on a
-      hierarchical emotional architecture, the system simulates how emotions are generated, evolve, and
-      interact—creating deeply immersive, adaptive, and human-like experiences.
-    </p>
-    <div class="emotion-architect-content">
-      <p class="emotion-architect-text">At its core are eight primary emotions—such as Joy, Fear, and Anticipation—each
-        with visual and behavioral parameters like intensity, stability, and contagion. From these, more complex
-        emotional states emerge through interaction and combination, enabling rich emotional diversity. The system also
-        models inter-emotional dynamics, such as how one emotion can amplify, suppress, or transform another, creating a
-        responsive emotional network.</p>
 
-      <p class="emotion-architect-text">Environmental zones (like deserts or mountains) and temporal factors (such as
-        time of day or season) shape emotional behavior in context-sensitive ways, making each experience feel grounded
-        and dynamic. Additionally, an integrated memory system tracks emotional history, allowing virtual entities to
-        learn, adapt, and evolve unique emotional personalities over time.</p>
-      <p class="emotion-architect-text">Whether used for AI-driven storytelling, adaptive game design, or emotional
-        research, this simulation brings emotional intelligence to life in compelling, interactive environments.
-      </p>
-    </div>
-  </section>
   <section id="features-spot">
 
 
@@ -284,6 +424,8 @@
     <p class="footer-text">All rights reserved</p>
     <p class="footer-text">© 2025 DorianAI</p>
   </footer>
+  <script type="module" src="dorian.js"></script>
+
 </body>
 
 </html>

@@ -1,0 +1,8 @@
+/* In global CSS (index.css, App.css, etc.) */
+html, body, #root {
+  height: 100%;
+  width: 100%;
+  margin: 0;
+  padding: 0;
+  background: #0d0d0d; /* Optional: Carbon theme background */
+}
