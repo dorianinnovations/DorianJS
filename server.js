@@ -1,6 +1,6 @@
 // server.js - Fixed ESM version
-import express from "express";
 import cors from "cors";
+import express from "express";
 import dotenv from "dotenv";
 import { createBot } from "./botCreation.js"; // Make sure this path is correct
 
@@ -17,6 +17,8 @@ const defaultAllowedOrigins = [
   "https://aidorian.com",
   "https://leafy-centaur-370c2f.netlify.app",
   "https://www.aidorian.com",
+  "http://127.0.0.1:5500/",
+  
 ];
 
 // Allow additional origins from environment variable (comma separated)
@@ -33,6 +35,7 @@ const localOrigins = [
   "http://127.0.0.1:8080",
   "http://localhost:3000",
   "http://localhost:5500",
+  "http://127.0.0.1:8080",
   null, // Allow `null` origin for local file testing
 ];
 
@@ -41,18 +44,23 @@ app.use(
     origin: function (origin, callback) {
       console.log("CORS Origin:", origin);
 
-      if (!origin) return callback(null, true); // non-browser request
+      if (!origin) return callback(null, true); // Allow non-browser requests
 
-      // Allow in development or if origin is in the allow list
+      // Allow all origins in development
+      if (isDevelopment) {
+        return callback(null, true);
+      }
+
+      // Allow if origin is in the allow list
       const fullAllowList = allowedOrigins.concat(localOrigins);
-      if (isDevelopment || fullAllowList.includes(origin)) {
+      if (fullAllowList.includes(origin)) {
         return callback(null, true);
       }
 
       // Reject without throwing to avoid 500 errors
-      return callback(null, false);
+      return callback(new Error("Not allowed by CORS"));
     },
-    credentials: true,
+    credentials: true, // Allow cookies and credentials
   })
 );
 
@@ -81,6 +89,7 @@ if (!apiKey) {
 
 // Create bot AFTER imports and configuration
 const myBot = createBot();
+console.log("🤖 Bot initialized successfully");
 
 // Define API routes
 app.post("/ask", async (req, res) => {
@@ -94,6 +103,7 @@ app.post("/ask", async (req, res) => {
     console.log("Received prompt:", prompt.substring(0, 50) + "...");
 
     const reply = await myBot.sendMessage(prompt);
+    console.log("Bot reply:", reply.substring(0, 50) + "...");
     return res.json({ reply });
   } catch (error) {
     console.error("Error handling request:", error);
@@ -116,5 +126,3 @@ app.use((req, res, next) => {
 app.listen(PORT, () => {
   console.log(`🚀 Server running on port ${PORT}`);
 });
-
-

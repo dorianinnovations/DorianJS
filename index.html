@@ -99,6 +99,7 @@
       const [loading, setLoading] = React.useState(false);
       const [isOpen, setIsOpen] = React.useState(false);
       const [messages, setMessages] = React.useState([]);
+      
 
       const sendMessage = async (prompt) => {
         setLoading(true);
@@ -109,8 +110,7 @@
         setMessages(prev => [...prev, userMessage]);
 
         try {
-          // Replace with your actual API endpoint
-          const res = await fetch("https://dorianjs.onrender.com", {
+          const res = await fetch("https://dorianjs.onrender.com/ask", {
             method: 'POST',
             headers: {
               'Content-Type': 'application/json',
@@ -118,11 +118,9 @@
             body: JSON.stringify({ prompt }),
           });
 
-          // Use await res.json() to get the response body
           const data = await res.json();
           const reply = data?.reply || data?.content || "Dorian is currently away, Come back later";
 
-          // Add AI response
           const aiMessage = { type: 'ai', content: reply };
           setMessages(prev => [...prev, aiMessage]);
           setResponse(reply);

@@ -6,8 +6,8 @@ import { createBot } from "./botCreation.js";
 const API_URL =
   process.env.NODE_ENV === "production"
     ? "https://dorianjs.onrender.com/ask"
-    : "http://localhost:8080";
-const bot = createBot();
+    : "http://localhost:8080/ask";
+      "https://localhost:5500/ask";
 export default function ChatWithClaude() {
   const [response, setResponse] = useState("");
   const [loading, setLoading] = useState(false);
@@ -20,15 +20,15 @@ export default function ChatWithClaude() {
     setMessages((prev) => [...prev, userMessage]);
 
     try {
-      // Use the bot's sendMessage method to get the AI response
-      const reply = await bot.sendMessage(prompt);
+      // Make a direct request to the backend
+      const { data } = await axios.post(API_URL, { prompt });
 
       // Add AI response
-      const aiMessage = { type: "ai", content: reply };
+      const aiMessage = { type: "ai", content: data.reply };
       setMessages((prev) => [...prev, aiMessage]);
-      setResponse(reply);
+      setResponse(data.reply);
     } catch (err) {
-      console.error("Error from bot:", err);
+      console.error("Error from backend:", err);
       const errorMessage = {
         type: "ai",
         content: "Sorry, I'm sleeping right now",
