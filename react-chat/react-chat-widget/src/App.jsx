@@ -2,6 +2,11 @@ import React, { useState } from "react";
 import axios from "axios";
 import AIChatWidget from "./components/AIChatWidget";
 import { createBot } from "./botCreation.js";
+
+const API_URL =
+  process.env.NODE_ENV === "production"
+    ? "https://dorianjs.onrender.com/ask"
+    : "http://localhost:8080";
 const bot = createBot();
 export default function ChatWithClaude() {
   const [response, setResponse] = useState("");

@@ -1,8 +1,8 @@
 // server.js - Fixed ESM version
-import express from 'express';
-import cors from 'cors';
-import dotenv from 'dotenv';
-import { createBot } from './botCreation.js'; // Make sure this path is correct
+import express from "express";
+import cors from "cors";
+import dotenv from "dotenv";
+import { createBot } from "./botCreation.js"; // Make sure this path is correct
 
 // Load environment variables FIRST
 dotenv.config();
@@ -14,57 +14,59 @@ const PORT = process.env.PORT || 8080;
 // CORS Configuration - Development-friendly with strict production
 // Base origins that are always allowed
 const defaultAllowedOrigins = [
-  'https://aidorian.com',
-  'https://leafy-centaur-370c2f.netlify.app',
-  'https://www.aidorian.com'
+  "https://aidorian.com",
+  "https://leafy-centaur-370c2f.netlify.app",
+  "https://www.aidorian.com",
 ];
 
 // Allow additional origins from environment variable (comma separated)
 const envAllowedOrigins = process.env.ALLOWED_ORIGINS
-  ? process.env.ALLOWED_ORIGINS.split(',').map(o => o.trim())
+  ? process.env.ALLOWED_ORIGINS.split(",").map((o) => o.trim())
   : [];
 
 const allowedOrigins = [...defaultAllowedOrigins, ...envAllowedOrigins];
 
-const isDevelopment = process.env.NODE_ENV !== 'production';
+const isDevelopment = process.env.NODE_ENV !== "production";
 
 const localOrigins = [
-  'http://localhost:8080',
-  'http://127.0.0.1:8080',
-  'http://localhost:3000',
-  'http://localhost:5500',
-  null // Allow `null` origin for local file testing
+  "http://localhost:8080",
+  "http://127.0.0.1:8080",
+  "http://localhost:3000",
+  "http://localhost:5500",
+  null, // Allow `null` origin for local file testing
 ];
 
-app.use(cors({
-  origin: function(origin, callback) {
-    console.log('CORS Origin:', origin);
+app.use(
+  cors({
+    origin: function (origin, callback) {
+      console.log("CORS Origin:", origin);
 
-    if (!origin) return callback(null, true); // non-browser request
+      if (!origin) return callback(null, true); // non-browser request
 
-    // Allow in development or if origin is in the allow list
-    const fullAllowList = allowedOrigins.concat(localOrigins);
-    if (isDevelopment || fullAllowList.includes(origin)) {
-      return callback(null, true);
-    }
+      // Allow in development or if origin is in the allow list
+      const fullAllowList = allowedOrigins.concat(localOrigins);
+      if (isDevelopment || fullAllowList.includes(origin)) {
+        return callback(null, true);
+      }
 
-    // Reject without throwing to avoid 500 errors
-    return callback(null, false);
-  },
-  credentials: true
-}));
+      // Reject without throwing to avoid 500 errors
+      return callback(null, false);
+    },
+    credentials: true,
+  })
+);
 
 // Provide a clear response when CORS blocks a request
 app.use((err, req, res, next) => {
-  if (err && err.message === 'Not allowed by CORS') {
-    console.error('CORS error:', err.message);
+  if (err && err.message === "Not allowed by CORS") {
+    console.error("CORS error:", err.message);
     return res.status(403).json({ error: err.message });
   }
   next(err);
 });
 
 // Handle OPTIONS preflight requests
-app.options('*', cors());
+app.options("*", cors());
 
 // Parse JSON requests
 app.use(express.json());
@@ -72,26 +74,27 @@ app.use(express.json());
 // Check API key
 const apiKey = process.env.OPENROUTER_API_KEY;
 if (!apiKey) {
-  console.error("⚠️ No API key found! Please set OPENROUTER_API_KEY in your .env file");
+  console.error(
+    "⚠️ No API key found! Please set OPENROUTER_API_KEY in your .env file"
+  );
 }
 
 // Create bot AFTER imports and configuration
 const myBot = createBot();
 
 // Define API routes
-app.post('/ask', async (req, res) => {
+app.post("/ask", async (req, res) => {
   try {
     const { prompt } = req.body;
-    
+
     if (!prompt) {
-      return res.status(400).json({ error: 'No prompt provided' });
+      return res.status(400).json({ error: "No prompt provided" });
     }
-    
+
     console.log("Received prompt:", prompt.substring(0, 50) + "...");
-    
+
     const reply = await myBot.sendMessage(prompt);
     return res.json({ reply });
-    
   } catch (error) {
     console.error("Error handling request:", error);
     res.status(500).json({ error: error.message });
@@ -99,13 +102,13 @@ app.post('/ask', async (req, res) => {
 });
 
 // Health check endpoint
-app.get('/', (req, res) => {
-  res.json({ status: 'Dorian API is running' });
+app.get("/", (req, res) => {
+  res.json({ status: "Dorian API is running" });
 });
 
 // Log request origin
 app.use((req, res, next) => {
-  console.log('Request Origin:', req.headers.origin);
+  console.log("Request Origin:", req.headers.origin);
   next();
 });
 
@@ -113,3 +116,5 @@ app.use((req, res, next) => {
 app.listen(PORT, () => {
   console.log(`🚀 Server running on port ${PORT}`);
 });
+
+
