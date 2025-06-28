@@ -1,10 +1,10 @@
 //FRONTEND
 // This file handles the integration with the GPT API for sending prompts and receiving responses.
-
 // Configurable API endpoint. Can be injected via <script> or process.env for Node
-const API_URL = (typeof window !== 'undefined' && window.API_URL) ||
-  (typeof process !== 'undefined' && process.env.API_URL) ||
-  'https://dorianjs.onrender.com';
+const API_URL =
+  (typeof window !== "undefined" && window.API_URL) ||
+  (typeof process !== "undefined" && process.env.API_URL) ||
+  "https://dorianjs.onrender.com";
 
 export async function sendUserPrompt(userInput) {
   return await sendPrompt(userInput);
@@ -13,7 +13,6 @@ export async function sendAutoReflection(systemInput) {
   return await sendPrompt(systemInput);
 }
 console.log("🟢 LLM API ONLINE...");
-
 
 export async function sendPrompt(userInput) {
   const simulationMetrics = {
@@ -44,23 +43,24 @@ ${userInput}`;
 
   console.log("🟢 Full Prompt:", fullPrompt);
 
-
-try {
+  try {
     const res = await fetch(`${API_URL}/ask`, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ prompt: fullPrompt }),
     });
 
-    if (!res.ok) { // Check if the network request failed (e.g., 404, 500 errors)
+    if (!res.ok) {
+      // Check if the network request failed (e.g., 404, 500 errors)
       const errorDetail = await res.text();
-      throw new Error(`API request failed: ${res.status} ${res.statusText} - ${errorDetail}`);
+      throw new Error(
+        `API request failed: ${res.status} ${res.statusText} - ${errorDetail}`
+      );
     }
 
     const data = await res.json();
     // THIS IS THE ONLY THING THIS FILE DOES WITH THE REPLY: IT RETURNS IT.
     return data.reply;
-
   } catch (err) {
     console.error("GPT integration error:", err);
     // If there's an error, return null. dorian.js will handle showing an error message.
