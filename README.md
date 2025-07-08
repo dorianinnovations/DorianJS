@@ -1,60 +1,127 @@
-Dorian
+# Dorian - An Experimental Emotional AI System
 
-Dorian is an experimental engine for crafting synthetic organisms—emergent digital systems that evolve, feel, remember, and express symbolic behavior over time.
+Dorian is a learning project exploring how digital systems can exhibit emotional behavior through cellular automata, real-time simulation, and emergent interactions. It's designed as a foundation for understanding how complex behaviors can arise from simple rules and feedback loops.
 
-Unlike traditional logic frameworks or scripted AI, Dorian is designed to generate unpredictable, emotionally resonant behavior through feedback, entropy, and internal state dynamics. It is intended for developers, designers, and researchers exploring new ways of building presence, life, and meaning into digital systems.
+## What This Project Explores
 
-Dorian is not a chatbot, assistant, or simulator. It is a foundation for developing beings—responsive systems that exhibit emotional structure, symbolic memory, and adaptive logic in real or virtual environments.
+### Core Concepts
+- **Emergent Behavior**: How simple rules can create complex, unpredictable patterns
+- **Emotional Simulation**: Mapping emotional states to visual and behavioral systems
+- **Interactive Learning**: Real-time adaptation based on user interactions and environmental changes
+- **Cellular Automata**: Using grid-based systems to model emotional spread and evolution
 
-The long-term goal is to offer a platform that can be embedded in games, physical devices, creative tools, and research systems to support emergent behavior that cannot be fully predicted, but can be meaningfully related to.
-What Dorian Offers
+### Current Implementation
+- **Web-based Simulation**: Real-time canvas visualization of emotional states
+- **Emotional Engine**: 20+ emotional states with relationships and transformations
+- **Interactive Interface**: Click to seed emotions, paint with different emotional states
+- **Memory System**: Persistent emotional history and pattern recognition
+- **Chat Integration**: Conversational interface with emotional context
 
-    Emergent Logic Core
-    A rule-based engine for agent behavior, mutation, and self-organization.
-
-    Emotion Layer
-    Symbolic emotional states like surprise, calm, tension, or focus, driven by entropy and interaction.
-
-    Memory + Identity Mechanisms
-    Behavioral persistence and self-reference over time—early groundwork for digital individuation.
-
-    Real-Time Canvas Output
-    Visual simulation of internal dynamics, entropy shifts, and emotional states.
-
-    Framework for Integration (in progress)
-    Planned support for use in games (Unity/Unreal), robotics, and IoT through a modular interface.
-
-Status
-
-Dorian is currently in early development. The foundational simulation engine is active and undergoing continuous refinement. Integration layers, modular input/output logic, and deeper emotional-cognitive scaffolding are under active design.
-Who It's For
-
-    Game Developers seeking unscripted NPC intelligence or emergent group behavior
-
-    Creative Coders + Artists exploring generative life, symbolic feedback, or interactive ritual
-
-    Robotics and Interaction Designers building adaptive logic into physical systems
-
-    Complexity + AI Researchers studying synthetic emergence and digital identity formation
-
-Documentation
-
-    Coming soon. In the meantime, see issues, examples, and dev logs for in-progress thinking and architectural notes.
-
-Collaboration
-
-This project is open to future contributors who understand its intention: to explore emergence and emotional structure without reducing life to utility or prediction. If you're interested in building with or integrating Dorian, feel free to reach out.
-
-## Server Configuration
-
-Set environment variables in a `.env` file before running the Node server:
+## Project Structure
 
 ```
-OPENROUTER_API_KEY=your-openrouter-key
-# Optional: comma separated list of extra origins allowed by CORS
-ALLOWED_ORIGINS=https://example.com,https://staging.example.com
+├── dorian.js              # Main simulation engine and UI management
+├── emotions.js            # Emotional system definitions and relationships
+├── worker.js              # Web worker for simulation calculations
+├── gptIntegration.js      # AI chat integration
+├── memory.js              # Memory and persistence system
+├── botCreation.js         # Bot creation and management
+├── dorianUniverse.js      # Universe simulation logic
+├── index.html             # Main web interface
+├── style.css              # Styling and visual effects
+├── server.js              # Express server for API endpoints
+└── package.json           # Node.js dependencies
 ```
 
-`ALLOWED_ORIGINS` extends the default origin list used in `server.js`. This helps resolve CORS errors when deploying to new domains.
+## Key Features
+
+### Emotional System
+- **Primary Emotions**: Joy, Trust, Fear, Surprise, Sadness, Disgust, Anger, Anticipation
+- **Emergent Emotions**: Affectionate, Shocked, Contempt, Hopeful, Depressed, Delight, Anxiety, Aggression
+- **Complex Emotions**: Euphoric, Melancholy, Vindictive, Panic
+- **Emotional Relationships**: Amplification, suppression, and transformation rules
+
+### Interactive Elements
+- **Canvas Simulation**: Real-time visualization of emotional spread
+- **Emotional Painting**: Apply different emotions to the simulation
+- **Chat Interface**: Conversational AI with emotional context
+- **Memory Tracking**: Persistent emotional history and patterns
+
+### Technical Implementation
+- **Web Workers**: Background processing for simulation calculations
+- **Canvas API**: Real-time visual rendering
+- **Express Server**: API endpoints for chat and data persistence
+- **Modular Architecture**: Separated concerns for maintainability
+
+## Getting Started
+
+### Prerequisites
+- Node.js (>=14.0.0)
+- Modern web browser with Web Worker support
+
+### Installation
+1. Clone the repository
+2. Install dependencies:
+   ```bash
+   npm install
+   ```
+3. Set up environment variables in `.env`:
+   ```
+   OPENROUTER_API_KEY=your-openrouter-key
+   ALLOWED_ORIGINS=https://example.com,https://staging.example.com
+   ```
+4. Start the development server:
+   ```bash
+   npm run dev
+   ```
+
+## Learning Goals
+
+This project serves as a learning platform for:
+
+- **Complex Systems**: Understanding how simple rules create complex behavior
+- **Emotional AI**: Exploring non-traditional approaches to AI emotional modeling
+- **Interactive Design**: Creating engaging user experiences through simulation
+- **Web Technologies**: Modern JavaScript, Canvas API, Web Workers
+- **Emergent Behavior**: Studying how systems evolve beyond their initial design
+
+## Current Status
+
+This is an experimental learning project in active development. The core simulation engine is functional, but many features are still being explored and refined. The project serves as a foundation for understanding:
+
+- How emotional states can be modeled computationally
+- Ways to create engaging, emergent interactions
+- Methods for visualizing abstract concepts
+- Approaches to building responsive, adaptive systems
+
+## Contributing
+
+This project welcomes contributions from learners and researchers interested in:
+- Emotional AI and affective computing
+- Complex systems and emergence
+- Interactive art and creative coding
+- Experimental user interfaces
+
+Please feel free to explore the code, experiment with modifications, and share your learnings.
+
+## Technical Notes
+
+- The simulation uses a cellular automata approach with emotional states
+- Web Workers handle the computational load for smooth performance
+- The emotional system includes relationships, transformations, and memory
+- The interface combines real-time visualization with conversational AI
+
+## Future Explorations
+
+Areas for continued learning and development:
+- Enhanced emotional complexity and relationships
+- More sophisticated memory and learning systems
+- Integration with external data sources
+- Mobile and touch interface improvements
+- Performance optimization for larger simulations
+
+---
+
+*This project is designed for learning and experimentation. It explores the boundaries between computation, emotion, and interaction in digital systems.*
  
 
